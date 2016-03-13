@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2016-03-13T03:47:46.000Z</updated>
+  <updated>2016-03-13T06:10:12.000Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -16,13 +16,46 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>github中README.md插入图片</title>
+    <link href="http://yoursite.com/2016/03/13/github-README/"/>
+    <id>http://yoursite.com/2016/03/13/github-README/</id>
+    <published>2016-03-13T05:38:15.000Z</published>
+    <updated>2016-03-13T06:10:12.000Z</updated>
+    
+    <content type="html">&lt;p&gt;&amp;#x5728;&lt;strong&gt;Github&lt;/strong&gt;&amp;#x4E0A;&amp;#x7684;&amp;#x9879;&amp;#x76EE;&amp;#x4E2D;&amp;#x6709;&amp;#x4E2A;README.md&amp;#x6587;&amp;#x4EF6;&amp;#xFF0C;&amp;#x90A3;&amp;#x4E48;&amp;#x5982;&amp;#x4F55;&amp;#x5728;&amp;#x5176;&amp;#x4E2D;&amp;#x63D2;&amp;#x5165;&amp;#x56FE;&amp;#x7247;&amp;#x5462;&amp;#xFF1F;&amp;#x5176;&amp;#x5B9E;&amp;#x5C31;&amp;#x662F;&amp;#x4E00;&amp;#x4E2A;&amp;#x683C;&amp;#x5F0F;&amp;#x95EE;&amp;#x9898;&amp;#xFF0C;&amp;#x56FA;&amp;#x5B9A;&amp;#x7684;&amp;#x8BB0;&amp;#x4F4F;&amp;#x5C31;&amp;#x884C;&lt;/p&gt;
+&lt;h3 id=&quot;&amp;#x94FE;&amp;#x63A5;&amp;#x683C;&amp;#x5F0F;&amp;#xFF1A;&quot;&gt;&lt;a href=&quot;#&amp;#x94FE;&amp;#x63A5;&amp;#x683C;&amp;#x5F0F;&amp;#xFF1A;&quot; class=&quot;headerlink&quot; title=&quot;&amp;#x94FE;&amp;#x63A5;&amp;#x683C;&amp;#x5F0F;&amp;#xFF1A;&quot;&gt;&lt;/a&gt;&amp;#x94FE;&amp;#x63A5;&amp;#x683C;&amp;#x5F0F;&amp;#xFF1A;&lt;/h3&gt;&lt;p&gt;(&lt;a href=&quot;http://github.com/yourname/your-repository/raw/master/images-folder/xxx.png&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;http://github.com/yourname/your-repository/raw/master/images-folder/xxx.png&lt;/a&gt;)&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3 id=&quot;&amp;#x89E3;&amp;#x91CA;&quot;&gt;&lt;a href=&quot;#&amp;#x89E3;&amp;#x91CA;&quot; class=&quot;headerlink&quot; title=&quot;&amp;#x89E3;&amp;#x91CA;&quot;&gt;&lt;/a&gt;&amp;#x89E3;&amp;#x91CA;&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;yourname Github&amp;#x5E10;&amp;#x53F7;&amp;#x540D;&lt;/li&gt;
+&lt;li&gt;your-repository Github&amp;#x5F53;&amp;#x524D;&amp;#x4ED3;&amp;#x5E93;&amp;#x540D;&lt;/li&gt;
+&lt;li&gt;raw/master &amp;#x539F;&amp;#x751F; &amp;#x56FA;&amp;#x5B9A;&amp;#x4E0D;&amp;#x53D8;&lt;/li&gt;
+&lt;li&gt;images-folder &amp;#x653E;&amp;#x56FE;&amp;#x7247;&amp;#x7684;&amp;#x6587;&amp;#x4EF6;&amp;#x5939; &amp;#x6CE8;&amp;#x610F;&amp;#x8BE5;&amp;#x6587;&amp;#x4EF6;&amp;#x5939;&amp;#x5728;&amp;#x4F60;&amp;#x672C;&amp;#x5730;&amp;#x9879;&amp;#x76EE;&amp;#x6839;&amp;#x76EE;&amp;#x5F55;&amp;#x4E0B;&lt;/li&gt;
+&lt;li&gt;xxx.png &amp;#x56FE;&amp;#x7247;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;&amp;#x63D0;&amp;#x4EA4;&quot;&gt;&lt;a href=&quot;#&amp;#x63D0;&amp;#x4EA4;&quot; class=&quot;headerlink&quot; title=&quot;&amp;#x63D0;&amp;#x4EA4;&quot;&gt;&lt;/a&gt;&amp;#x63D0;&amp;#x4EA4;&lt;/h3&gt;&lt;p&gt;&amp;#x518D;&amp;#x901A;&amp;#x8FC7;git push &amp;#x63D0;&amp;#x4EA4;&amp;#x5230;&lt;strong&gt;Github&lt;/strong&gt;&amp;#x4E0A;&lt;/p&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&amp;#x5728;&lt;strong&gt;Github&lt;/strong&gt;&amp;#x4E0A;&amp;#x7684;&amp;#x9879;&amp;#x76EE;&amp;#x4E2D;&amp;#x6709;&amp;#x4E2A;README.md&amp;#x6587;&amp;#x4EF6;&amp;#xFF0C;&amp;#x90A3;&amp;#x4E48;&amp;
+    
+    </summary>
+    
+      <category term="github" scheme="http://yoursite.com/categories/github/"/>
+    
+    
+      <category term="github" scheme="http://yoursite.com/tags/github/"/>
+    
+  </entry>
+  
+  <entry>
     <title>滑轮选择器</title>
     <link href="http://yoursite.com/2016/03/13/PickerView/"/>
     <id>http://yoursite.com/2016/03/13/PickerView/</id>
     <published>2016-03-13T02:18:41.000Z</published>
-    <updated>2016-03-13T03:47:46.000Z</updated>
+    <updated>2016-03-13T05:59:57.000Z</updated>
     
-    <content type="html">&lt;p&gt;&amp;#x539F;&amp;#x6765;&amp;#x505A;&amp;#x9879;&amp;#x76EE;&amp;#x65F6;&amp;#x7528;&amp;#x5230;&amp;#x4E86;&amp;#x6ED1;&amp;#x8F6E;&amp;#x9009;&amp;#x62E9;&amp;#x5668;&amp;#xFF0C;&amp;#x4E5F;&amp;#x662F;&amp;#x501F;&amp;#x9274;&amp;#x4E86;&amp;#x522B;&amp;#x4EBA;&amp;#x7684;&amp;#xFF0C;&amp;#x4F46;&amp;#x5F53;&amp;#x65F6;&amp;#x65F6;&amp;#x95F4;&amp;#x7D27;&amp;#x4E5F;&amp;#x5C31;&amp;#x6CA1;&amp;#x81EA;&amp;#x5DF1;&amp;#x600E;&amp;#x4E48;&amp;#x4F18;&amp;#x5316;&amp;#x4E0E;&amp;#x5DE9;&amp;#x56FA;&amp;#xFF0C;&amp;#x6700;&amp;#x8FD1;&amp;#x65F6;&amp;#x95F4;&amp;#x5145;&amp;#x8DB3;&amp;#x5C31;&amp;#x91CD;&amp;#x73B0;&amp;#x5DE9;&amp;#x56FA;&amp;#x4E86;&amp;#x4E00;&amp;#x4E0B;&amp;#xFF0C;&amp;#x5728;&amp;#x8FD9;&amp;#x91CC;&amp;#x8BB0;&amp;#x4E0B;&amp;#x81EA;&amp;#x5DF1;&amp;#x7684;&amp;#x5FC3;&amp;#x5F97;&amp;#x4E0E;&amp;#x5B9E;&amp;#x73B0;&amp;#x65B9;&amp;#x6CD5;&amp;#x4EE5;&amp;#x514D;&amp;#x4EE5;&amp;#x540E;&amp;#x751F;&amp;#x758F;&amp;#xFF0C;&amp;#x6709;&amp;#x4E0D;&amp;#x8DB3;&amp;#x7684;&amp;#x5730;&amp;#x65B9;&amp;#x6B22;&amp;#x8FCE;&amp;#x6307;&amp;#x6559;&amp;#x3002;&lt;/p&gt;
+    <content type="html">&lt;p&gt;&amp;#x539F;&amp;#x6765;&amp;#x505A;&amp;#x9879;&amp;#x76EE;&amp;#x65F6;&amp;#x7528;&amp;#x5230;&amp;#x4E86;&amp;#x6ED1;&amp;#x8F6E;&amp;#x9009;&amp;#x62E9;&amp;#x5668;&amp;#xFF0C;&amp;#x4E5F;&amp;#x662F;&amp;#x501F;&amp;#x9274;&amp;#x4E86;&amp;#x522B;&amp;#x4EBA;&amp;#x7684;&amp;#xFF0C;&amp;#x4F46;&amp;#x5F53;&amp;#x65F6;&amp;#x65F6;&amp;#x95F4;&amp;#x7D27;&amp;#x4E5F;&amp;#x5C31;&amp;#x6CA1;&amp;#x81EA;&amp;#x5DF1;&amp;#x600E;&amp;#x4E48;&amp;#x4F18;&amp;#x5316;&amp;#x4E0E;&amp;#x5DE9;&amp;#x56FA;&amp;#xFF0C;&amp;#x6700;&amp;#x8FD1;&amp;#x65F6;&amp;#x95F4;&amp;#x5145;&amp;#x8DB3;&amp;#x5C31;&amp;#x91CD;&amp;#x65B0;&amp;#x5DE9;&amp;#x56FA;&amp;#x4E86;&amp;#x4E00;&amp;#x4E0B;&amp;#xFF0C;&amp;#x5728;&amp;#x8FD9;&amp;#x91CC;&amp;#x8BB0;&amp;#x4E0B;&amp;#x81EA;&amp;#x5DF1;&amp;#x7684;&amp;#x5FC3;&amp;#x5F97;&amp;#x4E0E;&amp;#x5B9E;&amp;#x73B0;&amp;#x65B9;&amp;#x6CD5;&amp;#x4EE5;&amp;#x514D;&amp;#x4EE5;&amp;#x540E;&amp;#x751F;&amp;#x758F;&amp;#xFF0C;&amp;#x6709;&amp;#x4E0D;&amp;#x8DB3;&amp;#x7684;&amp;#x5730;&amp;#x65B9;&amp;#x6B22;&amp;#x8FCE;&amp;#x6307;&amp;#x6559;&amp;#x3002;&lt;/p&gt;
 &lt;hr&gt;
 &lt;h1 id=&quot;&amp;#x5B9E;&amp;#x73B0;&amp;#x539F;&amp;#x7406;&quot;&gt;&lt;a href=&quot;#&amp;#x5B9E;&amp;#x73B0;&amp;#x539F;&amp;#x7406;&quot; class=&quot;headerlink&quot; title=&quot;&amp;#x5B9E;&amp;#x73B0;&amp;#x539F;&amp;#x7406;&quot;&gt;&lt;/a&gt;&amp;#x5B9E;&amp;#x73B0;&amp;#x539F;&amp;#x7406;&lt;/h1&gt;&lt;ul&gt;
 &lt;li&gt;&amp;#x9996;&amp;#x5148;&amp;#x81EA;&amp;#x5B9A;&amp;#x4E49;&amp;#x4E86;&amp;#x4E00;&amp;#x4E2A;&lt;font color=&quot;#FF0000&quot;&gt;PickerView&lt;/font&gt;&amp;#x7EE7;&amp;#x627F;android&amp;#x539F;&amp;#x751F;&amp;#x7684;&lt;font color=&quot;#FF0000&quot;&gt;View&lt;/font&gt;&lt;/li&gt;
