@@ -4,9 +4,9 @@
   
   <link href="/atom.xml" rel="self"/>
   
-  <link href="http://yoursite.com/"/>
+  <link href="http://idisfkj.github.io/"/>
   <updated>2016-03-29T07:34:09.000Z</updated>
-  <id>http://yoursite.com/</id>
+  <id>http://idisfkj.github.io/</id>
   
   <author>
     <name>idisfkj</name>
@@ -17,8 +17,8 @@
   
   <entry>
     <title>Android 开源SlideSwitch源码分析</title>
-    <link href="http://yoursite.com/2016/03/26/Android-%E5%BC%80%E6%BA%90SlideSwitch%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/"/>
-    <id>http://yoursite.com/2016/03/26/Android-开源SlideSwitch源码分析/</id>
+    <link href="http://idisfkj.github.io/2016/03/26/Android-%E5%BC%80%E6%BA%90SlideSwitch%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/"/>
+    <id>http://idisfkj.github.io/2016/03/26/Android-开源SlideSwitch源码分析/</id>
     <published>2016-03-26T08:31:44.000Z</published>
     <updated>2016-03-29T07:34:09.000Z</updated>
     
@@ -95,17 +95,17 @@
     
     </summary>
     
-      <category term="android" scheme="http://yoursite.com/categories/android/"/>
+      <category term="android" scheme="http://idisfkj.github.io/categories/android/"/>
     
     
-      <category term="源码分析" scheme="http://yoursite.com/tags/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/"/>
+      <category term="源码分析" scheme="http://idisfkj.github.io/tags/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/"/>
     
   </entry>
   
   <entry>
     <title>圆形头像</title>
-    <link href="http://yoursite.com/2016/03/20/circleView/"/>
-    <id>http://yoursite.com/2016/03/20/circleView/</id>
+    <link href="http://idisfkj.github.io/2016/03/20/circleView/"/>
+    <id>http://idisfkj.github.io/2016/03/20/circleView/</id>
     <published>2016-03-20T01:17:29.000Z</published>
     <updated>2016-03-20T04:56:47.000Z</updated>
     
@@ -154,17 +154,17 @@
     
     </summary>
     
-      <category term="android" scheme="http://yoursite.com/categories/android/"/>
+      <category term="android" scheme="http://idisfkj.github.io/categories/android/"/>
     
     
-      <category term="view" scheme="http://yoursite.com/tags/view/"/>
+      <category term="view" scheme="http://idisfkj.github.io/tags/view/"/>
     
   </entry>
   
   <entry>
     <title>github中README.md插入图片</title>
-    <link href="http://yoursite.com/2016/03/13/github-README/"/>
-    <id>http://yoursite.com/2016/03/13/github-README/</id>
+    <link href="http://idisfkj.github.io/2016/03/13/github-README/"/>
+    <id>http://idisfkj.github.io/2016/03/13/github-README/</id>
     <published>2016-03-13T05:38:15.000Z</published>
     <updated>2016-03-13T06:10:12.000Z</updated>
     
@@ -187,17 +187,17 @@
     
     </summary>
     
-      <category term="github" scheme="http://yoursite.com/categories/github/"/>
+      <category term="github" scheme="http://idisfkj.github.io/categories/github/"/>
     
     
-      <category term="github" scheme="http://yoursite.com/tags/github/"/>
+      <category term="github" scheme="http://idisfkj.github.io/tags/github/"/>
     
   </entry>
   
   <entry>
     <title>滑轮选择器</title>
-    <link href="http://yoursite.com/2016/03/13/PickerView/"/>
-    <id>http://yoursite.com/2016/03/13/PickerView/</id>
+    <link href="http://idisfkj.github.io/2016/03/13/PickerView/"/>
+    <id>http://idisfkj.github.io/2016/03/13/PickerView/</id>
     <published>2016-03-13T02:18:41.000Z</published>
     <updated>2016-03-13T05:59:57.000Z</updated>
     
@@ -244,17 +244,17 @@
     
     </summary>
     
-      <category term="android" scheme="http://yoursite.com/categories/android/"/>
+      <category term="android" scheme="http://idisfkj.github.io/categories/android/"/>
     
     
-      <category term="picker" scheme="http://yoursite.com/tags/picker/"/>
+      <category term="picker" scheme="http://idisfkj.github.io/tags/picker/"/>
     
   </entry>
   
   <entry>
     <title>Hexo的安装与配置</title>
-    <link href="http://yoursite.com/2016/03/04/Hexo-install/"/>
-    <id>http://yoursite.com/2016/03/04/Hexo-install/</id>
+    <link href="http://idisfkj.github.io/2016/03/04/Hexo-install/"/>
+    <id>http://idisfkj.github.io/2016/03/04/Hexo-install/</id>
     <published>2016-03-04T10:41:38.000Z</published>
     <updated>2016-03-05T06:43:12.000Z</updated>
     
@@ -361,10 +361,10 @@
     
     </summary>
     
-      <category term="hexo" scheme="http://yoursite.com/categories/hexo/"/>
+      <category term="hexo" scheme="http://idisfkj.github.io/categories/hexo/"/>
     
     
-      <category term="hexo" scheme="http://yoursite.com/tags/hexo/"/>
+      <category term="hexo" scheme="http://idisfkj.github.io/tags/hexo/"/>
     
   </entry>
   
