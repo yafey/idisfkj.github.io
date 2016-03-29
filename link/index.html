@@ -1,5 +1,9 @@
 <!DOCTYPE html>
-<html>
+
+
+  <html class="light">
+
+
 <head>
   <meta charset="utf-8">
   
@@ -8,7 +12,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="idisfkj,前端,设计,Android开发,Php,Java,C++,JavaScript" />
+    <meta name="keywords" content="idisfkj,Android开发,Php,Java,C++" />
   
 
   <meta name="description">
@@ -29,9 +33,12 @@
     <link rel="icon" href="/favicon.ico">
     <!-- <link href="favicon.ico" rel="shortcut icon" type="image/x-icon" /> -->
   
+  
+  <link href="/css/styles.css?v=5f7f1d39" rel="stylesheet">
 
-  <link rel="stylesheet" href="/css/styles.css">
 
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
   
 
   
@@ -51,6 +58,11 @@
 </head>
 
 <body>
+
+  
+    <a href="#modal-one" class="toolbox-mobile">盒子</a>
+  
+
   <div class="content content-link">
   <div class="page-header">
 
@@ -63,44 +75,82 @@
 
   
   <div class="toolbox">
-    <a class="toolbox-entry hint hint--left" data-hint="点击返回首页" href="/">盒子</a>
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
     <ul class="list-toolbox">
       
-        
-          <li class="item-toolbox">
-            <a class="CIRCLE" href="/archives/">博客</a>
-          </li>
-        
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
       
-        
-          <li class="item-toolbox">
-            <a class="CIRCLE" href="/category/">分类</a>
-          </li>
-        
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
       
-        
-          <li class="item-toolbox">
-            <a class="CIRCLE" href="/tag/">标签</a>
-          </li>
-        
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
       
-        
-          <li class="item-toolbox">
-            <a class="CIRCLE" href="/link/">友链</a>
-          </li>
-        
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
       
-        
-          <li class="item-toolbox">
-            <a class="CIRCLE" href="/about/">关于</a>
-          </li>
-        
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
       
-        
-          <li class="item-toolbox">
-            <a class="CIRCLE" href="/atom.xml">RSS</a>
-          </li>
-        
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
       
     </ul>
   </div>
@@ -112,7 +162,7 @@
       <img src="/images/idisfkj.jpg" alt="" />
     </a>
     <div class="info">
-      <h3 class="name">
+      <h3 class="name" style="font-family: calligraffittiregular">
         Idisfkj
       </h3>
       <div class="slogan">
@@ -120,65 +170,197 @@
       </div>
     </div>
   </div>
+
 </div>
 
+
+  <hr>
 
   <ul class="link-list">
     
       <li class="link-item link-item-0">
         <a target="_blank" class="link-url" href="http://zheng-ji.info/">
           <img class="avatar" src="https://avatars3.githubusercontent.com/u/1414745?v=3&amp;s=460" alt="织网">
-          <span class="name">织网</span>
+          <div class="wrap-info">
+            <div class="name">织网</div>
+            <div class="info">身体和灵魂，总有一个在路上</div>
+          </div>
         </a>
       </li>
     
       <li class="link-item link-item-1">
         <a target="_blank" class="link-url" href="http://dongyado.com/">
           <img class="avatar" src="https://avatars0.githubusercontent.com/u/6274940?v=3&amp;s=460" alt="Dongyado">
-          <span class="name">Dongyado</span>
+          <div class="wrap-info">
+            <div class="name">Dongyado</div>
+            <div class="info">生命不止，折腾不息</div>
+          </div>
         </a>
       </li>
     
       <li class="link-item link-item-2">
         <a target="_blank" class="link-url" href="http://orangecoder.com/">
           <img class="avatar" src="https://avatars0.githubusercontent.com/u/2263785?v=3&amp;s=460" alt="OrangeCoder">
-          <span class="name">OrangeCoder</span>
+          <div class="wrap-info">
+            <div class="name">OrangeCoder</div>
+            <div class="info">android ffmpeg nodejs gradle</div>
+          </div>
         </a>
       </li>
     
       <li class="link-item link-item-3">
         <a target="_blank" class="link-url" href="http://everet.org/about-me/">
           <img class="avatar" src="https://avatars1.githubusercontent.com/u/1559563?v=3&amp;s=460" alt="EverET">
-          <span class="name">EverET</span>
+          <div class="wrap-info">
+            <div class="name">EverET</div>
+            <div class="info">好记性不如烂笔头</div>
+          </div>
         </a>
       </li>
     
       <li class="link-item link-item-4">
         <a target="_blank" class="link-url" href="http://tiye.me/">
           <img class="avatar" src="https://avatars2.githubusercontent.com/u/449224?v=3&amp;s=460" alt="题叶">
-          <span class="name">题叶</span>
+          <div class="wrap-info">
+            <div class="name">题叶</div>
+            <div class="info">FP, GUI, Writing</div>
+          </div>
         </a>
       </li>
     
   </ul>
 
+  
+    <div class="tip">
+      <i class="icon-mail"></i>
+      <span>交换友链可以邮件 idisfkj@qq.com</span>
+    </div>
+  
+
 </div>
 
-  
+
+
+
+
+  <div class="modal" id="modal-one" aria-hidden="true">
+  <a href="#close" class="cover" aria-hidden="true"></a>
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <a href="#close" class="btn-close" aria-hidden="true">关闭</a>
+    </div>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
 
   
+
   <script type="text/javascript">
-  var duoshuoQuery = {short_name:"idisfkj"};
-  (function() {
-    var ds = document.createElement('script');
-    ds.type = 'text/javascript';ds.async = true;
-    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-    ds.charset = 'UTF-8';
-    (document.getElementsByTagName('head')[0]
-     || document.getElementsByTagName('body')[0]).appendChild(ds);
-  })();
-  </script>
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
 
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?398', function() {
+      // load success
+    });
+  }
+</script>
 
 </body>
 </html>

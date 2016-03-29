@@ -1,5 +1,9 @@
 <!DOCTYPE html>
-<html>
+
+
+  <html class="light">
+
+
 <head>
   <meta charset="utf-8">
   
@@ -8,7 +12,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-    <meta name="keywords" content="idisfkj,前端,设计,Android开发,Php,Java,C++,JavaScript" />
+    <meta name="keywords" content="idisfkj,Android开发,Php,Java,C++" />
   
 
   <meta name="description">
@@ -29,9 +33,12 @@
     <link rel="icon" href="/favicon.ico">
     <!-- <link href="favicon.ico" rel="shortcut icon" type="image/x-icon" /> -->
   
+  
+  <link href="/css/styles.css?v=5f7f1d39" rel="stylesheet">
 
-  <link rel="stylesheet" href="/css/styles.css">
 
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
   
 
   
@@ -51,6 +58,11 @@
 </head>
 
 <body>
+
+  
+    <a href="#modal-one" class="toolbox-mobile">盒子</a>
+  
+
   <div class="content content-category">
   <div class="page-header">
 
@@ -63,44 +75,82 @@
 
   
   <div class="toolbox">
-    <a class="toolbox-entry hint hint--left" data-hint="点击返回首页" href="/">盒子</a>
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
     <ul class="list-toolbox">
       
-        
-          <li class="item-toolbox">
-            <a class="CIRCLE" href="/archives/">博客</a>
-          </li>
-        
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
       
-        
-          <li class="item-toolbox">
-            <a class="CIRCLE" href="/category/">分类</a>
-          </li>
-        
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
       
-        
-          <li class="item-toolbox">
-            <a class="CIRCLE" href="/tag/">标签</a>
-          </li>
-        
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
       
-        
-          <li class="item-toolbox">
-            <a class="CIRCLE" href="/link/">友链</a>
-          </li>
-        
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
       
-        
-          <li class="item-toolbox">
-            <a class="CIRCLE" href="/about/">关于</a>
-          </li>
-        
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
       
-        
-          <li class="item-toolbox">
-            <a class="CIRCLE" href="/atom.xml">RSS</a>
-          </li>
-        
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
       
     </ul>
   </div>
@@ -112,7 +162,7 @@
       <img src="/images/idisfkj.jpg" alt="" />
     </a>
     <div class="info">
-      <h3 class="name">
+      <h3 class="name" style="font-family: calligraffittiregular">
         Idisfkj
       </h3>
       <div class="slogan">
@@ -120,20 +170,16 @@
       </div>
     </div>
   </div>
+
 </div>
 
   <section class="category-box">
   <div class="category-title">分类</div>
   <div class="category-list">
     
-      <a class="category-item" href="#Android">
-        <span class="category-name">Android</span>
-        <span class="category-size">( 1 )</span>
-      </a>
-    
       <a class="category-item" href="#android">
         <span class="category-name">android</span>
-        <span class="category-size">( 2 )</span>
+        <span class="category-size">( 3 )</span>
       </a>
     
       <a class="category-item" href="#github">
@@ -149,12 +195,12 @@
   </div>
 </section>
 
-  <ul class="list-post"><li id="Android" class="item-category-name item-title item-title-0">
+  <ul class="list-post"><li id="android" class="item-category-name item-title item-title-0">
   <!--
     <a href="" class="text-year">
    -->
-    Android
-    <span class="category-count">( 1 )</span>
+    android
+    <span class="category-count">( 3 )</span>
   <!--
   </a>
    -->
@@ -164,16 +210,6 @@
 
   <a class="post-title" href="/2016/03/26/Android-开源SlideSwitch源码分析/">Android 开源SlideSwitch源码分析</a>
 
-</li>
-<li id="android" class="item-category-name item-title item-title-1">
-  <!--
-    <a href="" class="text-year">
-   -->
-    android
-    <span class="category-count">( 2 )</span>
-  <!--
-  </a>
-   -->
 </li>
 <li class="item-post item">
   <span class="post-date">03-13</span>
@@ -187,7 +223,7 @@
   <a class="post-title" href="/2016/03/20/circleView/">圆形头像</a>
 
 </li>
-<li id="github" class="item-category-name item-title item-title-2">
+<li id="github" class="item-category-name item-title item-title-1">
   <!--
     <a href="" class="text-year">
    -->
@@ -203,7 +239,7 @@
   <a class="post-title" href="/2016/03/13/github-README/">github中README.md插入图片</a>
 
 </li>
-<li id="hexo" class="item-category-name item-title item-title-3">
+<li id="hexo" class="item-category-name item-title item-title-2">
   <!--
     <a href="" class="text-year">
    -->
@@ -223,22 +259,133 @@
 </div>
 
 
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+
+
+  <div class="modal" id="modal-one" aria-hidden="true">
+  <a href="#close" class="cover" aria-hidden="true"></a>
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <a href="#close" class="btn-close" aria-hidden="true">关闭</a>
+    </div>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
 
   
 
-  
   <script type="text/javascript">
-  var duoshuoQuery = {short_name:"idisfkj"};
-  (function() {
-    var ds = document.createElement('script');
-    ds.type = 'text/javascript';ds.async = true;
-    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-    ds.charset = 'UTF-8';
-    (document.getElementsByTagName('head')[0]
-     || document.getElementsByTagName('body')[0]).appendChild(ds);
-  })();
-  </script>
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
 
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?398', function() {
+      // load success
+    });
+  }
+</script>
 
 </body>
 </html>

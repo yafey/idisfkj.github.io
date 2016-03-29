@@ -1,5 +1,9 @@
 <!DOCTYPE html>
-<html>
+
+
+  <html class="light">
+
+
 <head>
   <meta charset="utf-8">
   
@@ -18,7 +22,7 @@
 <meta property="og:site_name" content="Idisfkj">
 <meta property="og:description" content="&amp;#x5927;&amp;#x5BB6;&amp;#x90FD;&amp;#x77E5;&amp;#x9053;android&amp;#x7684;&amp;#x6700;&amp;#x5927;&amp;#x597D;&amp;#x5904;&amp;#x5C31;&amp;#x662F;&amp;#x5F00;&amp;#x6E90;&amp;#xFF0C;&amp;#x5176;&amp;#x5B9E;&amp;#x5F88;&amp;#x591A;&amp;#x9879;&amp;#x76EE;&amp;#x80FD;&amp;#x5168;&amp;#x90E8;&amp;">
 <meta property="og:image" content="http://yoursite.com/2016/03/26/Android-开源SlideSwitch源码分析/2.gif">
-<meta property="og:updated_time" content="2016-03-26T14:41:20.000Z">
+<meta property="og:updated_time" content="2016-03-29T07:34:09.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android 开源SlideSwitch源码分析">
 <meta name="twitter:description" content="&amp;#x5927;&amp;#x5BB6;&amp;#x90FD;&amp;#x77E5;&amp;#x9053;android&amp;#x7684;&amp;#x6700;&amp;#x5927;&amp;#x597D;&amp;#x5904;&amp;#x5C31;&amp;#x662F;&amp;#x5F00;&amp;#x6E90;&amp;#xFF0C;&amp;#x5176;&amp;#x5B9E;&amp;#x5F88;&amp;#x591A;&amp;#x9879;&amp;#x76EE;&amp;#x80FD;&amp;#x5168;&amp;#x90E8;&amp;">
@@ -31,9 +35,12 @@
     <link rel="icon" href="/favicon.ico">
     <!-- <link href="favicon.ico" rel="shortcut icon" type="image/x-icon" /> -->
   
+  
+  <link href="/css/styles.css?v=5f7f1d39" rel="stylesheet">
 
-  <link rel="stylesheet" href="/css/styles.css">
 
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
   
 
   
@@ -53,47 +60,90 @@
 </head>
 
 <body>
+
+  
+    <a href="#modal-one" class="toolbox-mobile">盒子</a>
+  
+
   <div class="post-header CENTER">
    
   <div class="toolbox">
-    <a class="toolbox-entry hint hint--left" data-hint="点击返回首页" href="/">盒子</a>
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
     <ul class="list-toolbox">
       
-        
-          <li class="item-toolbox">
-            <a class="CIRCLE" href="/archives/">博客</a>
-          </li>
-        
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
       
-        
-          <li class="item-toolbox">
-            <a class="CIRCLE" href="/category/">分类</a>
-          </li>
-        
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
       
-        
-          <li class="item-toolbox">
-            <a class="CIRCLE" href="/tag/">标签</a>
-          </li>
-        
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
       
-        
-          <li class="item-toolbox">
-            <a class="CIRCLE" href="/link/">友链</a>
-          </li>
-        
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
       
-        
-          <li class="item-toolbox">
-            <a class="CIRCLE" href="/about/">关于</a>
-          </li>
-        
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
       
-        
-          <li class="item-toolbox">
-            <a class="CIRCLE" href="/atom.xml">RSS</a>
-          </li>
-        
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
       
     </ul>
   </div>
@@ -101,37 +151,41 @@
 
 </div>
 
- 
+
   <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
     <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#说明"><span class="toc-text">说明</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#分析要点"><span class="toc-text">分析要点</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#TypedArray"><span class="toc-text">TypedArray</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#onMeasure"><span class="toc-text">onMeasure</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#onDraw"><span class="toc-text">onDraw</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#onTouchEvent"><span class="toc-text">onTouchEvent</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ValueAnimator"><span class="toc-text">ValueAnimator</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SlideSwitchListener"><span class="toc-text">SlideSwitchListener</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#效果图"><span class="toc-text">效果图</span></a></li></ol></li></ol>
   </div>
 
 
- <a class="back-top" href="#">
-  <i class="icon-angle-up"></i>
-</a>
 
-
-<div class="content-post CENTER">
-   <article id="post-Android-开源SlideSwitch源码分析" class="article article-type-post" itemscope itemprop="blogPost">
+<div class="content content-post CENTER">
+   <article id="post-Android-开源SlideSwitch源码分析" class="article article-type-post" itemprop="blogPost">
   <header class="article-header">
     <h1 class="post-title">Android 开源SlideSwitch源码分析</h1>
 
     <div class="article-meta">
-      <span>2016-03-26</span>
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.03.26</span>
+      </span>
 
-      <span> | </span>
-
-      <span class="article-author">idisfkj</span>
-
-      <span> | </span>
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>idisfkj</span>
+        </span>
+      
 
       
   <span class="article-category">
-    <a class="article-category-link" href="/categories/Android/">Android</a>
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/android/">android</a>
   </span>
 
+
+
+      
 
     </div>
   </header>
@@ -208,10 +262,108 @@
   </div>
 </article>
 
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
 
 
 
 
+  <div class="modal" id="modal-one" aria-hidden="true">
+  <a href="#close" class="cover" aria-hidden="true"></a>
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <a href="#close" class="btn-close" aria-hidden="true">关闭</a>
+    </div>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
   <section class="duoshuo-comments">
     <!-- 多说评论框 start -->
     <div class="ds-thread" data-thread-key="" data-title="Android 开源SlideSwitch源码分析" data-url="http://yoursite.com/2016/03/26/Android-开源SlideSwitch源码分析/index.html"></div>
@@ -219,11 +371,8 @@
   </section>
 
 
-</div>
 
-  
 
-  
   <script type="text/javascript">
   var duoshuoQuery = {short_name:"idisfkj"};
   (function() {
@@ -236,6 +385,40 @@
   })();
   </script>
 
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?398', function() {
+      // load success
+    });
+  }
+</script>
 
 </body>
 </html>
