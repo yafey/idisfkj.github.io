@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+
+
+  <html class="light">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>RecyclerView深入浅出 | Idisfkj</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="recyclerView," />
+  
+
+  <meta name="description" content="&amp;#x524D;&amp;#x8A00;RecyclerView&amp;#x5DF2;&amp;#x7ECF;&amp;#x51FA;&amp;#x6765;&amp;#x597D;&amp;#x4E00;&amp;#x6BB5;&amp;#x65F6;&amp;#x95F4;&amp;#x4E86;&amp;#xFF0C;&amp;#x5BF9;&amp;#x4E8E;&amp;#x65B0;&amp;#x63A5;&amp;#x89E6;Android&amp;#x7684;&amp;#x5B66;&amp;#x5458;&amp;#x6765;&amp;#x8B">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RecyclerView深入浅出">
+<meta property="og:url" content="http://idisfkj.github.io/2016/04/02/RecyclerView深入浅出/index.html">
+<meta property="og:site_name" content="Idisfkj">
+<meta property="og:description" content="&amp;#x524D;&amp;#x8A00;RecyclerView&amp;#x5DF2;&amp;#x7ECF;&amp;#x51FA;&amp;#x6765;&amp;#x597D;&amp;#x4E00;&amp;#x6BB5;&amp;#x65F6;&amp;#x95F4;&amp;#x4E86;&amp;#xFF0C;&amp;#x5BF9;&amp;#x4E8E;&amp;#x65B0;&amp;#x63A5;&amp;#x89E6;Android&amp;#x7684;&amp;#x5B66;&amp;#x5458;&amp;#x6765;&amp;#x8B">
+<meta property="og:image" content="http://idisfkj.github.io/2016/04/02/RecyclerView深入浅出/RecyclerView.gif">
+<meta property="og:updated_time" content="2016-04-02T14:29:09.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RecyclerView深入浅出">
+<meta name="twitter:description" content="&amp;#x524D;&amp;#x8A00;RecyclerView&amp;#x5DF2;&amp;#x7ECF;&amp;#x51FA;&amp;#x6765;&amp;#x597D;&amp;#x4E00;&amp;#x6BB5;&amp;#x65F6;&amp;#x95F4;&amp;#x4E86;&amp;#xFF0C;&amp;#x5BF9;&amp;#x4E8E;&amp;#x65B0;&amp;#x63A5;&amp;#x89E6;Android&amp;#x7684;&amp;#x5B66;&amp;#x5458;&amp;#x6765;&amp;#x8B">
+<meta name="twitter:image" content="http://idisfkj.github.io/2016/04/02/RecyclerView深入浅出/RecyclerView.gif">
+
+  
+
+  
+  <!-- <link href="/favicon.ico" rel="icon" type="image/x-icon"> -->
+    <link rel="icon" href="/favicon.ico">
+    <!-- <link href="favicon.ico" rel="shortcut icon" type="image/x-icon" /> -->
+  
+  
+  <link href="/css/styles.css?v=5f7f1d39" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?ef89e68af5e136d5c22043f91cd139ea";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+
+  
+    <a href="#modal-one" class="toolbox-mobile">盒子</a>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#添加依赖"><span class="toc-text">添加依赖</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Adapter变化"><span class="toc-text">Adapter变化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#onCreateViewHolder"><span class="toc-text">onCreateViewHolder</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#onBindViewHolder"><span class="toc-text">onBindViewHolder</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#setLayoutManager"><span class="toc-text">setLayoutManager</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ListView与GridView嵌套效果"><span class="toc-text">ListView与GridView嵌套效果</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RecyclerView动画"><span class="toc-text">RecyclerView动画</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RecyclerView的CursorAdapter"><span class="toc-text">RecyclerView的CursorAdapter</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#CursorFilter"><span class="toc-text">CursorFilter</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RecyclerBaseCursorAdapter"><span class="toc-text">RecyclerBaseCursorAdapter</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#效果图"><span class="toc-text">效果图</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#结语"><span class="toc-text">结语</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-RecyclerView深入浅出" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">RecyclerView深入浅出</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.04.02</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>idisfkj</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/android/">android</a>
+  </span>
+
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h1 id="&#x524D;&#x8A00;"><a href="#&#x524D;&#x8A00;" class="headerlink" title="&#x524D;&#x8A00;"></a>&#x524D;&#x8A00;</h1><p><strong>RecyclerView</strong>&#x5DF2;&#x7ECF;&#x51FA;&#x6765;&#x597D;&#x4E00;&#x6BB5;&#x65F6;&#x95F4;&#x4E86;&#xFF0C;&#x5BF9;&#x4E8E;&#x65B0;&#x63A5;&#x89E6;<strong>Android</strong>&#x7684;&#x5B66;&#x5458;&#x6765;&#x8BF4;&#x5927;&#x591A;&#x6570;&#x4F7F;&#x7528;&#x7684;&#x662F;<strong>ListView</strong>&#x4E0E;<strong>GridView</strong>&#xFF0C;&#x5BF9;&#x4E8E;<strong>RecyclerView</strong>&#x7684;&#x4F7F;&#x7528;&#x53EF;&#x80FD;&#x90FD;&#x4E0D;&#x662F;&#x5F88;&#x719F;&#x6089;&#xFF0C;&#x76F8;&#x4FE1;&#x8FD9;&#x7247;&#x6587;&#x7AE0;&#x80FD;&#x5F88;&#x597D;&#x7684;&#x5E26;&#x4F60;&#x8FDB;&#x53BB;<strong>RecyclerView</strong>&#x7684;&#x5927;&#x95E8;&#xFF0C;&#x5FEB;&#x901F;&#x4E86;&#x89E3;&#x4E0E;&#x638C;&#x63E1;&#x65B0;&#x6280;&#x672F;&#x3002;</p>
+<h2 id="&#x6DFB;&#x52A0;&#x4F9D;&#x8D56;"><a href="#&#x6DFB;&#x52A0;&#x4F9D;&#x8D56;" class="headerlink" title="&#x6DFB;&#x52A0;&#x4F9D;&#x8D56;"></a>&#x6DFB;&#x52A0;&#x4F9D;&#x8D56;</h2><p>&#x5927;&#x5BB6;&#x4F7F;&#x7528;<strong>ListView</strong>&#x4E0E;<strong>GridView</strong>&#x53EA;&#x8981;&#x5728;<strong>xml</strong>&#x4E2D;&#x5F15;&#x7528;&#x5C31;&#x53EF;&#x4EE5;&#x4E86;&#xFF0C;&#x6CA1;&#x9519;<strong>RecyclerView</strong>&#x4E5F;&#x662F;&#x4E00;&#x6837;&#xFF0C;&#x4F46;&#x5728;&#x5F15;&#x7528;&#x524D;&#x8981;&#x5148;&#x6DFB;&#x52A0;&#x4F9D;&#x8D56;,&#x5728;&#x9879;&#x76EE;&#x7684;<strong>app</strong>&#x76EE;&#x5F55;&#x4E0B;&#x7684;<strong>build.gradl</strong>&#x7684;dependencies&#x4E2D;&#x6DFB;&#x52A0;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">compile &apos;com.android.support:recyclerview-v7:23.2.0&apos;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><em>&#x5B8C;&#x4E86;&#x4E4B;&#x540E;&#x522B;&#x5FD8;&#x4E86;Sync Now</em></p>
+</blockquote>
+<h2 id="Adapter&#x53D8;&#x5316;"><a href="#Adapter&#x53D8;&#x5316;" class="headerlink" title="Adapter&#x53D8;&#x5316;"></a>Adapter&#x53D8;&#x5316;</h2><p>&#x65E2;&#x7136;&#x8981;&#x6709;<strong>ListView</strong>&#x4E0E;<strong>GridView</strong>&#x7684;&#x6548;&#x679C;&#x81EA;&#x7136;&#x4E0D;&#x80FD;&#x5C11;&#x4E86;<strong>adapter</strong>,&#x800C;<strong>RecyclerView</strong>&#x7684;<strong>adapter</strong>&#x4E3B;&#x8981;&#x6709;&#x4E24;&#x4E2A;&#x91CD;&#x5927;&#x7684;&#x53D8;&#x5316;&#xFF0C;&#x539F;&#x6765;<strong>adapter</strong>&#x4E2D;&#x7684;<strong>getView()</strong>&#x65B9;&#x6CD5;&#x53D6;&#x6D88;&#x4E86;&#xFF0C;&#x66FF;&#x6362;&#x6210;&#x4E86;<strong>onCreateViewHolder()</strong>&#x4E0E;<strong>onBindViewHolder()</strong>&#x3002;&#x5176;&#x5B9E;&#x5C31;&#x662F;&#x5206;&#x6210;&#x4E86;&#x4E24;&#x90E8;&#x5206;&#xFF0C;&#x4E00;&#x90E8;&#x5206;&#x521B;&#x5EFA;&#x89C6;&#x56FE;&#x53E6;&#x4E00;&#x90E8;&#x5206;&#x7ED1;&#x5B9A;&#x6570;&#x636E;&#xFF0C;&#x662F;&#x4E0D;&#x662F;&#x611F;&#x89C9;&#x5C42;&#x6B21;&#x66F4;&#x6E05;&#x6670;&#x4E86;&#x5462;&#xFF0C;&#x4E0B;&#x9762;&#x4E3B;&#x8981;&#x4ECB;&#x7ECD;&#x4E4B;&#x4E24;&#x5927;&#x65B9;&#x6CD5;&#x7684;&#x4F7F;&#x7528;&#x3002;</p>
+<h3 id="onCreateViewHolder"><a href="#onCreateViewHolder" class="headerlink" title="onCreateViewHolder"></a>onCreateViewHolder</h3><p>&#x8BF4;&#x767D;&#x4E86;&#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;&#x5C31;&#x662F;&#x521B;&#x5EFA;&#x89C6;&#x56FE;&#xFF0C;&#x5728;&#x521B;&#x5EFA;&#x4E4B;&#x524D;&#x8981;&#x521B;&#x5EFA;&#x4E2A;<strong>ViewHolder</strong>&#x76F8;&#x4FE1;&#x5728;&#x539F;&#x6765;&#x7684;<strong>adapter</strong>&#x4E2D;&#x5E94;&#x8BE5;&#x6709;&#x4F7F;&#x7528;&#x8FC7;&#x5427;.&#x8FD9;&#x91CC;&#x7EE7;&#x627F;<strong>RecyclerView.ViewHolder</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public static class NormalViewHolder extends RecyclerView.ViewHolder {</span><br><span class="line">        @Bind(R.id.item_tv)</span><br><span class="line">        TextView itemTv;</span><br><span class="line">        public NormalViewHolder(View itemView) {</span><br><span class="line">            super(itemView);</span><br><span class="line">            ButterKnife.bind(this, itemView);</span><br><span class="line">        }</span><br><span class="line">    }</span><br></pre></td></tr></table></figure>
+<p>&#x7136;&#x540E;&#x5728;<strong>onCreateViewHolder</strong>&#x4E2D;&#x8C03;&#x7528;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">   public NormalViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {</span><br><span class="line">       return new NormalViewHolder(mLayoutInflater.inflate(R.layout.item_text, parent, false));</span><br><span class="line">   }</span><br></pre></td></tr></table></figure>
+<h3 id="onBindViewHolder"><a href="#onBindViewHolder" class="headerlink" title="onBindViewHolder"></a>onBindViewHolder</h3><p>&#x89C6;&#x56FE;&#x521B;&#x5EFA;&#x5B8C;&#x6BD5;&#x5C31;&#x662F;&#x7B80;&#x5355;&#x7684;&#x7ED1;&#x5B9A;&#x4E86;&#xFF0C;&#x4F7F;&#x7528;holder&#x5BF9;&#x63A7;&#x4EF6;&#x8FDB;&#x884C;&#x7ED1;&#x5B9A;&#x8BBE;&#x7F6E;&#x6570;&#x636E;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">public void onBindViewHolder(NormalViewHolder holder, int position) {</span><br><span class="line">    holder.itemTv.setText((CharSequence) mListData.get(position));</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>OK&#x4E86;&#xFF0C;&#x662F;&#x4E0D;&#x662F;&#x611F;&#x89C9;&#x5F88;&#x7B80;&#x5355;&#x5462;&#xFF1F;&#x662F;&#x7684;&#x5C31;&#x662F;&#x8FD9;&#x4E48;&#x7B80;&#x5355;&#xFF0C;&#x81F3;&#x4E8E;&#x8BBE;&#x7F6E;adapter&#x5C31;&#x4E0D;&#x8BF4;&#x4E86;&#x76F8;&#x4FE1;&#x4E4B;&#x540E;&#x7684;&#x6B65;&#x9AA4;&#x5927;&#x5BB6;&#x90FD;&#x4F1A;&#x4E86;&#x3002;</p>
+<h3 id="setLayoutManager"><a href="#setLayoutManager" class="headerlink" title="setLayoutManager"></a>setLayoutManager</h3><p>&#x4F60;&#x662F;&#x4E0D;&#x662F;&#x60F3;&#x8BF4;&#x5982;&#x4F55;&#x8BBE;&#x7F6E;&#x663E;&#x793A;&#x7684;&#x65B9;&#x5F0F;&#x662F;<strong>ListView</strong>&#x4E0E;<strong>GridView</strong>&#xFF0C;&#x8FD9;&#x4E2A;&#x5176;&#x5B9E;&#x66F4;&#x52A0;&#x7B80;&#x5355;&#x53EA;&#x9700;&#x4E00;&#x53E5;&#x4EE3;&#x7801;&#xFF0C;<strong>setLayoutManager()</strong>&#x5373;&#x53EF;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">switch (type) {</span><br><span class="line">            case App.LINEAR_LAYOUT:</span><br><span class="line">            	//ListView</span><br><span class="line">                recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));</span><br><span class="line">                break;</span><br><span class="line">            case App.GRID_LAYOUT:</span><br><span class="line">            	//GridView</span><br><span class="line">                gridLayoutManager = new GridLayoutManager(getActivity(),3);</span><br><span class="line">                recyclerView.setLayoutManager(gridLayoutManager);</span><br><span class="line">                break;                </span><br><span class="line">            case App.STAGGERED_GRID_LAYOUT:</span><br><span class="line">            	//Can customize the waterfall flow</span><br><span class="line">                recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, OrientationHelper.VERTICAL));</span><br><span class="line">                break;</span><br><span class="line">            default:</span><br><span class="line">                break;</span><br><span class="line">        }</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><em>&#x8BBE;&#x7F6E;&#x4E86;&#x663E;&#x793A;&#x7684;&#x65B9;&#x5F0F;&#x540E;&#x518D;setAdapter()&#x5373;&#x53EF;,&#x6548;&#x679C;&#x56FE;&#x8FD8;&#x662F;&#x653E;&#x5230;&#x6700;&#x540E;&#x4E00;&#x8D77;&#x663E;&#x793A;&#x5427;</em></p>
+</blockquote>
+<h2 id="ListView&#x4E0E;GridView&#x5D4C;&#x5957;&#x6548;&#x679C;"><a href="#ListView&#x4E0E;GridView&#x5D4C;&#x5957;&#x6548;&#x679C;" class="headerlink" title="ListView&#x4E0E;GridView&#x5D4C;&#x5957;&#x6548;&#x679C;"></a>ListView&#x4E0E;GridView&#x5D4C;&#x5957;&#x6548;&#x679C;</h2><p>&#x5982;&#x679C;&#x8981;&#x5B9E;&#x73B0;&#x9996;&#x5C3E;&#x662F;<strong>ListView</strong>&#x5E03;&#x5C40;&#x6548;&#x679C;&#xFF0C;&#x4E2D;&#x95F4;&#x7684;<strong>GridView</strong>&#x6548;&#x679C;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;<strong>RecyclerView.Adapter</strong>&#x63D0;&#x4F9B;&#x7684;<strong>getItemViewType(int position)</strong>&#x65B9;&#x6CD5;&#xFF0C;&#x6CE8;&#x610F;&#x8FD9;&#x91CC;&#x4E0E;<strong>ListView</strong>&#x7684;<strong>adapter</strong>&#x4E0D;&#x540C;&#x53EA;&#x6709;&#x8FD9;&#x4E00;&#x4E2A;&#x65B9;&#x6CD5;&#xFF0C;&#x6CA1;&#x6709;<strong>getViewTypeCount() </strong>&#x65B9;&#x6CD5;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x9996;&#x5C3E;&#x8981;&#x663E;&#x793A;&#x7684;&#x884C;&#x6570;&#x6765;&#x63A7;&#x5236;&#x663E;&#x793A;&#x7684;&#x5E03;&#x5C40;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">    public int getItemViewType(int position) {</span><br><span class="line">        mHeadCount = getHeadCount();</span><br><span class="line">        mContentCount = getContentCount();</span><br><span class="line">        mBottomCount = mHeadCount + mContentCount;</span><br><span class="line">        if (mHeadCount &gt; position) {</span><br><span class="line">            return App.LINEAR_LAYOUT;//ListView</span><br><span class="line">        } else if (mBottomCount &lt;= position) {</span><br><span class="line">            return App.STAGGERED_GRID_LAYOUT;//Can customize the waterfall flow</span><br><span class="line">        } else {</span><br><span class="line">            return App.GRID_LAYOUT;//GridView</span><br><span class="line">        }</span><br><span class="line">    }</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><em>&#x6839;&#x636E;&#x4E0D;&#x540C;&#x7684;viewtype&#x8FD4;&#x56DE;&#x4E0D;&#x540C;&#x7684;&#x5E03;&#x5C40;</em></p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {</span><br><span class="line">        switch (viewType) {</span><br><span class="line">            case App.LINEAR_LAYOUT:</span><br><span class="line">                return onCreateHeadViewHolder(parent);</span><br><span class="line">            case App.GRID_LAYOUT:</span><br><span class="line">                return onCreateContentViewHolder(parent);</span><br><span class="line">            case App.STAGGERED_GRID_LAYOUT:</span><br><span class="line">                return onCreateBottomViewHolder(parent);</span><br><span class="line">            default:</span><br><span class="line">                return null;</span><br><span class="line">        }</span><br><span class="line">    }</span><br></pre></td></tr></table></figure>
+<h2 id="RecyclerView&#x52A8;&#x753B;"><a href="#RecyclerView&#x52A8;&#x753B;" class="headerlink" title="RecyclerView&#x52A8;&#x753B;"></a>RecyclerView&#x52A8;&#x753B;</h2><p><strong>RecyclerView</strong>&#x7684;<strong>adapter</strong>&#x63D0;&#x4F9B;&#x4E86;&#x4E00;&#x4E9B;&#x7B80;&#x5355;&#x7684;&#x52A8;&#x753B;&#x5B9E;&#x73B0;&#xFF0C;&#x4E0B;&#x9762;&#x662F;&#x4E00;&#x90E8;&#x5206;:</p>
+<ul>
+<li>notifyItemRemoved(int position)</li>
+<li>notifyItemInserted(int position)</li>
+<li>notifyItemChanged(int position)</li>
+<li>notifyItemRangeChanged(int positionStart,int itemCount)</li>
+</ul>
+<p>&#x53EA;&#x8981;&#x5728;&#x6570;&#x636E;&#x6539;&#x53D8;&#x65F6;&#x901A;&#x8FC7;<strong>adapter</strong>&#x8C03;&#x7528;&#x5C31;&#x884C;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@OnClick(R.id.item_tv)</span><br><span class="line">       public void onClick() {</span><br><span class="line">           if (getLayoutPosition() != 1) {</span><br><span class="line">               animationAdapter.mListData.add(&quot;add&quot;+getLayoutPosition());</span><br><span class="line">               animationAdapter.notifyItemInserted(getLayoutPosition());</span><br><span class="line">           } else {</span><br><span class="line">               animationAdapter.mListData.remove(getLayoutPosition());</span><br><span class="line">               animationAdapter.notifyItemRemoved(getLayoutPosition());</span><br><span class="line">           }</span><br><span class="line">       }</span><br></pre></td></tr></table></figure>
+<p>&#x4F7F;&#x7528;<strong>recyclerView</strong>&#x7684;<strong>setItemAnimator()</strong>&#x53EF;&#x4EE5;&#x8BBE;&#x7F6E;&#x52A8;&#x753B;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">recyclerView.setItemAnimator(new DefaultItemAnimator());</span><br></pre></td></tr></table></figure>
+<p>&#x5F53;&#x7136;&#x4F60;&#x4E5F;&#x53EF;&#x4EE5;&#x5B9E;&#x73B0;&#x81EA;&#x5DF1;&#x7684;&#x52A8;&#x753B;&#xFF0C;&#x53EA;&#x8981;<strong>extends</strong> ItemAnimator&#x91CD;&#x5199;&#x51E0;&#x4E2A;&#x65B9;&#x6CD5;&#xFF0C;&#x8FD9;&#x91CC;&#x5C31;&#x4E0D;&#x5C55;&#x5F00;&#x4E86;&#xFF0C;&#x8BFB;&#x8005;&#x53EF;&#x4EE5;&#x81EA;&#x5DF1;&#x53BB;&#x8BD5;&#x8BD5;&#x3002;</p>
+<h2 id="RecyclerView&#x7684;CursorAdapter"><a href="#RecyclerView&#x7684;CursorAdapter" class="headerlink" title="RecyclerView&#x7684;CursorAdapter"></a>RecyclerView&#x7684;CursorAdapter</h2><p>&#x8BB2;&#x5230;&#x8FD9;&#x91CC;&#x4E86;&#x4F60;&#x53EF;&#x4EE5;&#x80FD;&#x4F1A;&#x8BA4;&#x4E3A;<strong>CursorAdapter</strong>&#x4E5F;&#x662F;&#x8DDF;&#x539F;&#x6765;&#x7684;&#x5DEE;&#x4E0D;&#x591A;&#xFF0C;&#x4F46;&#x6211;&#x8981;&#x8BF4;&#x7684;&#x662F;<strong>RecyclerView</strong>&#x5E76;&#x6CA1;&#x6709;&#x63D0;&#x4F9B;&#x6709;&#x5173;&#x4E0E;<strong>CursorAdapter</strong>&#x7684;&#x64CD;&#x4F5C;&#x3002;&#x6240;&#x4EE5;&#x5F53;&#x6211;&#x4EEC;&#x8981;&#x4F7F;&#x7528;<strong>CursorAdapter</strong>&#x65F6;&#x8981;&#x600E;&#x4E48;&#x529E;&#x5462;&#xFF1F;&#x6211;&#x4EEC;&#x53EA;&#x80FD;&#x81EA;&#x5DF1;&#x5B9E;&#x73B0;&#x4E00;&#x4E2A;<strong>CursorAdapter</strong>&#x7684;&#x62BD;&#x8C61;&#x7C7B;&#xFF0C;&#x662F;&#x4E0D;&#x662F;&#x611F;&#x89C9;&#x5934;&#x75DB;&#xFF0C;&#x8FD9;&#x4E00;&#x70B9;&#x770B;&#x8D77;&#x6765;&#x786E;&#x5B9E;&#x6709;&#x70B9;&#x9EBB;&#x70E6;&#xFF0C;&#x4F46;&#x662F;&#x6211;&#x544A;&#x8BC9;&#x4F60;&#x4EEC;&#x5B9E;&#x73B0;&#x4E5F;&#x662F;&#x5F88;&#x7B80;&#x5355;&#x7684;&#x4E00;&#x4EF6;&#x4E8B;&#xFF0C;&#x4E3A;&#x4EC0;&#x4E48;&#x8FD9;&#x4E48;&#x8BF4;&#x5462;&#xFF0C;&#x56E0;&#x4E3A;&#x6211;&#x4EEC;&#x53EA;&#x8981;&#x4EFF;&#x9020;<strong>ListView</strong>&#x7684;<strong>CursorAdapter</strong>&#x5C31;&#x53EF;&#x4EE5;&#x4E86;&#x3002;</p>
+<h3 id="CursorFilter"><a href="#CursorFilter" class="headerlink" title="CursorFilter"></a>CursorFilter</h3><p>&#x8FD9;&#x4E2A;&#x662F;<strong>Cursor</strong>&#x7684;&#x8FC7;&#x6EE4;&#x5668;&#xFF0C;&#x6211;&#x4EEC;&#x65E0;&#x9700;&#x505A;&#x4EC0;&#x4E48;&#xFF0C;&#x627E;&#x5230;<strong>ListView</strong>&#x7684;<strong>CursorFilter</strong>&#x590D;&#x5236;&#x5C31;&#x53EF;&#x4EE5;&#x4E86;&#x3002;&#x4EE3;&#x7801;&#x6CA1;&#x4EC0;&#x4E48;&#x8D34;&#x7684;&#xFF0C;&#x90FD;&#x662F;&#x6E90;&#x7801;&#xFF0C;&#x81EA;&#x5DF1;&#x53EF;&#x4EE5;&#x53BB;&#x67E5;&#x770B;.</p>
+<h3 id="RecyclerBaseCursorAdapter"><a href="#RecyclerBaseCursorAdapter" class="headerlink" title="RecyclerBaseCursorAdapter"></a>RecyclerBaseCursorAdapter</h3><p>&#x8FD9;&#x4E2A;&#x62BD;&#x8C61;&#x7C7B;&#x5927;&#x90E8;&#x5206;&#x90FD;&#x662F;&#x4E0E;<strong>ListView</strong>&#x7684;<strong>CursorAdapter</strong>&#x76F8;&#x540C;&#xFF0C;&#x53EA;&#x662F;&#x6709;&#x51E0;&#x4E2A;&#x5730;&#x65B9;&#x9700;&#x8981;&#x7279;&#x522B;&#x63D0;&#x9192;&#x4E0B;</p>
+<ul>
+<li>&#x539F;&#x6765;&#x7684;&#x6709;notifyDataSetInvalidated()&#x65B9;&#x6CD5;&#xFF0C;&#x4F46;RecyclerView&#x6CA1;&#x6709;&#x63D0;&#x4F9B;&#x8BE5;&#x65B9;&#x6CD5;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;notifyDataSetChanged()&#x66FF;&#x4EE3;</li>
+<li>&#x539F;&#x6765;&#x7684;hasStableIds() &#x65B9;&#x6CD5;&#x4E5F;&#x6CA1;&#x7528;&#xFF0C;&#x6211;&#x4EEC;&#x4E5F;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;setHasStableIds(true)&#x8BBE;&#x7F6E;&#x4E3A;ture&#x6765;&#x5B9E;&#x73B0;&#x76F8;&#x540C;&#x7684;&#x6548;&#x679C;</li>
+<li>&#x539F;&#x6765;&#x7684;<strong>getView()</strong>&#x65B9;&#x6CD5;&#x8981;&#x66FF;&#x6362;&#x6210;<strong>onBindViewHolder()</strong>&#x65B9;&#x6CD5;</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">void init(Context context, Cursor c, int flags) {</span><br><span class="line">        boolean cursorPresent = c != null;</span><br><span class="line">        mCursor = c;</span><br><span class="line">        mDataValid = cursorPresent;</span><br><span class="line">        mContext = context;</span><br><span class="line">        mRowIDColumn = cursorPresent ? c.getColumnIndexOrThrow(&quot;_id&quot;) : -1;</span><br><span class="line">        if ((flags &amp; FLAG_REGISTER_CONTENT_OBSERVER) == FLAG_REGISTER_CONTENT_OBSERVER) {</span><br><span class="line">            mChangeObserver = new ChangeObserver();</span><br><span class="line">            mDataSetObserver = new MyDataSetObserver();</span><br><span class="line">        } else {</span><br><span class="line">            mChangeObserver = null;</span><br><span class="line">            mDataSetObserver = null;</span><br><span class="line">        }</span><br><span class="line"></span><br><span class="line">        if (cursorPresent) {</span><br><span class="line">            if (mChangeObserver != null) c.registerContentObserver(mChangeObserver);</span><br><span class="line">            if (mDataSetObserver != null) c.registerDataSetObserver(mDataSetObserver);</span><br><span class="line">        }</span><br><span class="line">        //should set true to init</span><br><span class="line">        setHasStableIds(true);</span><br><span class="line">    }</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">        public void onInvalidated() {</span><br><span class="line">            mDataValid = false;</span><br><span class="line">//            notifyDataSetInvalidated();</span><br><span class="line">            //there is no notifyDataSetInvalidated method we should use notifyDataSetChanged method;</span><br><span class="line">            notifyDataSetChanged();</span><br><span class="line">        }</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><em>&#x57FA;&#x672C;&#x4E0A;&#x4E3B;&#x8981;&#x7684;&#x5C31;&#x662F;&#x8FD9;&#x4E9B;&#x4E86;&#xFF0C;&#x66F4;&#x591A;&#x8BE6;&#x60C5;&#x53EF;&#x4EE5;&#x67E5;&#x770B;&#x540E;&#x9762;&#x7684;<strong>Demo</strong>&#x94FE;&#x63A5;&#xFF0C;&#x6700;&#x540E;&#x4F7F;&#x7528;&#x90FD;&#x76F8;&#x540C;&#x7684;&#x5957;&#x8DEF;&#xFF0C;&#x7EE7;&#x627F;&#x8BE5;&#x62BD;&#x8C61;&#x7C7B;&#xFF0C;&#x76F8;&#x4FE1;&#x5E94;&#x8BE5;&#x6CA1;&#x6709;&#x95EE;&#x9898;&#x3002;</em></p>
+</blockquote>
+<h1 id="&#x6548;&#x679C;&#x56FE;"><a href="#&#x6548;&#x679C;&#x56FE;" class="headerlink" title="&#x6548;&#x679C;&#x56FE;"></a>&#x6548;&#x679C;&#x56FE;</h1><p><img src="/2016/04/02/RecyclerView&#x6DF1;&#x5165;&#x6D45;&#x51FA;/RecyclerView.gif" alt="&#x6548;&#x679C;&#x56FE;"></p>
+<h1 id="&#x7ED3;&#x8BED;"><a href="#&#x7ED3;&#x8BED;" class="headerlink" title="&#x7ED3;&#x8BED;"></a>&#x7ED3;&#x8BED;</h1><p>&#x6E90;&#x7801;&#x5730;&#x5740;&#x94FE;&#x63A5;&#xFF1A;<a href="https://github.com/idisfkj/RecyclerView" target="_blank" rel="external">https://github.com/idisfkj/RecyclerView</a><br>&#x6700;&#x540E;&#x611F;&#x8C22;&#x5927;&#x5BB6;&#x7684;&#x9605;&#x8BFB;&#xFF0C;&#x6709;&#x4E0D;&#x8DB3;&#x7684;&#x5730;&#x65B9;&#x6B22;&#x8FCE;&#x6307;&#x51FA;&#x3002;</p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal-one" aria-hidden="true">
+  <a href="#close" class="cover" aria-hidden="true"></a>
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <a href="#close" class="btn-close" aria-hidden="true">关闭</a>
+    </div>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+  <section class="duoshuo-comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="" data-title="RecyclerView深入浅出" data-url="http://idisfkj.github.io/2016/04/02/RecyclerView深入浅出/index.html"></div>
+    <!-- 多说评论框 end -->
+  </section>
+
+
+
+
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"idisfkj"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?398', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
