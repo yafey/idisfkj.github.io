@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+
+
+  <html class="light">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>Android高仿微信之mvp实现(一) | Idisfkj</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="高仿," />
+  
+
+  <meta name="description" content="&amp;#x524D;&amp;#x8A00;&amp;#x4E3A;&amp;#x4E86;&amp;#x5DE9;&amp;#x56FA;&amp;#x4E00;&amp;#x4E0B;&amp;#x81EA;&amp;#x5DF1;&amp;#x5BF9;mvp&amp;#x67B6;&amp;#x6784;&amp;#x7684;&amp;#x7406;&amp;#x89E3;&amp;#xFF0C;&amp;#x4E8E;&amp;#x662F;&amp;#x7A81;&amp;#x751F;&amp;#x4E00;&amp;#x4E2A;&amp;#x60F3;&amp;#x6C">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android高仿微信之mvp实现(一)">
+<meta property="og:url" content="http://idisfkj.github.io/2016/04/23/Android高仿微信之mvp实现-一/index.html">
+<meta property="og:site_name" content="Idisfkj">
+<meta property="og:description" content="&amp;#x524D;&amp;#x8A00;&amp;#x4E3A;&amp;#x4E86;&amp;#x5DE9;&amp;#x56FA;&amp;#x4E00;&amp;#x4E0B;&amp;#x81EA;&amp;#x5DF1;&amp;#x5BF9;mvp&amp;#x67B6;&amp;#x6784;&amp;#x7684;&amp;#x7406;&amp;#x89E3;&amp;#xFF0C;&amp;#x4E8E;&amp;#x662F;&amp;#x7A81;&amp;#x751F;&amp;#x4E00;&amp;#x4E2A;&amp;#x60F3;&amp;#x6C">
+<meta property="og:image" content="http://idisfkj.github.io/2016/04/23/Android高仿微信之mvp实现-一/1.gif">
+<meta property="og:updated_time" content="2016-04-23T15:00:59.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android高仿微信之mvp实现(一)">
+<meta name="twitter:description" content="&amp;#x524D;&amp;#x8A00;&amp;#x4E3A;&amp;#x4E86;&amp;#x5DE9;&amp;#x56FA;&amp;#x4E00;&amp;#x4E0B;&amp;#x81EA;&amp;#x5DF1;&amp;#x5BF9;mvp&amp;#x67B6;&amp;#x6784;&amp;#x7684;&amp;#x7406;&amp;#x89E3;&amp;#xFF0C;&amp;#x4E8E;&amp;#x662F;&amp;#x7A81;&amp;#x751F;&amp;#x4E00;&amp;#x4E2A;&amp;#x60F3;&amp;#x6C">
+<meta name="twitter:image" content="http://idisfkj.github.io/2016/04/23/Android高仿微信之mvp实现-一/1.gif">
+
+  
+
+  
+  <!-- <link href="/favicon.ico" rel="icon" type="image/x-icon"> -->
+    <link rel="icon" href="/favicon.ico">
+    <!-- <link href="favicon.ico" rel="shortcut icon" type="image/x-icon" /> -->
+  
+  
+  <link href="/css/styles.css?v=5f7f1d39" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?ef89e68af5e136d5c22043f91cd139ea";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+
+  
+    <a href="#modal-one" class="toolbox-mobile">盒子</a>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#MVP"><span class="toc-text">MVP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#View层"><span class="toc-text">View层</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Model层"><span class="toc-text">Model层</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Presenter层"><span class="toc-text">Presenter层</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#效果图"><span class="toc-text">效果图</span></a></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-Android高仿微信之mvp实现-一" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Android高仿微信之mvp实现(一)</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.04.23</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>idisfkj</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/android/">android</a>
+  </span>
+
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h1 id="&#x524D;&#x8A00;"><a href="#&#x524D;&#x8A00;" class="headerlink" title="&#x524D;&#x8A00;"></a>&#x524D;&#x8A00;</h1><p>&#x4E3A;&#x4E86;&#x5DE9;&#x56FA;&#x4E00;&#x4E0B;&#x81EA;&#x5DF1;&#x5BF9;<strong>mvp</strong>&#x67B6;&#x6784;&#x7684;&#x7406;&#x89E3;&#xFF0C;&#x4E8E;&#x662F;&#x7A81;&#x751F;&#x4E00;&#x4E2A;&#x60F3;&#x6CD5;&#xFF0C;&#x7528;<strong>mvp</strong>&#x67B6;&#x6784;&#x6765;&#x5B9E;&#x73B0;&#x4E00;&#x70B9;&#x7C7B;&#x4F3C;&#x4E8E;&#x5FAE;&#x4FE1;&#x7684;&#x529F;&#x80FD;&#x3002;&#x6240;&#x4EE5;&#x5C31;&#x6709;&#x4E86;&#x73B0;&#x5728;&#x7684;&#x6807;&#x9898;&#x9AD8;&#x4EFF;&#x5FAE;&#x4FE1;&#x4E4B;mvp&#x5B9E;&#x73B0;&#x3002;&#x5E0C;&#x671B;&#x81EA;&#x5DF1;&#x5728;&#x5B9E;&#x73B0;&#x7684;&#x8FC7;&#x7A0B;&#x4E2D;&#x80FD;&#x719F;&#x7EC3;&#x638C;&#x63E1;<strong>mvp</strong>&#x67B6;&#x6784;&#x7684;&#x7CBE;&#x9AD3;&#xFF0C;&#x540C;&#x65F6;&#x6211;&#x4E5F;&#x5728;&#x8FD9;&#x5199;&#x4E0B;&#x81EA;&#x5DF1;&#x5728;&#x8FD9;&#x8FC7;&#x7A0B;&#x4E2D;&#x7684;&#x6210;&#x957F;&#x4E0E;&#x6240;&#x601D;&#x3002;&#x8BE5;&#x7247;&#x6587;&#x7AE0;&#x4E3A;&#x7B2C;&#x4E00;&#x7CFB;&#x5217;&#xFF0C;&#x4EE5;&#x540E;&#x4F1A;&#x6839;&#x636E;&#x81EA;&#x5DF1;&#x7684;&#x8FDB;&#x5EA6;&#x6765;&#x5199;&#x4E0B;&#x5269;&#x4F59;&#x7684;&#x7CFB;&#x5217;&#x3002;&#x8FD8;&#x6CA1;&#x63A5;&#x89E6;&#x7684;&#x4E5F;&#x53EF;&#x4EE5;&#x4E00;&#x8D77;&#x6765;&#x5B66;&#x4E60;&#x4E0B;&#xFF0C;&#x5F53;&#x7136;&#x5982;&#x6709;&#x4E0D;&#x5BF9;&#x7684;&#x6B22;&#x8FCE;&#x6765;&#x6307;&#x6559;&#x3002;</p>
+<h2 id="MVP"><a href="#MVP" class="headerlink" title="MVP"></a>MVP</h2><p>&#x9996;&#x5148;&#x6211;&#x6765;&#x7B80;&#x5355;&#x7684;&#x89E3;&#x91CA;&#x4E0B;&#x4F55;&#x4E3A;<strong>mvp</strong></p>
+<ul>
+<li><strong>M</strong>&#x5C31;&#x662F;<strong>Model</strong> &#xFF0C;&#x8FD9;&#x91CC;&#x4E3B;&#x8981;&#x8D1F;&#x8D23;&#x7684;&#x5C31;&#x662F;&#x4E1A;&#x52A1;&#x5904;&#x7406;&#xFF0C;&#x6570;&#x636E;&#x7684;&#x83B7;&#x53D6;&#xFF0C;&#x4F8B;&#x5982;&#x6570;&#x636E;&#x5E93;&#x7684;&#x8BFB;&#x5199;&#xFF0C;<strong>http</strong>&#x7684;&#x7F51;&#x7EDC;&#x6570;&#x636E;&#x7684;&#x5904;&#x7406;&#x3002;</li>
+<li><strong>V</strong>&#x5C31;&#x662F;<strong>View</strong> &#xFF0C;&#x987E;&#x540D;&#x601D;&#x4E49;&#x89C6;&#x56FE;&#x7684;&#x610F;&#x601D;&#xFF0C;&#x8FD9;&#x91CC;&#x4E3B;&#x8981;&#x7684;&#x4EFB;&#x52A1;&#x5C31;&#x662F;&#x5904;&#x7406;&#x5404;&#x4E2A;&#x754C;&#x9762;<strong>ui</strong>&#x63A7;&#x4EF6;&#x7684;&#x5904;&#x7406;&#x3002;</li>
+<li><strong>P</strong>&#x5C31;&#x662F;<strong>Presenter</strong> &#xFF0C;&#x63A7;&#x5236;&#x5668;&#xFF0C;&#x8FD9;&#x91CC;&#x8D1F;&#x8D23;&#x7684;&#x662F;<strong>Model</strong>&#x4E0E;<strong>View</strong>&#x4E4B;&#x95F4;&#x7684;&#x8054;&#x7CFB;&#x64CD;&#x4F5C;&#x3002;</li>
+</ul>
+<p>&#x90A3;&#x4E48;&#x4ED6;&#x4EEC;&#x4E4B;&#x95F4;&#x5230;&#x5E95;&#x662F;&#x5982;&#x4F55;&#x8054;&#x7CFB;&#x5728;&#x4E00;&#x8D77;&#x5DE5;&#x4F5C;&#x7684;&#x5462;&#xFF1F;&#x5F53;&#x4E00;&#x4E2A;&#x754C;&#x9762;&#x88AB;&#x521B;&#x5EFA;&#x65F6;&#x9996;&#x5148;&#x8C03;&#x7528;<strong>View</strong>&#xFF0C;<strong>View</strong>&#x8C03;&#x7528;<strong>Presenter</strong>&#x4E2D;&#x7684;&#x76F8;&#x5E94;&#x64CD;&#x4F5C;&#xFF0C;&#x5728;<strong>Presenter</strong>&#x4E2D;&#x5219;&#x8C03;&#x7528;&#x4E86;<strong>Model</strong>&#x7684;&#x6570;&#x636E;&#x64CD;&#x4F5C;&#x65B9;&#x6CD5;&#xFF0C;<strong>Presenter</strong>&#x4E2D;&#x83B7;&#x5F97;&#x6570;&#x636E;&#x65F6;&#xFF0C;&#x5219;&#x53CD;&#x8FC7;&#x6765;&#x8C03;&#x7528;<strong>View</strong>&#x4E2D;&#x63A5;&#x53E3;&#x4F20;&#x56DE;&#x7ED9;<strong>View</strong>&#x5C42;&#x3002;&#x8FD9;&#x6837;&#x5C31;&#x7B80;&#x5355;&#x7684;&#x5B9E;&#x73B0;&#x4E86;<strong>MVP</strong>&#x4E2D;&#x7684;&#x5408;&#x4F5C;&#x6D41;&#x7A0B;&#x3002;&#x8FD9;&#x6837;&#x505A;&#x7684;&#x4E00;&#x4E2A;&#x660E;&#x663E;&#x7684;&#x597D;&#x5904;&#x5C31;&#x662F;&#x628A;&#x6570;&#x636E;&#x64CD;&#x4F5C;&#x4E0E;&#x4E3B;&#x754C;&#x9762;&#x5206;&#x79BB;&#xFF0C;&#x5B8C;&#x5168;&#x9694;&#x79BB;&#x6570;&#x636E;&#x64CD;&#x4F5C;&#xFF0C;&#x4F7F;&#x5F97;&#x5404;&#x4E2A;&#x529F;&#x80FD;&#x5B9E;&#x73B0;&#x6A21;&#x5757;&#x5316;&#xFF0C;&#x964D;&#x4F4E;&#x4ED6;&#x4EEC;&#x4E4B;&#x95F4;&#x7684;&#x8026;&#x5408;&#x6027;&#xFF0C;&#x53EA;&#x8981;&#x547D;&#x540D;&#x5408;&#x7406;&#x5C31;&#x80FD;&#x8FC5;&#x901F;&#x660E;&#x767D;&#x8BE5;&#x65B9;&#x6CD5;&#x7684;&#x4F5C;&#x7528;&#x3002;&#x4E0B;&#x9762;&#x4EE5;&#x8BE5;&#x9879;&#x76EE;&#x4E3A;&#x4F8B;&#x3002;</p>
+<blockquote>
+<p><em>&#x672C;&#x6765;&#x60F3;&#x4EE5;&#x4E3B;&#x6846;&#x67B6;&#x4E3A;&#x4F8B;&#x7684;&#xFF0C;&#x4F46;&#x4E3B;&#x6846;&#x67B6;&#x76EE;&#x524D;&#x6CA1;&#x6709;Model&#x5C42;&#xFF0C;&#x6240;&#x4EE5;&#x4E0B;&#x9762;&#x4EE5;&#x5FAE;&#x4FE1;&#x4E2D;&#x7684;&#x7B2C;&#x4E00;&#x4E2A;&#x804A;&#x5929;&#x5FAE;&#x4FE1;&#x7A97;&#x53E3;&#x4E3A;&#x4F8B;&#xFF0C;&#x7528;MVP&#x6765;&#x5B9E;&#x73B0;</em></p>
+</blockquote>
+<h2 id="View&#x5C42;"><a href="#View&#x5C42;" class="headerlink" title="View&#x5C42;"></a>View&#x5C42;</h2><p>&#x5F53;&#x6211;&#x4EEC;&#x6253;&#x5F00;&#x5FAE;&#x4FE1;&#x804A;&#x5929;&#x754C;&#x9762;&#x65F6;&#xFF0C;&#x8981;&#x5148;&#x8C03;&#x7528;&#x8BBE;&#x7F6E;&#x6570;&#x636E;&#x7684;&#x65B9;&#x6CD5;&#x6240;&#x4EE5;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5B9A;&#x4E49;&#x4E00;&#x4E2A;&#x63A5;&#x53E3;&#xFF0C;&#x5176;&#x4E2D;&#x5B9E;&#x73B0;&#x8BBE;&#x7F6E;&#x6570;&#x636E;&#x7684;&#x65B9;&#x6CD5;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public interface WXView {</span><br><span class="line">    void setData(List&lt;WXItemInfo&gt; list);</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><em>&#x76F8;&#x4FE1;&#x5927;&#x5BB6;&#x4E00;&#x770B;&#x65B9;&#x6CD5;&#x540D;&#x5C31;&#x80FD;&#x5F88;&#x597D;&#x7406;&#x89E3;&#x8BE5;&#x65B9;&#x6CD5;&#x8981;&#x505A;&#x7684;&#x64CD;&#x4F5C;&#x4E86;</em></p>
+</blockquote>
+<h2 id="Model&#x5C42;"><a href="#Model&#x5C42;" class="headerlink" title="Model&#x5C42;"></a>Model&#x5C42;</h2><p>&#x65E2;&#x7136;&#x8BE5;&#x5C42;&#x662F;&#x5B9E;&#x73B0;&#x5BF9;&#x6570;&#x636E;&#x7684;&#x64CD;&#x4F5C;&#xFF0C;&#x81EA;&#x7136;&#x6211;&#x4EEC;&#x4E5F;&#x53EF;&#x4EE5;&#x5B9A;&#x4E49;&#x4E00;&#x4E2A;&#x63A5;&#x53E3;&#xFF0C;&#x5B9E;&#x73B0;&#x52A0;&#x8F7D;&#x6570;&#x636E;&#x7684;&#x65B9;&#x6CD5;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public interface WXModel {</span><br><span class="line">    List&lt;WXItemInfo&gt; initData();</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x5B9A;&#x4E49;&#x5B8C;&#x4E4B;&#x540E;&#x6211;&#x4EEC;&#x518D;&#x5B9A;&#x4E49;&#x4E00;&#x4E2A;&#x7C7B;&#x5B9E;&#x73B0;&#x8BE5;&#x63A5;&#x53E3;&#xFF0C;&#x8FDB;&#x884C;&#x6570;&#x636E;&#x7684;&#x52A0;&#x8F7D;&#xFF1B;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">public class WXModleImp implements WXModel{</span><br><span class="line">    private List&lt;WXItemInfo&gt; mList;</span><br><span class="line">    private WXItemInfo wxItemInfo;</span><br><span class="line">    @Override</span><br><span class="line">    public List&lt;WXItemInfo&gt; initData() {</span><br><span class="line">        mList = new ArrayList&lt;&gt;();</span><br><span class="line">        for (int i = 0; i &lt; 10; i++) {</span><br><span class="line">            wxItemInfo = new WXItemInfo();</span><br><span class="line">            wxItemInfo.setTitle(&quot;&#x6D4B;&#x8BD5;&#x6807;&#x9898;&quot; + i);</span><br><span class="line">            wxItemInfo.setContent(&quot;&#x6D4B;&#x8BD5;&#x5185;&#x5BB9;&quot; + i);</span><br><span class="line">            wxItemInfo.setTime(i + &quot;:11&quot;);</span><br><span class="line">            mList.add(wxItemInfo);</span><br><span class="line">        }</span><br><span class="line">        return mList;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x8FD9;&#x91CC;&#x73B0;&#x5728;&#x4E3A;&#x4E86;&#x6D4B;&#x8BD5;&#xFF0C;&#x6240;&#x4EE5;&#x505A;&#x4E86;&#x5047;&#x6570;&#x636E;&#x3002;&#x73B0;&#x5728;&#x662F;&#x4E0D;&#x662F;&#x660E;&#x767D;&#x4E86;&#x4E00;&#x70B9;&#x5462;&#xFF1F;&#x53EA;&#x8981;&#x6211;&#x4EEC;&#x8FD8;&#x6709;&#x5176;&#x4ED6;&#x76F8;&#x5173;&#x64CD;&#x4F5C;&#xFF0C;&#x5C31;&#x53EF;&#x4EE5;&#x5728;&#x63A5;&#x53E3;&#x4E2D;&#x5728;&#x5B9A;&#x4E49;&#x4E00;&#x4E2A;&#x8BE5;&#x64CD;&#x4F5C;&#x7684;&#x65B9;&#x6CD5;&#xFF0C;&#x5728;<strong>WXModelImp</strong>&#x4E2D;&#x5B9E;&#x73B0;&#x5C31;&#x53EF;&#x4EE5;&#x4E86;&#x3002;</p>
+<h2 id="Presenter&#x5C42;"><a href="#Presenter&#x5C42;" class="headerlink" title="Presenter&#x5C42;"></a>Presenter&#x5C42;</h2><p>&#x5230;&#x8FD9;&#x91CC;&#x662F;&#x4E0D;&#x662F;&#x60F3;&#x5230;&#x4E5F;&#x8981;&#x5B9A;&#x4E49;&#x4E00;&#x4E2A;&#x76F8;&#x5173;&#x63A5;&#x53E3;&#xFF0C;&#x4EE5;&#x4FBF;&#x5B9E;&#x73B0;&#x76F8;&#x5173;&#x65B9;&#x6CD5;&#xFF0C;&#x6CA1;&#x9519;&#x5C31;&#x662F;&#x8FD9;&#x6837;&#xFF0C;&#x5B9E;&#x73B0;&#x7684;&#x65B9;&#x6CD5;&#x5C31;&#x662F;&#x628A;<strong>View</strong>&#x4E0E;<strong>Model</strong>&#x8FDE;&#x63A5;&#x8D77;&#x6765;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public interface WXPresent {</span><br><span class="line">    void loadData();</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x5B9A;&#x4E49;&#x4E00;&#x4E2A;&#x7C7B;&#x5B9E;&#x73B0;&#x8BE5;&#x63A5;&#x53E3;,&#x5728;&#x5176;&#x4E2D;&#x5F15;&#x7528;<strong>View</strong>&#x4E0E;<strong>Model</strong>&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">public class WXPresentImp implements WXPresent{</span><br><span class="line"></span><br><span class="line">    private WXModel mWXModle;</span><br><span class="line">    private WXView mWXView;</span><br><span class="line">    private List&lt;WXItemInfo&gt; mList;</span><br><span class="line"></span><br><span class="line">    public WXPresentImp(WXView wxView) {</span><br><span class="line">        mWXView = wxView;</span><br><span class="line">        mWXModle = new WXModleImp();</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void loadData() {</span><br><span class="line">        mList = mWXModle.initData();</span><br><span class="line">        mWXView.setData(mList);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x5230;&#x8FD9;&#x91CC;&#x57FA;&#x672C;&#x7684;<strong>MVP</strong>&#x5C31;&#x8981;&#x7ED3;&#x675F;&#x4E86;&#xFF0C;&#x6700;&#x540E;&#x53EA;&#x8981;&#x5728;&#x5FAE;&#x4FE1;&#x804A;&#x5929;&#x754C;&#x9762;&#x5B9E;&#x73B0;<strong>View</strong>&#x5C42;&#x7684;<strong>WXView</strong>&#x63A5;&#x53E3;&#x5728;&#x5176;&#x4E2D;&#x586B;&#x5145;&#x6570;&#x636E;&#xFF0C;&#x5B9E;&#x4F8B;&#x5316;<strong>Presenter</strong>&#x5C42;&#x7684;<strong>WXPresentImp</strong>&#x7C7B;&#xFF0C;&#x8C03;&#x7528;&#x5176;&#x65B9;&#x6CD5;<strong>loadData()</strong>&#xFF1B;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">public class WXFragment extends Fragment implements WXView{</span><br><span class="line">    @InjectView(R.id.wx_recyclerView)</span><br><span class="line">    RecyclerView wxRecyclerView;</span><br><span class="line">    private WXAdapter wxAdapter;</span><br><span class="line">    private WXPresentImp mWXPresentImp;</span><br><span class="line"></span><br><span class="line">    @Nullable</span><br><span class="line">    @Override</span><br><span class="line">    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {</span><br><span class="line">        View view = LayoutInflater.from(getContext()).inflate(R.layout.wx_layout, null);</span><br><span class="line">        ButterKnife.inject(this, view);</span><br><span class="line">        wxAdapter = new WXAdapter(getContext());</span><br><span class="line">        mWXPresentImp = new WXPresentImp(this);</span><br><span class="line">        mWXPresentImp.loadData();</span><br><span class="line">        wxRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));</span><br><span class="line">        wxRecyclerView.addItemDecoration(new WXItemDecoration(getContext()));</span><br><span class="line">        wxRecyclerView.setAdapter(wxAdapter);</span><br><span class="line">        return view;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void onDestroyView() {</span><br><span class="line">        super.onDestroyView();</span><br><span class="line">        ButterKnife.reset(this);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public void setData(List&lt;WXItemInfo&gt; list) {</span><br><span class="line">       wxAdapter.addData(list);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x5230;&#x8FD9;&#x91CC;&#x6574;&#x4E2A;&#x7684;&#x5FAE;&#x4FE1;&#x804A;&#x5929;&#x7684;<strong>MVP</strong>&#x5C31;&#x5B8C;&#x6210;&#x4E86;&#xFF0C;&#x56DE;&#x8FC7;&#x53BB;&#x518D;&#x6574;&#x7406;&#x4E0B;&#x601D;&#x8DEF;&#x53D1;&#x73B0;&#x662F;&#x4E0D;&#x662F;&#x6E05;&#x695A;&#x4E86;&#x5F88;&#x591A;&#x3002;&#x4E00;&#x65E6;&#x4F60;&#x5B9E;&#x73B0;&#x4E86;<strong>MVP</strong>&#x5C31;&#x662F;&#x8FD9;&#x4E48;&#x7B80;&#x5355;&#x660E;&#x4E86;&#xFF0C;&#x601D;&#x8DEF;&#x6E05;&#x6670;&#x3002;&#x540E;&#x9762;&#x9879;&#x76EE;&#x7684;&#x5DE5;&#x7A0B;&#x91CF;&#x5927;&#x4E86;&#xFF0C;&#x66F4;&#x52A0;&#x9700;&#x8981;&#x4E00;&#x4E2A;&#x5F88;&#x597D;&#x7684;&#x6A21;&#x5F0F;&#x4E86;&#x7BA1;&#x7406;&#x9879;&#x76EE;&#x3002;&#x6240;&#x4EE5;&#x8FD8;&#x662F;&#x503C;&#x5F97;&#x63A8;&#x8350;&#x7684;&#x3002;</p>
+<h2 id="&#x6548;&#x679C;&#x56FE;"><a href="#&#x6548;&#x679C;&#x56FE;" class="headerlink" title="&#x6548;&#x679C;&#x56FE;"></a>&#x6548;&#x679C;&#x56FE;</h2><p><img src="/2016/04/23/Android&#x9AD8;&#x4EFF;&#x5FAE;&#x4FE1;&#x4E4B;mvp&#x5B9E;&#x73B0;-&#x4E00;/1.gif" alt="&#x6548;&#x679C;&#x56FE;"></p>
+<p>&#x9879;&#x76EE;&#x5730;&#x5740;&#xFF1A;<a href="https://github.com/idisfkj/HightCopyWX" target="_blank" rel="external">https://github.com/idisfkj/HightCopyWX</a></p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal-one" aria-hidden="true">
+  <a href="#close" class="cover" aria-hidden="true"></a>
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <a href="#close" class="btn-close" aria-hidden="true">关闭</a>
+    </div>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+  <section class="duoshuo-comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="" data-title="Android高仿微信之mvp实现(一)" data-url="http://idisfkj.github.io/2016/04/23/Android高仿微信之mvp实现-一/index.html"></div>
+    <!-- 多说评论框 end -->
+  </section>
+
+
+
+
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"idisfkj"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?398', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
