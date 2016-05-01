@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+
+
+  <html class="light">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>Android高仿微信之mvp实现(二) | Idisfkj</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="高仿," />
+  
+
+  <meta name="description" content="&amp;#x524D;&amp;#x8A00;&amp;#x4E0A;&amp;#x6B21;&amp;#x8BF4;&amp;#x4E86;&amp;#x4E0B;&amp;#x7B80;&amp;#x5355;&amp;#x7684;&amp;#x6846;&amp;#x67B6;&amp;#x6784;&amp;#x67B6;&amp;#xFF0C;&amp;#x4E3B;&amp;#x8981;&amp;#x662F;&amp;#x89E3;&amp;#x91CA;&amp;#x4E86;&amp;#x4E0B;MVP&amp;#x7684;&amp;#x539F;&amp;#x74">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android高仿微信之mvp实现(二)">
+<meta property="og:url" content="http://idisfkj.github.io/2016/05/01/Android高仿微信之mvp实现-二/index.html">
+<meta property="og:site_name" content="Idisfkj">
+<meta property="og:description" content="&amp;#x524D;&amp;#x8A00;&amp;#x4E0A;&amp;#x6B21;&amp;#x8BF4;&amp;#x4E86;&amp;#x4E0B;&amp;#x7B80;&amp;#x5355;&amp;#x7684;&amp;#x6846;&amp;#x67B6;&amp;#x6784;&amp;#x67B6;&amp;#xFF0C;&amp;#x4E3B;&amp;#x8981;&amp;#x662F;&amp;#x89E3;&amp;#x91CA;&amp;#x4E86;&amp;#x4E0B;MVP&amp;#x7684;&amp;#x539F;&amp;#x74">
+<meta property="og:image" content="http://idisfkj.github.io/2016/05/01/Android高仿微信之mvp实现-二/1.gif">
+<meta property="og:updated_time" content="2016-05-01T12:51:23.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android高仿微信之mvp实现(二)">
+<meta name="twitter:description" content="&amp;#x524D;&amp;#x8A00;&amp;#x4E0A;&amp;#x6B21;&amp;#x8BF4;&amp;#x4E86;&amp;#x4E0B;&amp;#x7B80;&amp;#x5355;&amp;#x7684;&amp;#x6846;&amp;#x67B6;&amp;#x6784;&amp;#x67B6;&amp;#xFF0C;&amp;#x4E3B;&amp;#x8981;&amp;#x662F;&amp;#x89E3;&amp;#x91CA;&amp;#x4E86;&amp;#x4E0B;MVP&amp;#x7684;&amp;#x539F;&amp;#x74">
+<meta name="twitter:image" content="http://idisfkj.github.io/2016/05/01/Android高仿微信之mvp实现-二/1.gif">
+
+  
+
+  
+  <!-- <link href="/favicon.ico" rel="icon" type="image/x-icon"> -->
+    <link rel="icon" href="/favicon.ico">
+    <!-- <link href="favicon.ico" rel="shortcut icon" type="image/x-icon" /> -->
+  
+  
+  <link href="/css/styles.css?v=5f7f1d39" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?ef89e68af5e136d5c22043f91cd139ea";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+
+  
+    <a href="#modal-one" class="toolbox-mobile">盒子</a>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#原理"><span class="toc-text">原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#配置小米SDK"><span class="toc-text">配置小米SDK</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#接收"><span class="toc-text">接收</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#发送"><span class="toc-text">发送</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#效果"><span class="toc-text">效果</span></a></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-Android高仿微信之mvp实现-二" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Android高仿微信之mvp实现(二)</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.05.01</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>idisfkj</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/android/">android</a>
+  </span>
+
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h1 id="&#x524D;&#x8A00;"><a href="#&#x524D;&#x8A00;" class="headerlink" title="&#x524D;&#x8A00;"></a>&#x524D;&#x8A00;</h1><p>&#x4E0A;&#x6B21;&#x8BF4;&#x4E86;&#x4E0B;&#x7B80;&#x5355;&#x7684;&#x6846;&#x67B6;&#x6784;&#x67B6;&#xFF0C;&#x4E3B;&#x8981;&#x662F;&#x89E3;&#x91CA;&#x4E86;&#x4E0B;<strong>MVP</strong>&#x7684;&#x539F;&#x7406;&#x5B9E;&#x73B0;&#x3002;&#x867D;&#x7136;&#x4E0A;&#x6B21;&#x7684;&#x529F;&#x80FD;&#x6CA1;&#x6709;&#x5F88;&#x591A;&#xFF0C;&#x4F46;&#x4E3B;&#x8981;&#x662F;&#x628A;&#x6846;&#x67B6;&#x642D;&#x597D;&#xFF0C;&#x624D;&#x80FD;&#x66F4;&#x597D;&#x7684;&#x8FDB;&#x884C;&#x4E0B;&#x9762;&#x7684;&#x64CD;&#x4F5C;&#x3002;&#x5982;&#x679C;&#x8FD8;&#x6709;&#x4E0D;&#x4E86;&#x89E3;&#x7684;&#x53EF;&#x4EE5;&#x5148;&#x770B;&#x4E0B;&#x6211;&#x524D;&#x9762;&#x7684;&#x6587;&#x7AE0;&#xFF1A;<a href="http://idisfkj.github.io/2016/04/23/Android%E9%AB%98%E4%BB%BF%E5%BE%AE%E4%BF%A1%E4%B9%8Bmvp%E5%AE%9E%E7%8E%B0-%E4%B8%80/">Android&#x9AD8;&#x4EFF;&#x5FAE;&#x4FE1;&#x4E4B;mvp&#x5B9E;&#x73B0;(&#x4E00;)</a><br>&#x597D;&#x4E86;&#xFF0C;&#x8FD9;&#x6B21;&#x6211;&#x4EEC;&#x8981;&#x4ECB;&#x7ECD;&#x7684;&#x662F;&#x5FAE;&#x4FE1;&#x804A;&#x5929;&#x754C;&#x9762;&#x529F;&#x80FD;&#x7684;&#x7B80;&#x5355;&#x5B9E;&#x73B0;&#x3002;</p>
+<h2 id="&#x539F;&#x7406;"><a href="#&#x539F;&#x7406;" class="headerlink" title="&#x539F;&#x7406;"></a>&#x539F;&#x7406;</h2><p>&#x5176;&#x5B9E;&#x77E5;&#x9053;&#x4E86;&#x539F;&#x7406;&#x4F60;&#x5C31;&#x4F1A;&#x53D1;&#x73B0;&#x5B83;&#x662F;&#x591A;&#x4E48;&#x7684;&#x7B80;&#x5355;&#x3002;&#x8FD9;&#x91CC;&#x6CA1;&#x6709;&#x670D;&#x52A1;&#x5668;&#x6240;&#x4EE5;&#x662F;&#x57FA;&#x4E8E;&#x63A8;&#x9001;&#x5B9E;&#x73B0;&#x7684;&#xFF0C;&#x7F51;&#x4E0A;&#x4E5F;&#x6709;&#x4E00;&#x4E9B;&#x8FD9;&#x65B9;&#x9762;&#x7684;&#x8D44;&#x6599;&#xFF0C;&#x4E00;&#x822C;&#x662F;&#x57FA;&#x4E8E;&#x767E;&#x5EA6;&#x4E91;&#x7684;&#xFF0C;&#x6211;&#x8FD9;&#x91CC;&#x662F;&#x57FA;&#x4E8E;&#x5C0F;&#x7C73;&#x63A8;&#x9001;&#x6765;&#x5B9E;&#x73B0;&#x6D88;&#x606F;&#x7684;&#x4F20;&#x9012;&#x3002;&#x5927;&#x5BB6;&#x90FD;&#x77E5;&#x9053;&#x73B0;&#x5728;&#x63A8;&#x9001;&#x65E0;&#x5904;&#x4E0D;&#x5728;&#xFF0C;&#x5982;&#x679C;&#x8FD8;&#x6CA1;&#x6709;&#x63A5;&#x89E6;&#x63A8;&#x9001;&#x7684;&#x8BDD;&#xFF0C;&#x8FD8;&#x662F;&#x5148;&#x53BB;&#x7B80;&#x5355;&#x7684;&#x8865;&#x4E0B;&#x529F;&#x8BFE;&#x5728;&#x6765;&#x770B;&#x5C31;&#x80FD;&#x66F4;&#x597D;&#x7684;&#x4E86;&#x89E3;&#x4E0B;&#x9762;&#x8BF4;&#x7684;&#x3002;</p>
+<p>&#x8981;&#x60F3;&#x5B9E;&#x73B0;&#x6D88;&#x606F;&#x7684;&#x4F20;&#x9012;&#xFF0C;&#x5C31;&#x8981;&#x6709;&#x53D1;&#x9001;&#x4E0E;&#x63A5;&#x6536;&#x529F;&#x80FD;&#xFF0C;&#x9996;&#x5148;&#x5BF9;&#x4E8E;&#x63A5;&#x6536;so easy &#x4E86;&#x53EA;&#x8981;&#x6211;&#x4EEC;&#x5728;&#x81EA;&#x5DF1;&#x7684;<strong>Android</strong>&#x5E94;&#x7528;&#x4E2D;&#x96C6;&#x6210;&#x5C0F;&#x7C73;&#x7684;I<strong>SDK</strong>(&#x6211;&#x8FD9;&#x91CC;&#x662F;&#x4EE5;&#x5C0F;&#x7C73;&#x63A8;&#x9001;&#x4E3A;&#x4F8B;&#x7684;)&#x3002;&#x5C31;&#x5DF2;&#x7ECF;&#x5B9E;&#x73B0;&#x7684;&#x63A5;&#x6536;&#x529F;&#x80FD;&#xFF0C;&#x5BF9;&#x4E8E;&#x63A5;&#x6536;&#x6211;&#x5206;&#x4E86;&#x4E24;&#x79CD;&#xFF0C;&#x4E00;&#x79CD;&#x7684;&#x6B63;&#x5E38;&#x804A;&#x5929;&#x5F97;&#x4FE1;&#x606F;&#xFF0C;&#x800C;&#x53E6;&#x4E00;&#x79CD;&#x5C31;&#x662F;&#x6211;&#x4EEC;&#x81EA;&#x5DF1;&#x6CE8;&#x518C;&#x65F6;&#x53D1;&#x9001;&#x7684;&#x4FE1;&#x606F;&#x3002;&#x5BF9;&#x4E8E;&#x7B2C;&#x4E00;&#x79CD;&#x6D88;&#x606F;&#x6211;&#x4EEC;&#x8981;&#x6839;&#x636E;&#x7528;&#x6237;&#x8BBE;&#x5907;&#x552F;&#x4E00;&#x6807;&#x8BC6;&#x4E0E;&#x7528;&#x6237;&#x8D26;&#x53F7;&#x6765;&#x5B58;&#x50A8;&#x4E0B;&#x53D1;&#x8FC7;&#x6765;&#x7684;&#x6D88;&#x606F;&#xFF0C;&#x4E3A;&#x4EE5;&#x540E;&#x663E;&#x793A;&#x4E0D;&#x540C;&#x7528;&#x6237;&#x804A;&#x5929;&#x8BB0;&#x5F55;&#x3002;&#x5BF9;&#x4E8E;&#x7B2C;&#x4E8C;&#x4E2D;&#xFF0C;&#x662F;&#x5728;&#x6211;&#x4EEC;&#x4F7F;&#x7528;&#x65F6;&#x5FC5;&#x987B;&#x5148;&#x6CE8;&#x518C;&#xFF0C;&#x4E00;&#x65E6;&#x6CE8;&#x518C;&#x6210;&#x529F;&#x5C31;&#x4F1A;&#x5411;&#x6240;&#x6709;&#x7684;&#x7528;&#x6237;&#x53D1;&#x9001;&#x4E00;&#x6761;&#x6CE8;&#x518C;&#x4FE1;&#x606F;&#xFF0C;&#x8BE5;&#x6D88;&#x606F;&#x5305;&#x62EC;&#x7528;&#x6237;&#x7684;&#x57FA;&#x672C;&#x4FE1;&#x606F;&#x4E0E;&#x8BBE;&#x5907;&#x6807;&#x8BC6;&#xFF0C;&#x53EA;&#x8981;&#x5728;&#x4FE1;&#x606F;&#x65F6;&#x95F4;&#x7684;&#x6709;&#x6548;&#x65F6;&#x95F4;&#x4E4B;&#x5185;&#xFF0C;&#x6CE8;&#x518C;&#x4E86;&#x5F97;&#x7528;&#x6237;&#x5C31;&#x80FD;&#x63A5;&#x6536;&#x8BE5;&#x6CE8;&#x518C;&#x6D88;&#x606F;&#x3002;&#x8FD9;&#x4E2A;&#x662F;&#x5F88;&#x91CD;&#x8981;&#x7684;&#x8EAB;&#x4EFD;&#x8BC6;&#x522B;&#xFF0C;&#x5BF9;&#x6D88;&#x606F;&#x7684;&#x53D1;&#x9001;&#xFF0C;&#x7528;&#x6237;&#x7684;&#x6DFB;&#x52A0;&#x90FD;&#x662F;&#x91CD;&#x8981;&#x7684;&#x6807;&#x8BC6;&#x3002;&#x8BF4;&#x4E86;&#x63A5;&#x6536;&#xFF0C;&#x53CD;&#x8FC7;&#x6765;&#x53D1;&#x9001;&#x4E5F;&#x662F;&#x4E00;&#x6837;&#x7684;&#x5206;&#x4E24;&#x79CD;&#xFF0C;&#x53EA;&#x662F;&#x65CB;&#x8F6C;&#x4E00;&#x4E0B;&#x4F4D;&#x7F6E;&#x800C;&#x5DF2;&#x3002;</p>
+<h2 id="&#x914D;&#x7F6E;&#x5C0F;&#x7C73;SDK"><a href="#&#x914D;&#x7F6E;&#x5C0F;&#x7C73;SDK" class="headerlink" title="&#x914D;&#x7F6E;&#x5C0F;&#x7C73;SDK"></a>&#x914D;&#x7F6E;&#x5C0F;&#x7C73;SDK</h2><p>&#x9996;&#x5148;&#x8FDB;&#x5165;&#x5C0F;&#x7C73;&#x5F00;&#x53D1;&#x5E73;&#x53F0;&#xFF0C;&#x4E3A;&#x81EA;&#x5DF1;&#x7684;&#x5E94;&#x7528;&#x5F00;&#x542F;&#x63A8;&#x9001;&#x529F;&#x80FD;&#xFF0C;&#x7136;&#x540E;&#x4E0B;&#x8F7D;<a href="http://dev.xiaomi.com/mipush/downpage/" target="_blank" rel="external">SDK</a>&#x6839;&#x636E;<a href="http://dev.xiaomi.com/doc/?p=3080" target="_blank" rel="external">&#x5B98;&#x65B9;&#x6587;&#x6863;</a>&#x505A;&#x597D;&#x76F8;&#x5E94;&#x7684;&#x914D;&#x7F6E;&#xFF0C;&#x524D;&#x671F;&#x5C31;&#x5927;&#x529F;&#x544A;&#x6210;&#x4E86;&#x3002;</p>
+<blockquote>
+<p><em>&#x5982;&#x679C;&#x6CA1;&#x63A5;&#x89E6;&#x8FC7;&#x7684;&#x53EA;&#x8981;&#x8010;&#x5FC3;&#x770B;&#x6587;&#x6863;&#x5C31;&#x6CA1;&#x4EC0;&#x4E48;&#x95EE;&#x9898;&#xFF0C;&#x6587;&#x6863;&#x5F88;&#x8BE6;&#x7EC6;</em></p>
+</blockquote>
+<h2 id="&#x63A5;&#x6536;"><a href="#&#x63A5;&#x6536;" class="headerlink" title="&#x63A5;&#x6536;"></a>&#x63A5;&#x6536;</h2><p>&#x524D;&#x9762;&#x6211;&#x5DF2;&#x7ECF;&#x8BF4;&#x4E86;&#x63A5;&#x6536;&#x662F;&#x76F8;&#x5BF9;&#x6765;&#x8BF4;&#x8F83;&#x7B80;&#x5355;&#x7684;&#x4E86;&#xFF0C;&#x5982;&#x679C;&#x4F60;&#x524D;&#x9762;&#x914D;&#x7F6E;&#x597D;&#x4E86;&#x5C0F;&#x7C73;&#x7684;<strong>SDK</strong>&#xFF0C;&#x90A3;&#x4E48;&#x4F60;&#x5C31;&#x6709;&#x4E00;&#x4E2A;&#x81EA;&#x5B9A;&#x4E49;&#x7684;<strong>extends</strong> <strong>PushMessageReceiver</strong>&#x7684;&#x7C7B;&#xFF0C;&#x5728;&#x8BE5;&#x7C7B;&#x4E2D;&#x7528;&#x5404;&#x79CD;&#x76F8;&#x5E94;&#x7684;&#x63A5;&#x6536;&#x4FE1;&#x606F;&#x65B9;&#x6CD5;&#xFF0C;&#x5BF9;&#x4E86;&#x5FD8;&#x4E86;&#x8BF4;&#x6D88;&#x606F;&#x7684;&#x53D1;&#x9001;&#x7C7B;&#x578B;&#xFF0C;&#x8FD9;&#x91CC;&#x5206;&#x4E3A;&#x4E24;&#x79CD;</p>
+<ul>
+<li>&#x901A;&#x77E5;&#x680F;&#x663E;&#x793A;&#x7684;&#x6D88;&#x606F;</li>
+<li>&#x900F;&#x4F20;&#x6D88;&#x606F;</li>
+</ul>
+<p>&#x901A;&#x77E5;&#x680F;&#x663E;&#x793A;&#x7684;&#x6D88;&#x606F;&#x4E0D;&#x7528;&#x6211;&#x591A;&#x8BF4;&#x4E86;&#xFF0C;&#x81F3;&#x4E8E;&#x900F;&#x4F20;&#x6D88;&#x606F;&#x7B80;&#x5355;&#x70B9;&#x5C31;&#x662F;&#x4E0D;&#x7528;&#x901A;&#x77E5;&#x680F;&#x663E;&#x793A;&#xFF0C;&#x76F4;&#x63A5;&#x5728;&#x5185;&#x90E8;&#x63A5;&#x6536;&#x53D1;&#x9001;&#x8FC7;&#x6765;&#x7684;&#x6D88;&#x606F;&#x3002;</p>
+<p>&#x6211;&#x4EEC;&#x804A;&#x5929;&#x4F7F;&#x7528;&#x7684;&#x5F53;&#x7136;&#x7684;&#x900F;&#x4F20;&#x6D88;&#x606F;&#xFF0C;&#x6240;&#x4EE5;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5728;&#x4E0B;&#x9762;&#x7684;&#x65B9;&#x6CD5;&#x4E2D;&#x63A5;&#x6536;&#x5230;&#x900F;&#x4F20;&#x53D1;&#x9001;&#x8FC7;&#x6765;&#x7684;&#x6D88;&#x606F;&#x5BF9;&#x4E8E;&#x4E24;&#x79CD;&#x63A5;&#x6536;&#x6D88;&#x606F;&#x505A;&#x76F8;&#x5E94;&#x7684;&#x5904;&#x7406;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line">     * &#x63A5;&#x6536;&#x670D;&#x52A1;&#x5668;&#x53D1;&#x9001;&#x7684;&#x900F;&#x4F20;&#x6D88;&#x606F;</span><br><span class="line">     *</span><br><span class="line">     * @param context</span><br><span class="line">     * @param message</span><br><span class="line">     */</span><br><span class="line">    @Override</span><br><span class="line">    public void onReceivePassThroughMessage(Context context, MiPushMessage message) {</span><br><span class="line">        mMessage = message.getContent();</span><br><span class="line">        if (!TextUtils.isEmpty(message.getTopic())) {</span><br><span class="line">            mTopic = message.getTopic();</span><br><span class="line">        } else if (!TextUtils.isEmpty(message.getAlias())) {</span><br><span class="line">            mAlias = message.getAlias();</span><br><span class="line">        }</span><br><span class="line">        Intent intent = new Intent();</span><br><span class="line">        //user information</span><br><span class="line">        if (mMessage.indexOf(&quot;^&quot;) != -1 &amp;&amp; mMessage.indexOf(&quot;@&quot;) != -1) {</span><br><span class="line">            int index1 = mMessage.lastIndexOf(&quot;^&quot;);</span><br><span class="line">            int index2 = mMessage.lastIndexOf(&quot;@&quot;);</span><br><span class="line">            String userName = mMessage.substring(0, index1);</span><br><span class="line">            String regId = mMessage.substring(index1 + 1, index2);</span><br><span class="line">            String number = mMessage.substring(index2 + 1);</span><br><span class="line"></span><br><span class="line">            RegisterInfo info = new RegisterInfo();</span><br><span class="line">            info.setUserName(userName);</span><br><span class="line">            info.setNumber(number);</span><br><span class="line">            info.setRegId(regId);</span><br><span class="line">            RegisterDataHelper helper = new RegisterDataHelper(App.getAppContext());</span><br><span class="line">            Cursor cursor = helper.query(number, regId);</span><br><span class="line">            if (cursor != null &amp;&amp; cursor.getCount() &gt; 0) {</span><br><span class="line">                for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {</span><br><span class="line">                    if (CursorUtils.formatString(cursor, RegisterDataHelper.RegisterDataInfo.REGID).equals(regId)</span><br><span class="line">                            &amp;&amp; CursorUtils.formatString(cursor, RegisterDataHelper.RegisterDataInfo.NUMBER).equals(number)) {</span><br><span class="line">                        if (!CursorUtils.formatString(cursor, RegisterDataHelper.RegisterDataInfo.USER_NAME).equals(userName))</span><br><span class="line">                            // update user information</span><br><span class="line">                            helper.update(info, number, regId);</span><br><span class="line">                        cursor.close();</span><br><span class="line">                        return;</span><br><span class="line">                    }</span><br><span class="line">                }</span><br><span class="line">                cursor.close();</span><br><span class="line">            }</span><br><span class="line">            // insert user information</span><br><span class="line">            helper.insert(info);</span><br><span class="line">            if (SPUtils.getString(&quot;regId&quot;).equals(App.DEVELOPER_ID)){</span><br><span class="line">                WXDataHelper wxHelper = new WXDataHelper(App.getAppContext());</span><br><span class="line">                WXItemInfo itemInfo = new WXItemInfo();</span><br><span class="line">                itemInfo.setRegId(regId);</span><br><span class="line">                itemInfo.setTitle(userName);</span><br><span class="line">                itemInfo.setNumber(number);</span><br><span class="line">                itemInfo.setContent(String.format(App.HELLO_MESSAGE, userName));</span><br><span class="line">                itemInfo.setCurrentAccount(SPUtils.getString(&quot;userPhone&quot;));</span><br><span class="line">                itemInfo.setTime(CalendarUtils.getCurrentDate());</span><br><span class="line">                wxHelper.insert(itemInfo);</span><br><span class="line">            }</span><br><span class="line"></span><br><span class="line">        } else {</span><br><span class="line">            // chat information</span><br><span class="line">            int index1 = mMessage.lastIndexOf(&quot;(&quot;);</span><br><span class="line">            String rMessage = mMessage.substring(0, index1);</span><br><span class="line">            String extraMessage = mMessage.substring(index1 + 1);</span><br><span class="line"></span><br><span class="line">            int index2 = extraMessage.indexOf(&quot;@&quot;);</span><br><span class="line">            int index3 = extraMessage.indexOf(&quot;@&quot;, index2 + 1);</span><br><span class="line">            String receiverNumber = extraMessage.substring(0, index2);</span><br><span class="line">            String regId = extraMessage.substring(index2 + 1, index3);</span><br><span class="line">            String sendNumber = extraMessage.substring(index3 + 1);</span><br><span class="line"></span><br><span class="line">            ChatMessageInfo chatMessageInfo = new ChatMessageInfo();</span><br><span class="line">            chatMessageInfo.setMessage(rMessage);</span><br><span class="line">            chatMessageInfo.setFlag(0);</span><br><span class="line">            chatMessageInfo.setTime(CalendarUtils.getCurrentDate());</span><br><span class="line">            chatMessageInfo.setReceiverNumber(receiverNumber);</span><br><span class="line">            chatMessageInfo.setRegId(regId);</span><br><span class="line">            chatMessageInfo.setSendNumber(sendNumber);</span><br><span class="line"></span><br><span class="line">            if (App.mNumber.equals(sendNumber) &amp;&amp; App.mRegId.equals(regId)) {</span><br><span class="line">                //&#x5728;&#x5F53;&#x524D;&#x804A;&#x5929;&#x754C;&#x9762;</span><br><span class="line">                intent.setAction(&quot;com.idisfkj.hightcopywx.chat&quot;);</span><br><span class="line">                Bundle bundle = new Bundle();</span><br><span class="line">                bundle.putSerializable(&quot;chatMessageInfo&quot;, chatMessageInfo);</span><br><span class="line">                intent.putExtras(bundle);</span><br><span class="line">                App.getAppContext().sendBroadcast(intent);</span><br><span class="line">            } else {</span><br><span class="line">                //&#x4E0D;&#x5728;&#x5F53;&#x524D;&#x804A;&#x5929;&#x754C;&#x9762;</span><br><span class="line">                ChatMessageDataHelper helper = new ChatMessageDataHelper(App.getAppContext());</span><br><span class="line">                helper.insert(chatMessageInfo);</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    }</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><em>&#x4EE3;&#x7801;&#x5C31;&#x4E0D;&#x89E3;&#x91CA;&#x4E86;&#xFF0C;&#x81EA;&#x5DF1;&#x7814;&#x7A76;&#x7814;&#x7A76;</em></p>
+</blockquote>
+<h2 id="&#x53D1;&#x9001;"><a href="#&#x53D1;&#x9001;" class="headerlink" title="&#x53D1;&#x9001;"></a>&#x53D1;&#x9001;</h2><p>&#x5982;&#x679C;&#x4F60;&#x770B;&#x4E86;&#x6587;&#x6863;&#x7684;&#x8BDD;&#x5C31;&#x5E94;&#x8BE5;&#x6709;&#x70B9;&#x5934;&#x7EEA;&#x4E86;&#xFF0C;&#x53D1;&#x9001;&#x5C31;&#x662F;&#x4F7F;&#x7528;HTTP&#x8BF7;&#x6C42;&#x5411;&#x5C0F;&#x7C73;&#x6240;&#x63D0;&#x4F9B;&#x7684;API&#x6839;&#x636E;&#x4F60;&#x63D0;&#x4F9B;&#x7684;<strong>regId</strong>&#x3001;<strong>userAccount</strong>&#x3001;<strong>alias</strong>&#x3001;<strong>topic</strong>&#x7B49;&#x53D1;&#x9001;&#x4F60;&#x8981;&#x53D1;&#x9001;&#x7684;&#x6D88;&#x606F;&#x5185;&#x5BB9;&#xFF0C;&#x6211;&#x7528;&#x7684;&#x662F;<strong>regId</strong> API&#xFF1A;<a href="https://api.xmpush.xiaomi.com/v2/message/regid" target="_blank" rel="external">https://api.xmpush.xiaomi.com/v2/message/regid</a></p>
+<p><a href="http://dev.xiaomi.com/doc/?p=533" target="_blank" rel="external">&#x53C2;&#x8003;&#x6587;&#x6863;</a></p>
+<p>&#x4E0B;&#x9762;&#x662F;&#x53D1;&#x9001;&#x4EE3;&#x7801;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">    public void requestData(final requestListener listener, final String chatContent, final String number, final String regId, final ChatMessageDataHelper helper) {</span><br><span class="line">        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, UrlUtils.ChatUrl(chatContent, number, regId)</span><br><span class="line">                , null, new Response.Listener&lt;JSONObject&gt;() {</span><br><span class="line">            @Override</span><br><span class="line">            public void onResponse(JSONObject jsonObject) {</span><br><span class="line">                mChatMessageInfo = new ChatMessageInfo();</span><br><span class="line">                mChatMessageInfo.setMessage(chatContent);</span><br><span class="line">                mChatMessageInfo.setFlag(1);</span><br><span class="line">                mChatMessageInfo.setTime(CalendarUtils.getCurrentDate());</span><br><span class="line">                mChatMessageInfo.setReceiverNumber(number);</span><br><span class="line">                mChatMessageInfo.setRegId(regId);</span><br><span class="line">                mChatMessageInfo.setSendNumber(SPUtils.getString(&quot;userPhone&quot;, &quot;&quot;));</span><br><span class="line">                listener.onSucceed(mChatMessageInfo, helper);</span><br><span class="line">            }</span><br><span class="line">        }, new Response.ErrorListener() {</span><br><span class="line">            @Override</span><br><span class="line">            public void onErrorResponse(VolleyError volleyError) {</span><br><span class="line">                Log.d(&quot;TAG&quot;, volleyError.getMessage());</span><br><span class="line">                listener.onError(volleyError.getMessage());</span><br><span class="line">            }</span><br><span class="line">        }) {</span><br><span class="line">            @Override</span><br><span class="line">            public Map&lt;String, String&gt; getHeaders() throws AuthFailureError {</span><br><span class="line">                HashMap&lt;String, String&gt; header = new HashMap&lt;&gt;();</span><br><span class="line">                header.put(&quot;Authorization&quot;, &quot;key=&quot; + App.APP_SECRET_KEY);</span><br><span class="line">                return header;</span><br><span class="line">            }</span><br><span class="line">        };</span><br><span class="line">        VolleyUtils.addQueue(jsonObjectRequest, &quot;chatRequest&quot;);</span><br><span class="line">    }</span><br></pre></td></tr></table></figure>
+<p>&#x7531;&#x4E8E;&#x6D89;&#x53CA;&#x7684;&#x4EE3;&#x7801;&#x8FD8;&#x662F;&#x6709;&#x70B9;&#x591A;&#x7684;&#xFF0C;&#x8FD9;&#x91CC;&#x5C31;&#x4E0D;&#x4E00;&#x4E00;&#x5C55;&#x5F00;&#xFF0C;&#x6709;&#x5174;&#x8DA3;&#x7684;&#x53EF;&#x4EE5;&#x81EA;&#x5DF1;&#x6839;&#x636E;&#x540E;&#x9762;&#x7684;&#x5730;&#x5740;<strong>Star</strong>&#x3001;<strong>Fork</strong>&#x4E0B;&#x8F7D;&#x4EE3;&#x7801;&#x67E5;&#x770B;&#x3002;</p>
+<p>&#x5982;&#x679C;&#x4F60;&#x5B89;&#x88C5;&#x6CE8;&#x518C;&#x4E86;&#xFF0C;&#x7531;&#x4E8E;&#x65F6;&#x95F4;&#x539F;&#x56E0;&#xFF0C;&#x76EE;&#x524D;&#x804A;&#x5929;&#x754C;&#x9762;&#x53EA;&#x4F1A;&#x81EA;&#x52A8;&#x6DFB;&#x52A0;&#x6211;&#x4E3A;&#x597D;&#x53CB;&#xFF0C;&#x4F60;&#x4EEC;&#x5982;&#x679C;&#x7528;&#x4E0D;&#x61C2;&#x5F97;&#x53EF;&#x4EE5;&#x7B80;&#x5355;&#x7684;&#x53D1;&#x6D88;&#x606F;&#x7ED9;&#x6211;&#xFF0C;&#x4F46;&#x4E0D;&#x4E00;&#x5B9A;&#x90FD;&#x4F1A;&#x56DE;&#x3002;&#x597D;&#x4E86;&#xFF0C;&#x4E0B;&#x9762;&#x770B;&#x770B;&#x6548;&#x679C;&#x5427;</p>
+<h2 id="&#x6548;&#x679C;"><a href="#&#x6548;&#x679C;" class="headerlink" title="&#x6548;&#x679C;"></a>&#x6548;&#x679C;</h2><p><img src="/2016/05/01/Android&#x9AD8;&#x4EFF;&#x5FAE;&#x4FE1;&#x4E4B;mvp&#x5B9E;&#x73B0;-&#x4E8C;/1.gif" alt="&#x6548;&#x679C;&#x56FE;"></p>
+<p>&#x9879;&#x76EE;&#x5730;&#x5740;&#xFF1A;<a href="https://github.com/idisfkj/HightCopyWX" target="_blank" rel="external">https://github.com/idisfkj/HightCopyWX</a></p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal-one" aria-hidden="true">
+  <a href="#close" class="cover" aria-hidden="true"></a>
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <a href="#close" class="btn-close" aria-hidden="true">关闭</a>
+    </div>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+  <section class="duoshuo-comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="" data-title="Android高仿微信之mvp实现(二)" data-url="http://idisfkj.github.io/2016/05/01/Android高仿微信之mvp实现-二/index.html"></div>
+    <!-- 多说评论框 end -->
+  </section>
+
+
+
+
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"idisfkj"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?398', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
