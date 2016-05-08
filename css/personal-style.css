@@ -1,0 +1,25 @@
+@font-face {
+    font-family: &quot;SentyPea&quot;;
+    src: url(&quot;/fonts/SentyPea.eot&quot;); /* IE9 */
+    src: url(&quot;/fonts/SentyPea.eot?#iefix&quot;) format(&quot;embedded-opentype&quot;),
+    url(&quot;/fonts/SentyPea.woff&quot;) format(&quot;woff&quot;),
+    url(&quot;/fonts/SentyPea.ttf&quot;) format(&quot;truetype&quot;),
+    url(&quot;/fonts/SentyPea.svg#SentyPea&quot;) format(&quot;svg&quot;); /* iOS 4.1- */
+    font-style: normal;
+    font-weight: normal;
+}
+html.page-home {
+   position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url(&apos;/images/bg.jpg&apos;);
+  background-color: transparent;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  /*background: linear-gradient( #1abc9c, transparent), linear-gradient( 90deg, skyblue, transparent), linear-gradient( -90deg, coral, transparent);*/
+/*  background-blend-mode: screen;
+  background: linear-gradient(to left, #5f2c82, #49a09d);*/
+}
