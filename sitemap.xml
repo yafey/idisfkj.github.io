@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://idisfkj.github.io/2016/05/22/RecyclerView-item%E7%82%B9%E5%87%BB%E4%BD%A0%E7%9C%9F%E7%9A%84%E4%BC%9A%E4%B9%88/</loc>
+    
+    <lastmod>2016-05-22T08:06:04.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://idisfkj.github.io/2016/04/02/RecyclerView%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA/</loc>
+    
+    <lastmod>2016-05-22T03:22:58.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://idisfkj.github.io/2016/05/15/Android%E9%AB%98%E4%BB%BF%E5%BE%AE%E4%BF%A1%E4%B9%8Bmvp%E5%AE%9E%E7%8E%B0-%E5%9B%9B/</loc>
     
     <lastmod>2016-05-18T09:07:21.000Z</lastmod>
@@ -68,13 +82,6 @@
     <loc>http://idisfkj.github.io/2016/03/13/github-README/</loc>
     
     <lastmod>2016-04-03T02:05:24.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://idisfkj.github.io/2016/04/02/RecyclerView%E6%B7%B1%E5%85%A5%E6%B5%85%E5%87%BA/</loc>
-    
-    <lastmod>2016-04-02T14:29:09.000Z</lastmod>
     
   </url>
   
