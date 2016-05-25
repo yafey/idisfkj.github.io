@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+
+
+  <html class="light">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>android 软键盘显隐 | Idisfkj</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="软键盘," />
+  
+
+  <meta name="description" content="&amp;#x524D;&amp;#x8A00;&amp;#x6700;&amp;#x8FD1;&amp;#x9047;&amp;#x5230;&amp;#x8F6F;&amp;#x952E;&amp;#x76D8;&amp;#x7684;&amp;#x663E;&amp;#x9690;&amp;#x5224;&amp;#x65AD;&amp;#x95EE;&amp;#x9898;&amp;#xFF0C;&amp;#x539F;&amp;#x6765;&amp;#x4E5F;&amp;#x9047;&amp;#x8FC7;&amp;#x4E00;&amp;#x6B21;&amp;#xFF0C;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="android 软键盘显隐">
+<meta property="og:url" content="http://idisfkj.github.io/2016/05/24/android-软键盘显隐/index.html">
+<meta property="og:site_name" content="Idisfkj">
+<meta property="og:description" content="&amp;#x524D;&amp;#x8A00;&amp;#x6700;&amp;#x8FD1;&amp;#x9047;&amp;#x5230;&amp;#x8F6F;&amp;#x952E;&amp;#x76D8;&amp;#x7684;&amp;#x663E;&amp;#x9690;&amp;#x5224;&amp;#x65AD;&amp;#x95EE;&amp;#x9898;&amp;#xFF0C;&amp;#x539F;&amp;#x6765;&amp;#x4E5F;&amp;#x9047;&amp;#x8FC7;&amp;#x4E00;&amp;#x6B21;&amp;#xFF0C;">
+<meta property="og:updated_time" content="2016-05-25T01:07:29.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="android 软键盘显隐">
+<meta name="twitter:description" content="&amp;#x524D;&amp;#x8A00;&amp;#x6700;&amp;#x8FD1;&amp;#x9047;&amp;#x5230;&amp;#x8F6F;&amp;#x952E;&amp;#x76D8;&amp;#x7684;&amp;#x663E;&amp;#x9690;&amp;#x5224;&amp;#x65AD;&amp;#x95EE;&amp;#x9898;&amp;#xFF0C;&amp;#x539F;&amp;#x6765;&amp;#x4E5F;&amp;#x9047;&amp;#x8FC7;&amp;#x4E00;&amp;#x6B21;&amp;#xFF0C;">
+
+  
+
+  
+  <!-- <link href="/favicon.ico" rel="icon" type="image/x-icon"> -->
+    <link rel="icon" href="/favicon.ico">
+    <!-- <link href="favicon.ico" rel="shortcut icon" type="image/x-icon" /> -->
+  
+  
+  <link href="/css/styles.css?v=5f7f1d39" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?ef89e68af5e136d5c22043f91cd139ea";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+
+  
+    <a href="#modal-one" class="toolbox-mobile">盒子</a>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#自定义方法"><span class="toc-text">自定义方法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#调用Android-API"><span class="toc-text">调用Android API</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#自定义外部类"><span class="toc-text">自定义外部类</span></a></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-android-软键盘显隐" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">android 软键盘显隐</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.05.24</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>idisfkj</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/android/">android</a>
+  </span>
+
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h1 id="&#x524D;&#x8A00;"><a href="#&#x524D;&#x8A00;" class="headerlink" title="&#x524D;&#x8A00;"></a>&#x524D;&#x8A00;</h1><p>&#x6700;&#x8FD1;&#x9047;&#x5230;&#x8F6F;&#x952E;&#x76D8;&#x7684;&#x663E;&#x9690;&#x5224;&#x65AD;&#x95EE;&#x9898;&#xFF0C;&#x539F;&#x6765;&#x4E5F;&#x9047;&#x8FC7;&#x4E00;&#x6B21;&#xFF0C;&#x6240;&#x4EE5;&#x8FD9;&#x6B21;&#x9488;&#x5BF9;&#x8FD9;&#x7C7B;&#x95EE;&#x9898;&#x7684;&#x89E3;&#x51B3;&#x65B9;&#x6CD5;&#x505A;&#x4E0B;&#x8BB0;&#x5F55;&#xFF0C;&#x4E5F;&#x5E0C;&#x671B;&#x5E2E;&#x52A9;&#x540E;&#x9762;&#x78B0;&#x5230;&#x76F8;&#x540C;&#x95EE;&#x9898;&#x7684;&#x4F60;&#x4EEC;&#x3002;</p>
+<p>&#x6839;&#x636E;&#x81EA;&#x5DF1;&#x7684;&#x7ECF;&#x9A8C;&#xFF0C;&#x8FD9;&#x91CC;&#x6709;&#x4E09;&#x79CD;&#x89E3;&#x51B3;&#x65B9;&#x6CD5;&#xFF0C;&#x5176;&#x5B9E;&#x539F;&#x7406;&#x90FD;&#x662F;&#x4E00;&#x6837;&#x7684;&#x3002;&#x6211;&#x4EEC;&#x90FD;&#x77E5;&#x9053;&#x8F6F;&#x4EF6;&#x76D8;&#x7684;&#x5F39;&#x51FA;&#xFF0C;&#x89C6;&#x56FE;&#x7684;&#x5E03;&#x5C40;&#x4F1A;&#x53D1;&#x751F;&#x6539;&#x53D8;&#xFF0C;&#x6240;&#x4EE5;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x5E03;&#x5C40;&#x7684;&#x6539;&#x53D8;&#x6765;&#x5224;&#x65AD;&#x662F;&#x5426;&#x663E;&#x793A;&#x4E86;&#x8F6F;&#x4EF6;&#x76D8;&#x3002;</p>
+<h2 id="&#x81EA;&#x5B9A;&#x4E49;&#x65B9;&#x6CD5;"><a href="#&#x81EA;&#x5B9A;&#x4E49;&#x65B9;&#x6CD5;" class="headerlink" title="&#x81EA;&#x5B9A;&#x4E49;&#x65B9;&#x6CD5;"></a>&#x81EA;&#x5B9A;&#x4E49;&#x65B9;&#x6CD5;</h2><p>&#x4E2A;&#x4EBA;&#x89C9;&#x5F97;&#x5B83;&#x7684;&#x7075;&#x6D3B;&#x6027;&#x76F8;&#x5BF9;&#x4E8E;&#x522B;&#x7684;&#x66F4;&#x9AD8;&#x3002;&#x56E0;&#x4E3A;&#x8FD9;&#x53EA;&#x662F;&#x5728;&#x7C7B;&#x4E2D;&#x5B9A;&#x4E49;&#x4E00;&#x4E2A;&#x65B9;&#x6CD5;&#xFF0C;&#x6765;&#x5224;&#x65AD;&#x662F;&#x5426;&#x8F6F;&#x952E;&#x76D8;&#x89E6;&#x53D1;&#x4E86;&#x3002;&#x8FD9;&#x6837;&#x4F60;&#x53EF;&#x4EE5;&#x8FD0;&#x7528;&#x5230;&#x4EFB;&#x4F55;&#x76D1;&#x542C;&#x4E8B;&#x4EF6;&#x4E2D;&#x6765;&#x83B7;&#x53D6;&#x8F6F;&#x4EF6;&#x76D8;&#x7684;&#x72B6;&#x6001;&#x3002;&#x793A;&#x4F8B;&#x4EE3;&#x7801;&#x5982;&#x4E0B;&#xFF1A;</p>
+<p>&#x5224;&#x65AD;&#x72B6;&#x6001;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">private boolean isKeyboardShown(View rootView) {</span><br><span class="line">        final int softKeyboardHeight = 100;</span><br><span class="line">        Rect r = new Rect();</span><br><span class="line">        //&#xA0;&#x83B7;&#x53D6;&#x6839;&#x5E03;&#x5C40;&#x7684;&#x53EF;&#x89C6;&#x533A;&#x57DF;r</span><br><span class="line">        rootView.getWindowVisibleDisplayFrame(r);</span><br><span class="line">        DisplayMetrics dm = rootView.getResources().getDisplayMetrics();</span><br><span class="line">        // &#x672C;&#x6765;&#x7684;&#x5B9E;&#x9645;&#x5E95;&#x90E8;&#x8DDD;&#x79BB; - &#x53EF;&#x89C6;&#x7684;&#x5E95;&#x90E8;&#x8DDD;&#x79BB;</span><br><span class="line">        int heightDiff = rootView.getBottom() - r.bottom;</span><br><span class="line">        return heightDiff &gt; softKeyboardHeight * dm.density;</span><br><span class="line">    }</span><br></pre></td></tr></table></figure>
+<p>&#x4F8B;&#x5982;&#x5728;<code>onTouch</code>&#x4E2D;&#x5224;&#x65AD;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">    public boolean onTouch(View v, MotionEvent event) {</span><br><span class="line">        if (event.getAction() == MotionEvent.ACTION_DOWN &amp;&amp; isKeyboardShown(chatContent.getRootView()))</span><br><span class="line">            manager.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);</span><br><span class="line">        return false;</span><br><span class="line">    }</span><br></pre></td></tr></table></figure>
+<h2 id="&#x8C03;&#x7528;Android-API"><a href="#&#x8C03;&#x7528;Android-API" class="headerlink" title="&#x8C03;&#x7528;Android API"></a>&#x8C03;&#x7528;Android API</h2><p>&#x5176;&#x5B9E;&#x67E5;&#x9605;<code>API</code>&#x53D1;&#x73B0;<code>Android</code>&#x5DF2;&#x7ECF;&#x5E2E;&#x6211;&#x4EEC;&#x5B9E;&#x73B0;&#x4E86;&#x5E03;&#x5C40;&#x6539;&#x53D8;&#x7684;&#x76D1;&#x542C;&#x7684;&#x7C7B;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;<code>addOnGlobalLayoutListener</code>&#x6765;&#x76D1;&#x542C;&#x6574;&#x4E2A;&#x5E03;&#x5C40;&#x7684;&#x72B6;&#x6001;&#x3002;&#x8FD9;&#x4E2A;&#x76D1;&#x542C;&#x5668;&#x5728;&#x6211;&#x4EEC;&#x7684;&#x5E03;&#x5C40;&#x53D1;&#x751F;&#x6539;&#x53D8;&#x65F6;&#x4F1A;&#x8C03;&#x7528;<code>onGlobalLayout</code>&#x65B9;&#x6CD5;&#xFF0C;&#x6240;&#x4EE5;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5728;&#x5176;&#x4E2D;&#x8FDB;&#x884C;&#x64CD;&#x4F5C;&#x3002;&#x5F53;&#x7136;&#x5728;&#x4F7F;&#x7528;&#x8BE5;&#x76D1;&#x542C;&#x65F6;&#x8981;&#x5148;&#x83B7;&#x53D6;&#x6574;&#x4E2A;&#x89C6;&#x56FE;&#x6811;&#x7684;&#x89C2;&#x5BDF;&#x8005;&#x3002;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">final View root = findViewById(R.id.main);</span><br><span class="line">        ViewTreeObserver observer = root.getViewTreeObserver();</span><br></pre></td></tr></table></figure>
+<p>&#x518D;&#x6DFB;&#x52A0;&#x76D1;&#x542C;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">observer.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {</span><br><span class="line">            @Override</span><br><span class="line">            public void onGlobalLayout() {</span><br><span class="line">                int heightDiff = root.getRootView().getHeight() - root.getHeight();</span><br><span class="line">                if (heightDiff &gt; 100){ //&#x4E00;&#x822C;&#x8D85;&#x8FC7;100&#x89C6;&#x4E3A;&#x5F39;&#x51FA;</span><br><span class="line">                	//&#x663E;&#x793A;&#x64CD;&#x4F5C;</span><br><span class="line">                }else{</span><br><span class="line">                	//&#x9690;&#x85CF;&#x64CD;&#x4F5C;</span><br><span class="line">                }</span><br><span class="line">            }</span><br><span class="line">        });</span><br></pre></td></tr></table></figure>
+<h2 id="&#x81EA;&#x5B9A;&#x4E49;&#x5916;&#x90E8;&#x7C7B;"><a href="#&#x81EA;&#x5B9A;&#x4E49;&#x5916;&#x90E8;&#x7C7B;" class="headerlink" title="&#x81EA;&#x5B9A;&#x4E49;&#x5916;&#x90E8;&#x7C7B;"></a>&#x81EA;&#x5B9A;&#x4E49;&#x5916;&#x90E8;&#x7C7B;</h2><p>&#x5176;&#x5B9E;&#x4F7F;&#x7528;&#x8BE5;&#x65B9;&#x6CD5;&#x5C31;&#x662F;&#x81EA;&#x5B9A;&#x4E49;&#x4E00;&#x4E2A;&#x5E03;&#x5C40;&#x7EE7;&#x627F;<code>Android</code>&#x57FA;&#x672C;&#x5E03;&#x5C40;&#x63A7;&#x4EF6;&#xFF0C;&#x7136;&#x540E;&#x5728;&#x5176;&#x4E2D;&#x91CD;&#x5199;<code>onMeasure</code>&#x65B9;&#x6CD5;&#xFF0C;&#x5728;&#x8BE5;&#x65B9;&#x6CD5;&#x4E2D;&#x7684;&#x64CD;&#x4F5C;&#x4E0E;&#x524D;&#x9762;&#x7684;&#x57FA;&#x672C;&#x7C7B;&#x4F3C;&#x3002;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {</span><br><span class="line">        int height = MeasureSpec.getSize(heightMeasureSpec);</span><br><span class="line">        Activity activity = (Activity) getContext();</span><br><span class="line">        Rect rect = new Rect();</span><br><span class="line">        activity.getWindow().getDecorView().getWindowVisibleDisplayFrame(rect);</span><br><span class="line">        int statusBarHeight = rect.top;</span><br><span class="line">        int screenHeight = activity.getWindowManager().getDefaultDisplay().getHeight();</span><br><span class="line">        int diff = (screenHeight - statusBarHeight) - height;</span><br><span class="line">        if (listener != null) {</span><br><span class="line">            listener.onSoftKeyboardShown(diff &gt; 100);</span><br><span class="line">        }</span><br><span class="line">        super.onMeasure(widthMeasureSpec, heightMeasureSpec);</span><br><span class="line">    }</span><br></pre></td></tr></table></figure>
+<p>&#x8FD9;&#x91CC;&#x81EA;&#x5B9A;&#x4E49;&#x4E0E;&#x5B9E;&#x73B0;&#x4E86;&#x76D1;&#x542C;&#x63A5;&#x53E3;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public interface Listener {</span><br><span class="line">        void onSoftKeyboardShown(boolean isShowing);</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    private Listener listener;</span><br><span class="line"></span><br><span class="line">    public void setListener(Listener listener) {</span><br><span class="line">        this.listener = listener;</span><br><span class="line">    }</span><br></pre></td></tr></table></figure>
+<p>&#x6700;&#x540E;&#x5728;xml&#x4E2D;&#x4F7F;&#x7528;&#x8BE5;&#x81EA;&#x5B9A;&#x4E49;&#x5E03;&#x5C40;&#xFF0C;&#x76EE;&#x6807;&#x7C7B;&#x4E2D;&#x7ED1;&#x5B9A;&#x8C03;&#x7528;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">RelativeLayoutThatDetectsSoftKeyboard chatLayout = (RelativeLayoutThatDetectsSoftKeyboard) findViewById(R.id.chat_bottm);</span><br><span class="line">        chatLayout.setListener(this);</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">    public void onSoftKeyboardShown(boolean isShowing) {</span><br><span class="line">        if (isShowing)</span><br><span class="line">            //&#x663E;&#x793A;&#x64CD;&#x4F5C;</span><br><span class="line">    }</span><br></pre></td></tr></table></figure>
+<p>&#x8FD9;&#x4E2A;&#x7684;&#x597D;&#x5904;&#x5C31;&#x662F;&#x903B;&#x8F91;&#x5BF9;&#x5916;&#x5C01;&#x88C5;&#x3001;&#x89E3;&#x8026;&#x4E86;&#xFF0C;&#x53EA;&#x8981;&#x6839;&#x636E;<code>isShowing</code>&#x7684;&#x503C;&#x8FDB;&#x884C;&#x64CD;&#x4F5C;&#x3002;</p>
+<blockquote>
+<p><em>&#x597D;&#x4E86;&#xFF0C;&#x6211;&#x53EA;&#x662F;&#x5927;&#x81EA;&#x7136;&#x7684;&#x642C;&#x8FD0;&#x5DE5;&#xFF0C;&#x5230;&#x5E95;&#x8981;&#x7528;&#x54EA;&#x79CD;&#x5C31;&#x81EA;&#x5DF1;&#x89C6;&#x60C5;&#x51B5;&#x800C;&#x5B9A;&#x5427;</em></p>
+</blockquote>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal-one" aria-hidden="true">
+  <a href="#close" class="cover" aria-hidden="true"></a>
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <a href="#close" class="btn-close" aria-hidden="true">关闭</a>
+    </div>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+  <section class="duoshuo-comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="" data-title="android 软键盘显隐" data-url="http://idisfkj.github.io/2016/05/24/android-软键盘显隐/index.html"></div>
+    <!-- 多说评论框 end -->
+  </section>
+
+
+
+
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"idisfkj"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?398', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
