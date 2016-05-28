@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+
+
+  <html class="light">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>Socket的简单通信 | Idisfkj</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="Socket," />
+  
+
+  <meta name="description" content="&amp;#x524D;&amp;#x8A00;&amp;#x8FD9;&amp;#x7BC7;&amp;#x6587;&amp;#x7AE0;&amp;#x53EA;&amp;#x662F;&amp;#x7B80;&amp;#x5355;&amp;#x7684;&amp;#x4ECB;&amp;#x7ECD;Socket&amp;#x901A;&amp;#x4FE1;&amp;#xFF0C;&amp;#x662F;&amp;#x4E00;&amp;#x7BC7;&amp;#x5165;&amp;#x95E8;&amp;#x6587;&amp;#x7AE0;&amp;#x3002;&amp;#">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Socket的简单通信">
+<meta property="og:url" content="http://idisfkj.github.io/2016/05/28/Socket的简单通信/index.html">
+<meta property="og:site_name" content="Idisfkj">
+<meta property="og:description" content="&amp;#x524D;&amp;#x8A00;&amp;#x8FD9;&amp;#x7BC7;&amp;#x6587;&amp;#x7AE0;&amp;#x53EA;&amp;#x662F;&amp;#x7B80;&amp;#x5355;&amp;#x7684;&amp;#x4ECB;&amp;#x7ECD;Socket&amp;#x901A;&amp;#x4FE1;&amp;#xFF0C;&amp;#x662F;&amp;#x4E00;&amp;#x7BC7;&amp;#x5165;&amp;#x95E8;&amp;#x6587;&amp;#x7AE0;&amp;#x3002;&amp;#">
+<meta property="og:updated_time" content="2016-05-28T03:49:48.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Socket的简单通信">
+<meta name="twitter:description" content="&amp;#x524D;&amp;#x8A00;&amp;#x8FD9;&amp;#x7BC7;&amp;#x6587;&amp;#x7AE0;&amp;#x53EA;&amp;#x662F;&amp;#x7B80;&amp;#x5355;&amp;#x7684;&amp;#x4ECB;&amp;#x7ECD;Socket&amp;#x901A;&amp;#x4FE1;&amp;#xFF0C;&amp;#x662F;&amp;#x4E00;&amp;#x7BC7;&amp;#x5165;&amp;#x95E8;&amp;#x6587;&amp;#x7AE0;&amp;#x3002;&amp;#">
+
+  
+
+  
+  <!-- <link href="/favicon.ico" rel="icon" type="image/x-icon"> -->
+    <link rel="icon" href="/favicon.ico">
+    <!-- <link href="favicon.ico" rel="shortcut icon" type="image/x-icon" /> -->
+  
+  
+  <link href="/css/styles.css?v=5f7f1d39" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?ef89e68af5e136d5c22043f91cd139ea";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+
+  
+    <a href="#modal-one" class="toolbox-mobile">盒子</a>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Socket"><span class="toc-text">Socket</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#服务端"><span class="toc-text">服务端</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#实例化ServerSocket"><span class="toc-text">实例化ServerSocket</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#等待连接"><span class="toc-text">等待连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#通信"><span class="toc-text">通信</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#客户端"><span class="toc-text">客户端</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#建立连接"><span class="toc-text">建立连接</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#通信-1"><span class="toc-text">通信</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-Socket的简单通信" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Socket的简单通信</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.05.28</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>idisfkj</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/android/">android</a>
+  </span>
+
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h1 id="&#x524D;&#x8A00;"><a href="#&#x524D;&#x8A00;" class="headerlink" title="&#x524D;&#x8A00;"></a>&#x524D;&#x8A00;</h1><p>&#x8FD9;&#x7BC7;&#x6587;&#x7AE0;&#x53EA;&#x662F;&#x7B80;&#x5355;&#x7684;&#x4ECB;&#x7ECD;<code>Socket</code>&#x901A;&#x4FE1;&#xFF0C;&#x662F;&#x4E00;&#x7BC7;&#x5165;&#x95E8;&#x6587;&#x7AE0;&#x3002;&#x6240;&#x6709;&#x8FD8;&#x6CA1;&#x6709;&#x63A5;&#x89E6;&#xFF0C;&#x4F46;&#x53C8;&#x60F3;&#x4E86;&#x89E3;&#x7684;&#x53EF;&#x4EE5;&#x53C2;&#x8003;&#x4E0B;&#x3002;&#x5E0C;&#x671B;&#x5BF9;&#x4F60;&#x4EEC;&#x6709;&#x6240;&#x5E2E;&#x52A9;&#x3002;</p>
+<h2 id="Socket"><a href="#Socket" class="headerlink" title="Socket"></a>Socket</h2><p>&#x9996;&#x5148;&#x4E00;&#x53E5;&#x8BDD;&#x7B80;&#x5355;&#x7684;&#x4ECB;&#x7ECD;<code>Socket</code>:&#x7F51;&#x7EDC;&#x4E0A;&#x7684;&#x4E24;&#x4E2A;&#x7A0B;&#x5E8F;&#x901A;&#x8FC7;&#x4E00;&#x4E2A;&#x53CC;&#x5411;&#x7684;&#x901A;&#x4FE1;&#x8FDE;&#x63A5;&#x5B9E;&#x73B0;&#x6570;&#x636E;&#x7684;&#x4EA4;&#x6362;&#xFF0C;&#x8FD9;&#x4E2A;&#x8FDE;&#x63A5;&#x7684;&#x4E00;&#x7AEF;&#x79F0;&#x4E3A;&#x4E00;&#x4E2A;<code>socket</code>&#x3002;<br>&#x6240;&#x6709;&#x6211;&#x4EEC;&#x4E0B;&#x9762;&#x8981;&#x5EFA;&#x7ACB;&#x4E00;&#x4E2A;&#x670D;&#x52A1;&#x7AEF;&#x4E0E;&#x5BA2;&#x6237;&#x7AEF;&#x7684;&#x901A;&#x4FE1;&#x3002;</p>
+<blockquote>
+<p><em>&#x563F;&#x563F;&#xFF0C;&#x5176;&#x5B9E;&#x4E0A;&#x9762;&#x7684;&#x90A3;&#x53E5;&#x8BDD;&#x662F;&#x767E;&#x5EA6;&#x767E;&#x79D1;&#x7684;&#xFF0C;&#x4E0D;&#x77E5;&#x9053;&#x4F60;&#x4EEC;&#x53D1;&#x73B0;&#x4E86;&#x6CA1;&#x6709;</em></p>
+</blockquote>
+<h2 id="&#x670D;&#x52A1;&#x7AEF;"><a href="#&#x670D;&#x52A1;&#x7AEF;" class="headerlink" title="&#x670D;&#x52A1;&#x7AEF;"></a>&#x670D;&#x52A1;&#x7AEF;</h2><p>&#x8FD9;&#x91CC;&#x6211;&#x4EEC;&#x53EA;&#x8981;&#x65B0;&#x5EFA;&#x4E86;&#x4E2A;&#x7B80;&#x5355;&#x7684;<code>Java</code>&#x7C7B;&#xFF0C;&#x53EA;&#x662F;&#x5B9E;&#x73B0;&#x5F00;&#x542F;&#x540E;&#x7B49;&#x5230;&#x5BA2;&#x6237;&#x7AEF;&#x7684;&#x8FDE;&#x63A5;&#x3002;</p>
+<h3 id="&#x5B9E;&#x4F8B;&#x5316;ServerSocket"><a href="#&#x5B9E;&#x4F8B;&#x5316;ServerSocket" class="headerlink" title="&#x5B9E;&#x4F8B;&#x5316;ServerSocket"></a>&#x5B9E;&#x4F8B;&#x5316;ServerSocket</h3><p>&#x7ED1;&#x5B9A;&#x901A;&#x4FE1;&#x7AEF;&#x53E3;&#xFF0C;&#x6700;&#x597D;&#x7AEF;&#x53E3;&#x8BBE;&#x5927;&#x70B9;&#xFF0C;&#x9632;&#x6B62;&#x7AEF;&#x53E3;&#x88AB;&#x5360;&#x7528;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java.net.ServerSocket serverSocket = new java.net.ServerSocket(30000);</span><br></pre></td></tr></table></figure>
+<h3 id="&#x7B49;&#x5F85;&#x8FDE;&#x63A5;"><a href="#&#x7B49;&#x5F85;&#x8FDE;&#x63A5;" class="headerlink" title="&#x7B49;&#x5F85;&#x8FDE;&#x63A5;"></a>&#x7B49;&#x5F85;&#x8FDE;&#x63A5;</h3><p>&#x6211;&#x4EEC;&#x8FD9;&#x91CC;&#x8BBE;&#x8BA1;&#x4E86;&#x6B7B;&#x5FAA;&#x73AF;&#xFF0C;&#x53EA;&#x8981;&#x5F00;&#x542F;&#x4E86;&#x5C31;&#x4E00;&#x76F4;&#x7B49;&#x5F85;&#x5BA2;&#x6237;&#x7AEF;&#x7684;&#x8FDE;&#x63A5;&#x8BF7;&#x6C42;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">while (true) {</span><br><span class="line">                        //&#x63A5;&#x6536;&#x8FDE;&#x63A5;&#x8BF7;&#x6C42;</span><br><span class="line">                        Socket s = serverSocket.accept();</span><br><span class="line">                        list.add(s);</span><br><span class="line">                        //&#x4E3A;&#x6BCF;&#x4E00;&#x4E2A;&#x8FDE;&#x63A5;&#x5F00;&#x542F;&#x4E00;&#x4E2A;&#x7684;&#x7EBF;&#x7A0B;</span><br><span class="line">                        new Thread(new ServiceRunnable(s)).start();</span><br><span class="line">                    }</span><br></pre></td></tr></table></figure>
+<p>&#x56E0;&#x4E3A;&#x6211;&#x5B9E;&#x73B0;&#x7684;&#x662F;&#x5728;&#x591A;&#x7EBF;&#x7A0B;&#x4E0B;&#x5F97;&#x901A;&#x4FE1;&#xFF0C;&#x6240;&#x6709;&#x5C06;&#x6BCF;&#x4E2A;<code>Socket</code>&#x52A0;&#x5165;&#x5230;<code>List</code>&#x4E2D;&#x5E76;&#x4E14;&#x4E3A;&#x6BCF;&#x4E00;&#x4E2A;&#x8FDE;&#x63A5;&#x7684;<code>Socket</code>&#x5F00;&#x542F;&#x4E00;&#x4E2A;&#x5355;&#x72EC;&#x7684;&#x7EBF;&#x7A0B;&#x3002;</p>
+<h3 id="&#x901A;&#x4FE1;"><a href="#&#x901A;&#x4FE1;" class="headerlink" title="&#x901A;&#x4FE1;"></a>&#x901A;&#x4FE1;</h3><p>&#x5982;&#x4F55;&#x5BA2;&#x6237;&#x7AEF;&#x53D1;&#x6765;&#x7684;&#x6D88;&#x606F;&#xFF0C;&#x6211;&#x4EEC;&#x5C31;&#x5411;&#x6BCF;&#x4E00;&#x4E2A;&#x8FDE;&#x63A5;&#x7684;<code>Socket</code>&#x53D1;&#x9001;&#x8BE5;&#x6D88;&#x606F;&#xFF0C;&#x6240;&#x6709;&#x9996;&#x5148;&#x8981;&#x83B7;&#x53D6;&#x8F93;&#x5165;&#x6D41;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">br = new BufferedReader(new InputStreamReader(s.getInputStream(), &quot;utf-8&quot;));</span><br></pre></td></tr></table></figure>
+<p>&#x8BFB;&#x53D6;&#x6570;&#x636E;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">public String readContent() {</span><br><span class="line">    try {</span><br><span class="line">        return br.readLine();</span><br><span class="line">    } catch (IOException e) {</span><br><span class="line">        list.remove(s);</span><br><span class="line">        e.printStackTrace();</span><br><span class="line">    }</span><br><span class="line">    return null;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>&#x83B7;&#x53D6;&#x8F93;&#x51FA;&#x6D41;&#x53D1;&#x9001;&#x6D88;&#x606F;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">while ((content = readContent()) != null) {</span><br><span class="line">                //&#x904D;&#x5386;&#x6240;&#x6709;&#x8FDE;&#x63A5;&#x4E86;&#x7684;Socket&#xFF0C;&#x5411;&#x6240;&#x6709;&#x5BA2;&#x6237;&#x7AEF;Socket&#x53D1;&#x9001;&#x6D88;&#x606F;</span><br><span class="line">                for (Iterator&lt;Socket&gt; it = list.iterator(); it.hasNext(); ) {</span><br><span class="line">                    Socket socket = it.next();</span><br><span class="line">                    try {</span><br><span class="line">                        pw = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);</span><br><span class="line">                        pw.println(content);</span><br><span class="line">                    } catch (IOException e) {</span><br><span class="line">                        it.remove();</span><br><span class="line">                        e.printStackTrace();</span><br><span class="line">                    }</span><br><span class="line">                }</span><br><span class="line">            }</span><br></pre></td></tr></table></figure>
+<p>&#x670D;&#x52A1;&#x7AEF;&#x8FD9;&#x6837;&#x5C31;&#x53EF;&#x4EE5;&#x4E86;&#xFF0C;&#x4E0B;&#x9762;&#x662F;&#x5BA2;&#x6237;&#x7AEF;</p>
+<h2 id="&#x5BA2;&#x6237;&#x7AEF;"><a href="#&#x5BA2;&#x6237;&#x7AEF;" class="headerlink" title="&#x5BA2;&#x6237;&#x7AEF;"></a>&#x5BA2;&#x6237;&#x7AEF;</h2><p>&#x5BA2;&#x6237;&#x7AEF;&#x5E03;&#x5C40;&#x53EA;&#x8981;&#x5B9E;&#x73B0;&#x4E00;&#x4E2A;&#x7B80;&#x5355;&#x7684;&#x53D1;&#x9001;&#x754C;&#x9762;&#xFF0C;&#x8FD9;&#x91CC;&#x5C31;&#x4E0D;&#x591A;&#x8BF4;&#x4E86;&#x3002;&#x76F4;&#x63A5;&#x8BF4;<code>Socket</code>&#x3002;</p>
+<h3 id="&#x5EFA;&#x7ACB;&#x8FDE;&#x63A5;"><a href="#&#x5EFA;&#x7ACB;&#x8FDE;&#x63A5;" class="headerlink" title="&#x5EFA;&#x7ACB;&#x8FDE;&#x63A5;"></a>&#x5EFA;&#x7ACB;&#x8FDE;&#x63A5;</h3><p>&#x6307;&#x5B9A;&#x670D;&#x52A1;&#x4E3B;&#x673A;&#x540D;&#x6216;<code>IP</code>&#x5730;&#x5740;&#x4E0E;&#x8FDE;&#x63A5;&#x7684;&#x7AEF;&#x53E3;&#x53F7;&#xFF0C;&#x5E94;&#x4E3A;&#x662F;&#x672C;&#x5730;&#x670D;&#x52A1;&#x5668;&#x6240;&#x6709;&#x8FD9;&#x91CC;&#x76F4;&#x63A5;&#x4F7F;&#x7528;&#x672C;&#x5730;<code>IP</code>&#x5730;&#x5740;&#x3002;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">socket = new Socket(&quot;192.168.56.1&quot;, 30000);</span><br></pre></td></tr></table></figure>
+<h3 id="&#x901A;&#x4FE1;-1"><a href="#&#x901A;&#x4FE1;-1" class="headerlink" title="&#x901A;&#x4FE1;"></a>&#x901A;&#x4FE1;</h3><p>&#x5BA2;&#x6237;&#x7AEF;&#x7684;&#x901A;&#x4FE1;&#x4E0E;&#x670D;&#x52A1;&#x7AEF;&#x7C7B;&#x4F3C;&#xFF0C;&#x83B7;&#x53D6;&#x8F93;&#x5165;&#x6D41;&#xFF0C;&#x8BFB;&#x53D6;&#x670D;&#x52A1;&#x5668;&#x53D1;&#x6765;&#x7684;&#x6D88;&#x606F;&#xFF0C;&#x5E76;&#x663E;&#x793A;&#x5230;&#x754C;&#x9762;&#x4E2D;&#x3002;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">br = new BufferedReader(new InputStreamReader(socket.getInputStream()));</span><br><span class="line"></span><br><span class="line">                new Thread(new Runnable() {</span><br><span class="line">                    String line;</span><br><span class="line"></span><br><span class="line">                    @Override</span><br><span class="line">                    public void run() {</span><br><span class="line">                        try {</span><br><span class="line">                            //&#x8BFB;&#x53D6;&#x670D;&#x52A1;&#x7AEF;&#x53D1;&#x6765;&#x7684;&#x6D88;&#x606F;</span><br><span class="line">                            while ((line = br.readLine()) != null) {</span><br><span class="line">                                Message message = new Message();</span><br><span class="line">                                message.what = 1;</span><br><span class="line">                                message.obj = line;</span><br><span class="line">                                handler.sendMessage(message);</span><br><span class="line">                            }</span><br><span class="line">                        } catch (IOException e) {</span><br><span class="line">                            e.printStackTrace();</span><br><span class="line">                        }</span><br><span class="line">                    }</span><br><span class="line">                }).start();</span><br></pre></td></tr></table></figure>
+<p>&#x70B9;&#x51FB;&#x53D1;&#x9001;&#xFF0C;&#x83B7;&#x53D6;&#x8F93;&#x51FA;&#x6D41;&#x5411;&#x670D;&#x52A1;&#x5668;&#x53D1;&#x9001;&#x6D88;&#x606F;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">@Override</span><br><span class="line">public void onClick(View v) {</span><br><span class="line">    Message message = new Message();</span><br><span class="line">    message.what = 2;</span><br><span class="line">    message.obj = et.getText().toString();</span><br><span class="line">    clientThread.clientHandler.sendMessage(message);</span><br><span class="line">    et.setText(&quot;&quot;);</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">clientHandler = new Handler(Looper.getMainLooper()) {</span><br><span class="line">                    @Override</span><br><span class="line">                    public void handleMessage(Message msg) {</span><br><span class="line">                        if (msg.what == 2) {</span><br><span class="line">                            try {</span><br><span class="line">                                //&#x5411;&#x670D;&#x52A1;&#x7AEF;&#x53D1;&#x9001;&#x6D88;&#x606F;</span><br><span class="line">                                pw = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream())), true);</span><br><span class="line">                                pw.println(msg.obj);</span><br><span class="line">                            } catch (IOException e) {</span><br><span class="line">                                e.printStackTrace();</span><br><span class="line">                            }</span><br><span class="line">                        }</span><br><span class="line">                    }</span><br><span class="line">                };</span><br></pre></td></tr></table></figure>
+<p>&#x5230;&#x6B64;&#x6574;&#x4E2A;&#x7684;<code>Socket</code>&#x901A;&#x4FE1;&#x5C31;&#x57FA;&#x672C;&#x4E0A;&#x5B8C;&#x6210;&#x4E86;&#x3002;</p>
+<h2 id="&#x603B;&#x7ED3;"><a href="#&#x603B;&#x7ED3;" class="headerlink" title="&#x603B;&#x7ED3;"></a>&#x603B;&#x7ED3;</h2><p>&#x901A;&#x8FC7;&#x4E0A;&#x9762;&#x7684;&#x793A;&#x4F8B;&#x4F7F;&#x7528;<code>Socket</code>&#x5B9E;&#x73B0;&#x901A;&#x4FE1;&#xFF0C;&#x4E3B;&#x8981;&#x5206;&#x4E3A;&#x4E09;&#x6B65;</p>
+<ul>
+<li>&#x5B9E;&#x4F8B;&#x5316;<code>Socket</code>,&#x5EFA;&#x7ACB;&#x8FDE;&#x63A5;</li>
+<li>&#x83B7;&#x53D6;&#x8F93;&#x5165;&#x6D41;&#xFF0C;&#x8BFB;&#x53D6;&#x6570;&#x636E;</li>
+<li>&#x83B7;&#x53D6;&#x8F93;&#x51FA;&#x6D41;&#xFF0C;&#x53D1;&#x9001;&#x6570;&#x636E;</li>
+</ul>
+<p>&#x5F53;&#x7136;&#x8FD9;&#x53EA;&#x662F;&#x4E00;&#x4E2A;&#x7B80;&#x5355;&#x7684;&#x4F8B;&#x5B50;&#xFF0C;&#x5E26;&#x9886;&#x6211;&#x4EEC;&#x5165;&#x95E8;&#x800C;&#x5DF2;&#x3002;&#x6709;&#x5174;&#x8DA3;&#x7684;&#x53EF;&#x4EE5;&#x501F;&#x52A9;&#x4E0B;&#x9762;&#x7684;Demo&#x5B66;&#x4E60;&#x3002;</p>
+<p>Demo&#x5730;&#x5740;&#xFF1A;<a href="https://github.com/idisfkj/Socket" target="_blank" rel="external">https://github.com/idisfkj/Socket</a></p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal-one" aria-hidden="true">
+  <a href="#close" class="cover" aria-hidden="true"></a>
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <a href="#close" class="btn-close" aria-hidden="true">关闭</a>
+    </div>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+  <section class="duoshuo-comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="" data-title="Socket的简单通信" data-url="http://idisfkj.github.io/2016/05/28/Socket的简单通信/index.html"></div>
+    <!-- 多说评论框 end -->
+  </section>
+
+
+
+
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"idisfkj"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?398', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
