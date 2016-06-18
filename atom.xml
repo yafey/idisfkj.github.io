@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://idisfkj.github.io/"/>
-  <updated>2016-06-14T04:50:19.000Z</updated>
+  <updated>2016-06-18T02:13:26.000Z</updated>
   <id>http://idisfkj.github.io/</id>
   
   <author>
@@ -14,6 +14,42 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>算法(一)直接选择排序</title>
+    <link href="http://idisfkj.github.io/2016/06/18/%E7%AE%97%E6%B3%95-%E4%B8%80-%E7%9B%B4%E6%8E%A5%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F/"/>
+    <id>http://idisfkj.github.io/2016/06/18/算法-一-直接选择排序/</id>
+    <published>2016-06-18T01:31:35.000Z</published>
+    <updated>2016-06-18T02:13:26.000Z</updated>
+    
+    <content type="html">&lt;p&gt;&amp;#x76F4;&amp;#x63A5;&amp;#x9009;&amp;#x62E9;&amp;#x6392;&amp;#x5E8F;&amp;#xFF0C;&amp;#x6574;&amp;#x4F53;&amp;#x601D;&amp;#x60F3;&amp;#x662F;&amp;#x5C06;&amp;#x6570;&amp;#x636E;&amp;#x5206;&amp;#x6210;&amp;#x4E24;&amp;#x4E2A;&amp;#x533A;&amp;#x57DF;&amp;#xFF0C;&lt;code&gt;&amp;#x6709;&amp;#x5E8F;&amp;#x533A;&lt;/code&gt;&amp;#x4E0E;&lt;code&gt;&amp;#x65E0;&amp;#x5E8F;&amp;#x533A;&lt;/code&gt;&amp;#x3002;&amp;#x6392;&amp;#x5E8F;&amp;#x7684;&amp;#x65F6;&amp;#x5019;&amp;#x662F;&amp;#x6BCF;&amp;#x6B21;&amp;#x4ECE;&lt;code&gt;&amp;#x65E0;&amp;#x5E8F;&amp;#x533A;&lt;/code&gt;&amp;#x4E2D;&amp;#x9009;&amp;#x62E9;&amp;#x51FA;&amp;#x6700;&amp;#x5C0F;&amp;#x7684;&amp;#x6570;&amp;#xFF0C;&amp;#x7136;&amp;#x540E;&amp;#x63D2;&amp;#x5165;&amp;#x5230;&lt;code&gt;&amp;#x6709;&amp;#x5E8F;&amp;#x533A;&lt;/code&gt;&amp;#x4E2D;&amp;#x7684;&amp;#x6700;&amp;#x672B;&amp;#x5C3E;&amp;#xFF0C;&amp;#x4ECE;&amp;#x800C;&amp;#x5F62;&amp;#x6210;&amp;#x66F4;&amp;#x5927;&amp;#x7684;&lt;code&gt;&amp;#x6709;&amp;#x5E8F;&amp;#x533A;&lt;/code&gt;&amp;#x3002;&amp;#x76F4;&amp;#x5230;&lt;code&gt;&amp;#x65E0;&amp;#x5E8F;&amp;#x533A;&lt;/code&gt;&amp;#x4E2D;&amp;#x7684;&amp;#x6570;&amp;#x4E3A;&amp;#x96F6;&amp;#xFF0C;&amp;#x7ED3;&amp;#x675F;&amp;#x6392;&amp;#x5E8F;&amp;#x3002;&lt;/p&gt;
+&lt;h1 id=&quot;&amp;#x8BE6;&amp;#x7EC6;&amp;#x6B65;&amp;#x9AA4;&quot;&gt;&lt;a href=&quot;#&amp;#x8BE6;&amp;#x7EC6;&amp;#x6B65;&amp;#x9AA4;&quot; class=&quot;headerlink&quot; title=&quot;&amp;#x8BE6;&amp;#x7EC6;&amp;#x6B65;&amp;#x9AA4;&quot;&gt;&lt;/a&gt;&amp;#x8BE6;&amp;#x7EC6;&amp;#x6B65;&amp;#x9AA4;&lt;/h1&gt;&lt;p&gt;&amp;#x5047;&amp;#x8BBE;&amp;#x6392;&amp;#x5E8F;&amp;#x6570;&amp;#x7EC4;&amp;#x4E3A;a[0&amp;#x2026;n-1];&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&amp;#x9996;&amp;#x5148;&lt;code&gt;&amp;#x6709;&amp;#x5E8F;&amp;#x533A;&lt;/code&gt;&amp;#x4E2D;&amp;#x7684;&amp;#x4E2A;&amp;#x6570;&amp;#x4E3A;0&amp;#xFF0C;&amp;#x4EE4;&lt;code&gt;i = 0&lt;/code&gt;&amp;#x3002;&amp;#x4ECE;&lt;code&gt;&amp;#x65E0;&amp;#x5E8F;&amp;#x533A;&lt;/code&gt;&amp;#x4E2D;&amp;#x9009;&amp;#x62E9;&amp;#x6700;&amp;#x5C0F;&amp;#x7684;&amp;#x6570;&amp;#xFF0C;&amp;#x52A0;&amp;#x5165;&amp;#x5230;&lt;code&gt;&amp;#x6709;&amp;#x5E8F;&amp;#x533A;a[i]&lt;/code&gt;&amp;#x4E2D;&amp;#x3002;&amp;#x4F7F;&amp;#x5F97;&lt;code&gt;&amp;#x6709;&amp;#x5E8F;&amp;#x533A;&lt;/code&gt;&amp;#x4E3A;&lt;code&gt;a[0..i]&lt;/code&gt;,&lt;code&gt;&amp;#x65E0;&amp;#x5E8F;&amp;#x533A;&lt;/code&gt;&amp;#x4E3A;&lt;code&gt;a[i...n-1]&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&amp;#x5B8C;&amp;#x6210;&amp;#x540E; &lt;code&gt;i++&lt;/code&gt; ,&amp;#x7136;&amp;#x540E;&amp;#x7EE7;&amp;#x7EED;&amp;#x524D;&amp;#x9762;&amp;#x7684;&amp;#x6B65;&amp;#x9AA4;&amp;#xFF0C;&amp;#x76F4;&amp;#x5230; &lt;code&gt;i = n-1&lt;/code&gt; &amp;#x4E3A;&amp;#x6B62;&amp;#x3002;&amp;#x4F7F;&amp;#x5F97;&amp;#x5168;&amp;#x90E8;&amp;#x6570;&amp;#x90FD;&amp;#x5728;&lt;code&gt;&amp;#x6709;&amp;#x5E8F;&amp;#x533A;&lt;/code&gt;&amp;#x4E2D;&amp;#x3002;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;&amp;#x6240;&amp;#x4EE5;&amp;#x6839;&amp;#x636E;&amp;#x4E0A;&amp;#x9762;&amp;#x7684;&amp;#x601D;&amp;#x60F3;&amp;#x6B65;&amp;#x9AA4;&amp;#x5C31;&amp;#x80FD;&amp;#x5F88;&amp;#x5BB9;&amp;#x6613;&amp;#x7684;&amp;#x5199;&amp;#x51FA;&amp;#x5B9E;&amp;#x73B0;&amp;#x4EE3;&amp;#x7801;&amp;#x4E86;&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h1 id=&quot;&amp;#x5B9E;&amp;#x73B0;&quot;&gt;&lt;a href=&quot;#&amp;#x5B9E;&amp;#x73B0;&quot; class=&quot;headerlink&quot; title=&quot;&amp;#x5B9E;&amp;#x73B0;&quot;&gt;&lt;/a&gt;&amp;#x5B9E;&amp;#x73B0;&lt;/h1&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;public static void selectSort(int[] arr) {&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        int temp;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        int mid;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        for (int i = 0; i &amp;lt; arr.length - 1; i++) {&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            mid = i;//&amp;#x5173;&amp;#x952E;&amp;#x6570;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            for (int j = mid + 1; j &amp;lt; arr.length; j++) {&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                if (arr[mid] &amp;gt; arr[j])//&amp;#x627E;&amp;#x5230;&amp;#x6700;&amp;#x5C0F;&amp;#x503C;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                    mid = j;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            }&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            if (mid != i) {//&amp;#x4E0D;&amp;#x7B49;&amp;#x4E8E;&amp;#x5173;&amp;#x952E;&amp;#x6570;&amp;#x5219;&amp;#x4EA4;&amp;#x6362;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                temp = arr[mid];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                arr[mid] = arr[i];&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;                arr[i] = temp;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;            }&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;        }&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;    }&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+&lt;p&gt;&amp;#x8BE5;&amp;#x6392;&amp;#x5E8F;&amp;#x4E3A;&amp;#x4E0D;&amp;#x7A33;&amp;#x5B9A;&amp;#x6392;&amp;#x5E8F;&amp;#xFF0C;&amp;#x9996;&amp;#x5148;&amp;#x8BF4;&amp;#x660E;&amp;#x4F55;&amp;#x4E3A;&amp;#x7A33;&amp;#x5B9A;&amp;#x6392;&amp;#x5E8F;&amp;#xFF1A;&lt;code&gt;&amp;#x5728;&amp;#x6392;&amp;#x5E8F;&amp;#x7ED3;&amp;#x675F;&amp;#x540E;&amp;#x5982;&amp;#x679C;&amp;#x6392;&amp;#x5E8F;&amp;#x4E2D;&amp;#x76F8;&amp;#x540C;&amp;#x5927;&amp;#x5C0F;&amp;#x7684;&amp;#x6570;&amp;#x4E0E;&amp;#x6392;&amp;#x5E8F;&amp;#x524D;&amp;#x7684;&amp;#x76F8;&amp;#x5BF9;&amp;#x4F4D;&amp;#x7F6E;&amp;#x76F8;&amp;#x540C;(&amp;#x5373;&amp;#x524D;&amp;#x540E;&amp;#x4F4D;&amp;#x7F6E;&amp;#x4E0D;&amp;#x53D8;)&amp;#xFF0C;&amp;#x5219;&amp;#x79F0;&amp;#x4E3A;&amp;#x7A33;&amp;#x5B9A;&amp;#x6392;&amp;#x5E8F;&lt;/code&gt; &amp;#x76F4;&amp;#x63A5;&amp;#x9009;&amp;#x62E9;&amp;#x6392;&amp;#x5E8F;&amp;#x6211;&amp;#x4EEC;&amp;#x5F88;&amp;#x5BB9;&amp;#x6613;&amp;#x53D1;&amp;#x73B0;&amp;#xFF0C;&amp;#x5982;&amp;#x679C;&amp;#x6392;&amp;#x5E8F;&amp;#x6570;&amp;#x7EC4;&amp;#x4E3A;&lt;code&gt;a[11,11,2]&lt;/code&gt;&amp;#x5728;&amp;#x8FDB;&amp;#x884C;&amp;#x7B2C;&amp;#x4E00;&amp;#x8D9F;&amp;#x6392;&amp;#x5E8F;&amp;#x4E4B;&amp;#x540E;&amp;#x7B2C;&amp;#x4E00;&amp;#x4E2A;&lt;code&gt;11&lt;/code&gt;&amp;#x4E0E;&lt;code&gt;2&lt;/code&gt;&amp;#x4EA4;&amp;#x6362;&amp;#x4F4D;&amp;#x7F6E;&amp;#x4F7F;&amp;#x5F97;&amp;#x539F;&amp;#x6765;&amp;#x524D;&amp;#x9762;&amp;#x7684;&lt;code&gt;11&lt;/code&gt;&amp;#x6392;&amp;#x5E8F;&amp;#x5230;&amp;#x540E;&amp;#x9762;&amp;#x7684;&lt;code&gt;11&lt;/code&gt;&amp;#x4E4B;&amp;#x540E;&amp;#xFF0C;&amp;#x6240;&amp;#x4EE5;&amp;#x76F4;&amp;#x63A5;&amp;#x9009;&amp;#x62E9;&amp;#x6392;&amp;#x5E8F;&amp;#x4E3A;&amp;#x4E0D;&amp;#x7A33;&amp;#x5B9A;&amp;#x6392;&amp;#x5E8F;&amp;#x3002;&amp;#x540C;&amp;#x65F6;&amp;#x5B83;&amp;#x7684;&amp;#x65F6;&amp;#x95F4;&amp;#x590D;&amp;#x6742;&amp;#x5EA6;&amp;#x4E3A;&lt;code&gt;O(n^2)&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;em&gt;&amp;#x8F6C;&amp;#x8F7D;&amp;#x8BF7;&amp;#x6307;&amp;#x660E;&amp;#x51FA;&amp;#x5904; idisfkj&amp;#x535A;&amp;#x5BA2;&amp;#xFF1A;&lt;a href=&quot;http://idisfkj.github.io&quot;&gt;http://idisfkj.github.io&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+</content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&amp;#x76F4;&amp;#x63A5;&amp;#x9009;&amp;#x62E9;&amp;#x6392;&amp;#x5E8F;&amp;#xFF0C;&amp;#x6574;&amp;#x4F53;&amp;#x601D;&amp;#x60F3;&amp;#x662F;&amp;#x5C06;&amp;#x6570;&amp;#x636E;&amp;#x5206;&amp;#x6210;&amp;
+    
+    </summary>
+    
+      <category term="java" scheme="http://idisfkj.github.io/categories/java/"/>
+    
+    
+      <category term="算法" scheme="http://idisfkj.github.io/tags/%E7%AE%97%E6%B3%95/"/>
+    
+  </entry>
   
   <entry>
     <title>如何使Android Studio项目发布到Jcenter中</title>
