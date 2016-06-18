@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+
+
+  <html class="light">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>算法(三)直接插入排序 | Idisfkj</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="算法," />
+  
+
+  <meta name="description" content="&amp;#x76F4;&amp;#x63A5;&amp;#x63D2;&amp;#x5165;&amp;#x6392;&amp;#x5E8F;&amp;#x7684;&amp;#x57FA;&amp;#x672C;&amp;#x601D;&amp;#x60F3;&amp;#x662F;:&amp;#x5C06;&amp;#x9700;&amp;#x8981;&amp;#x6392;&amp;#x5E8F;&amp;#x7684;&amp;#x5173;&amp;#x952E;&amp;#x6570;&amp;#x4E0E;&amp;#x524D;&amp;#x9762;&amp;#x5DF2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="算法(三)直接插入排序">
+<meta property="og:url" content="http://idisfkj.github.io/2016/06/18/算法-三-直接插入排序/index.html">
+<meta property="og:site_name" content="Idisfkj">
+<meta property="og:description" content="&amp;#x76F4;&amp;#x63A5;&amp;#x63D2;&amp;#x5165;&amp;#x6392;&amp;#x5E8F;&amp;#x7684;&amp;#x57FA;&amp;#x672C;&amp;#x601D;&amp;#x60F3;&amp;#x662F;:&amp;#x5C06;&amp;#x9700;&amp;#x8981;&amp;#x6392;&amp;#x5E8F;&amp;#x7684;&amp;#x5173;&amp;#x952E;&amp;#x6570;&amp;#x4E0E;&amp;#x524D;&amp;#x9762;&amp;#x5DF2">
+<meta property="og:updated_time" content="2016-06-18T12:35:35.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="算法(三)直接插入排序">
+<meta name="twitter:description" content="&amp;#x76F4;&amp;#x63A5;&amp;#x63D2;&amp;#x5165;&amp;#x6392;&amp;#x5E8F;&amp;#x7684;&amp;#x57FA;&amp;#x672C;&amp;#x601D;&amp;#x60F3;&amp;#x662F;:&amp;#x5C06;&amp;#x9700;&amp;#x8981;&amp;#x6392;&amp;#x5E8F;&amp;#x7684;&amp;#x5173;&amp;#x952E;&amp;#x6570;&amp;#x4E0E;&amp;#x524D;&amp;#x9762;&amp;#x5DF2">
+
+  
+
+  
+  <!-- <link href="/favicon.ico" rel="icon" type="image/x-icon"> -->
+    <link rel="icon" href="/favicon.ico">
+    <!-- <link href="favicon.ico" rel="shortcut icon" type="image/x-icon" /> -->
+  
+  
+  <link href="/css/styles.css?v=5f7f1d39" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?ef89e68af5e136d5c22043f91cd139ea";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+
+  
+    <a href="#modal-one" class="toolbox-mobile">盒子</a>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#基本步骤"><span class="toc-text">基本步骤</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#实现"><span class="toc-text">实现</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-算法-三-直接插入排序" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">算法(三)直接插入排序</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.06.18</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>idisfkj</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/java/">java</a>
+  </span>
+
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>&#x76F4;&#x63A5;&#x63D2;&#x5165;&#x6392;&#x5E8F;&#x7684;&#x57FA;&#x672C;&#x601D;&#x60F3;&#x662F;:<code>&#x5C06;&#x9700;&#x8981;&#x6392;&#x5E8F;&#x7684;&#x5173;&#x952E;&#x6570;&#x4E0E;&#x524D;&#x9762;&#x5DF2;&#x7ECF;&#x6392;&#x597D;&#x5E8F;&#x7684;&#x6570;&#x636E;&#x4ECE;&#x540E;&#x5F80;&#x524D;&#x8FDB;&#x884C;&#x6BD4;&#x8F83;&#xFF0C;&#x4F7F;&#x5176;&#x63D2;&#x5165;&#x5230;&#x5408;&#x9002;&#x7684;&#x4F4D;&#x7F6E;</code>&#x3002;</p>
+<h1 id="&#x57FA;&#x672C;&#x6B65;&#x9AA4;"><a href="#&#x57FA;&#x672C;&#x6B65;&#x9AA4;" class="headerlink" title="&#x57FA;&#x672C;&#x6B65;&#x9AA4;"></a>&#x57FA;&#x672C;&#x6B65;&#x9AA4;</h1><p>&#x6392;&#x5E8F;&#x6570;&#x7EC4;&#x4E3A;<code>a[0...n]</code></p>
+<ol>
+<li>&#x5C06;<code>a[0]</code>&#x4F5C;&#x4E3A;&#x8D77;&#x59CB;&#x6570;&#x636E;&#xFF0C;&#x4ECE;<code>a[1]</code>&#x5F00;&#x59CB;&#x4F5C;&#x4E3A;&#x5173;&#x952E;&#x5B57;&#x5411;&#x524D;&#x8FDB;&#x884C;&#x6BD4;&#x8F83;&#xFF0C;&#x82E5;&#x5C0F;&#x4E8E;&#x524D;&#x9762;&#x6240;&#x9047;&#x5230;&#x7684;&#x6BD4;&#x8F83;&#x6570;&#xFF0C;&#x5219;&#x4EA4;&#x6362;&#x4E24;&#x4E2A;&#x6BD4;&#x8F83;&#x6570;&#x7684;&#x4F4D;&#x7F6E;&#xFF0C;&#x5426;&#x5219;&#x76F4;&#x63A5;&#x8FDB;&#x884C;&#x4E0B;&#x4E00;&#x4E2A;&#x5173;&#x952E;&#x5B57;&#x7684;&#x6BD4;&#x8F83;&#x3002;</li>
+<li>&#x91CD;&#x590D;&#x524D;&#x9762;&#x7684;&#x6B65;&#x9AA4;&#xFF0C;&#x76F4;&#x5230;&#x5C06;<code>a[n]</code>&#x4F5C;&#x4E3A;&#x5173;&#x952E;&#x5B57;&#x8FDB;&#x884C;&#x6BD4;&#x8F83;&#x3002;&#x6BD4;&#x8F83;&#x5B8C;&#x4EE5;&#x540E;&#x5219;&#x6392;&#x5E8F;&#x7ED3;&#x675F;&#x3002;</li>
+</ol>
+<blockquote>
+<p><em>&#x8BE5;&#x7B97;&#x6CD5;&#x5B9E;&#x73B0;&#x8FD8;&#x662F;&#x5F88;&#x7B80;&#x5355;&#x7684;&#xFF0C;&#x53EF;&#x4EE5;&#x6839;&#x636E;&#x6B65;&#x9AA4;&#x8FC5;&#x901F;&#x5199;&#x51FA;</em></p>
+</blockquote>
+<h1 id="&#x5B9E;&#x73B0;"><a href="#&#x5B9E;&#x73B0;" class="headerlink" title="&#x5B9E;&#x73B0;"></a>&#x5B9E;&#x73B0;</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">public static void insertSort(int[] arr) {</span><br><span class="line">        int temp;</span><br><span class="line">        for (int i = 1; i &lt; arr.length; i++) {</span><br><span class="line">            for (int j = i; j &gt; 0; j--) {</span><br><span class="line">                if (arr[j] &lt; arr[j - 1]) {//&#x4EA4;&#x6362;</span><br><span class="line">                    temp = arr[j];</span><br><span class="line">                    arr[j] = arr[j - 1];</span><br><span class="line">                    arr[j - 1] = temp;</span><br><span class="line">                } else {//&#x53EA;&#x8981;&#x6BD4;&#x8F83;&#x4E0D;&#x5C0F;&#x4E8E;&#x7684;&#x8BDD;&#x5C31;&#x76F4;&#x63A5;&#x8DF3;&#x51FA;</span><br><span class="line">                    break;</span><br><span class="line">                }</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    }</span><br></pre></td></tr></table></figure>
+<h1 id="&#x603B;&#x7ED3;"><a href="#&#x603B;&#x7ED3;" class="headerlink" title="&#x603B;&#x7ED3;"></a>&#x603B;&#x7ED3;</h1><p>&#x901A;&#x8FC7;&#x4E0A;&#x9762;&#x7684;&#x601D;&#x60F3;&#x53EF;&#x4EE5;&#x770B;&#x51FA;&#x8BE5;&#x6392;&#x5E8F;&#x4E3A;&#x7A33;&#x5B9A;&#x6392;&#x5E8F;&#xFF0C;&#x4E14;&#x6700;&#x597D;&#x65F6;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#x3001;&#x6700;&#x574F;&#x65F6;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#x90FD;&#x4E0E;&#x524D;&#x9762;&#x7684;<a href="http://idisfkj.github.io/2016/06/18/%E7%AE%97%E6%B3%95-%E4%BA%8C-%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F/">&#x5192;&#x6CE1;&#x6392;&#x5E8F;</a>&#x4E00;&#x6837;&#x662F;<code>O(n)</code>&#x4E0E;<code>O(n^2)</code>&#x3002;</p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal-one" aria-hidden="true">
+  <a href="#close" class="cover" aria-hidden="true"></a>
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <a href="#close" class="btn-close" aria-hidden="true">关闭</a>
+    </div>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+  <section class="duoshuo-comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="" data-title="算法(三)直接插入排序" data-url="http://idisfkj.github.io/2016/06/18/算法-三-直接插入排序/index.html"></div>
+    <!-- 多说评论框 end -->
+  </section>
+
+
+
+
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"idisfkj"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?398', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
