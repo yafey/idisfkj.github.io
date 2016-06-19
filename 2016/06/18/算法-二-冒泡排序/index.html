@@ -21,7 +21,7 @@
 <meta property="og:url" content="http://idisfkj.github.io/2016/06/18/算法-二-冒泡排序/index.html">
 <meta property="og:site_name" content="Idisfkj">
 <meta property="og:description" content="&amp;#x5192;&amp;#x6CE1;&amp;#x6392;&amp;#x5E8F;&amp;#x4E3B;&amp;#x8981;&amp;#x662F;&amp;#x76F8;&amp;#x90BB;&amp;#x7684;&amp;#x4E24;&amp;#x4E2A;&amp;#x6570;&amp;#x4E24;&amp;#x4E24;&amp;#x8FDB;&amp;#x884C;&amp;#x6BD4;&amp;#x8F83;&amp;#xFF0C;&amp;#x62FF;&amp;#x4ECE;&amp;#x5C0F;&amp;#x5230;&amp;#x5927;">
-<meta property="og:updated_time" content="2016-06-18T03:32:06.000Z">
+<meta property="og:updated_time" content="2016-06-19T09:12:52.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="算法(二)冒泡排序">
 <meta name="twitter:description" content="&amp;#x5192;&amp;#x6CE1;&amp;#x6392;&amp;#x5E8F;&amp;#x4E3B;&amp;#x8981;&amp;#x662F;&amp;#x76F8;&amp;#x90BB;&amp;#x7684;&amp;#x4E24;&amp;#x4E2A;&amp;#x6570;&amp;#x4E24;&amp;#x4E24;&amp;#x8FDB;&amp;#x884C;&amp;#x6BD4;&amp;#x8F83;&amp;#xFF0C;&amp;#x62FF;&amp;#x4ECE;&amp;#x5C0F;&amp;#x5230;&amp;#x5927;">
@@ -152,7 +152,7 @@
 
   <div id="toc" class="toc-article">
     <strong class="toc-title">文章目录</strong>
-    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#基本思想"><span class="toc-text">基本思想</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#实现"><span class="toc-text">实现</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#优化"><span class="toc-text">优化</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li></ol>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#实现步骤"><span class="toc-text">实现步骤</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#实现"><span class="toc-text">实现</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#优化"><span class="toc-text">优化</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li></ol>
   </div>
 
 
@@ -191,7 +191,7 @@
   <div class="article-content">
     
       <p>&#x5192;&#x6CE1;&#x6392;&#x5E8F;&#x4E3B;&#x8981;&#x662F;&#x76F8;&#x90BB;&#x7684;&#x4E24;&#x4E2A;&#x6570;&#x4E24;&#x4E24;&#x8FDB;&#x884C;&#x6BD4;&#x8F83;&#xFF0C;&#x62FF;&#x4ECE;&#x5C0F;&#x5230;&#x5927;&#x8BF4;&#x660E;&#xFF0C;&#x8FDB;&#x884C;&#x5192;&#x6CE1;&#x6392;&#x5E8F;&#x540E;&#x4F1A;&#x5C06;&#x5927;&#x7684;&#x6570;<code>&#x6C89;</code>&#x5230;&#x5E95;&#x90E8;&#xFF0C;&#x5C06;&#x5C0F;&#x5F97;&#x6570;<code>&#x6D6E;</code>&#x5230;&#x9876;&#x90E8;&#x3002;&#x6240;&#x4EE5;&#x5192;&#x6CE1;&#x8BF4;&#x6CD5;&#x7531;&#x6B64;&#x5F97;&#x540D;&#x3002;</p>
-<h1 id="&#x57FA;&#x672C;&#x601D;&#x60F3;"><a href="#&#x57FA;&#x672C;&#x601D;&#x60F3;" class="headerlink" title="&#x57FA;&#x672C;&#x601D;&#x60F3;"></a>&#x57FA;&#x672C;&#x601D;&#x60F3;</h1><p>&#x4EE5;&#x4ECE;&#x5C0F;&#x5230;&#x5927;&#x4E3A;&#x4F8B;&#xFF0C;&#x6392;&#x5E8F;&#x6570;&#x7EC4;&#x5927;&#x5C0F;&#x4E3A;<code>n</code>&#x3002;</p>
+<h1 id="&#x5B9E;&#x73B0;&#x6B65;&#x9AA4;"><a href="#&#x5B9E;&#x73B0;&#x6B65;&#x9AA4;" class="headerlink" title="&#x5B9E;&#x73B0;&#x6B65;&#x9AA4;"></a>&#x5B9E;&#x73B0;&#x6B65;&#x9AA4;</h1><p>&#x4EE5;&#x4ECE;&#x5C0F;&#x5230;&#x5927;&#x4E3A;&#x4F8B;&#xFF0C;&#x6392;&#x5E8F;&#x6570;&#x7EC4;&#x5927;&#x5C0F;&#x4E3A;<code>n</code>&#x3002;</p>
 <ol>
 <li>&#x7B2C;<code>N = 0</code>&#x8D9F;&#x6392;&#x5E8F;&#x5F00;&#x59CB;&#x90FD;&#x4ECE;<code>a[0]</code>&#x5F00;&#x59CB;&#x4E0E;&#x5176;&#x4E0B;&#x9762;&#x7684;&#x76F8;&#x90BB;&#x7684;&#x6570;&#x8FDB;&#x884C;&#x6BD4;&#x8F83;&#xFF0C;&#x5982;&#x679C;&#x5927;&#x4E8E;&#x76F8;&#x90BB;&#x7684;&#x6570;&#x5219;&#x4EA4;&#x6362;&#x4ED6;&#x4EEC;&#x7684;&#x4F4D;&#x7F6E;&#x3002;</li>
 <li>&#x7EE7;&#x7EED;&#x4E0E;&#x4E0B;&#x4E00;&#x4E2A;&#x76F8;&#x90BB;&#x7684;&#x6570;&#x8FDB;&#x884C;&#x6BD4;&#x8F83;&#xFF0C;&#x5927;&#x4E8E;&#x76F8;&#x90BB;&#x7684;&#x5C31;&#x4EA4;&#x6362;&#xFF0C;&#x6700;&#x540E;&#x8FDB;&#x884C;&#x6BD4;&#x8F83;<code>n-1</code>&#x6B21;&#x540E;&#xFF0C;&#x7B2C;<code>N = 0</code>&#x8D9F;&#x6392;&#x5E8F;&#x7ED3;&#x675F;&#xFF0C;&#x6700;&#x5927;&#x7684;&#x6570;&#x5C31;&#x5728;&#x6570;&#x7EC4;&#x7684;<code>a[n-1]</code>&#x5904;&#x3002;</li>

@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+
+
+  <html class="light">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>七大排序算法总结 | Idisfkj</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="算法," />
+  
+
+  <meta name="description" content="&amp;#x524D;&amp;#x9762;&amp;#x4ECB;&amp;#x7ECD;&amp;#x4E86;&amp;#x4E03;&amp;#x5927;&amp;#x7B97;&amp;#x6CD5;&amp;#x7684;&amp;#x601D;&amp;#x60F3;&amp;#x4E0E;&amp;#x5B9E;&amp;#x73B0;&amp;#x6B65;&amp;#x9AA4;&amp;#xFF0C;&amp;#x4E0B;&amp;#x9762;&amp;#x6765;&amp;#x505A;&amp;#x4E00;&amp;#x4E2A;&amp;#x5F52;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="七大排序算法总结">
+<meta property="og:url" content="http://idisfkj.github.io/2016/06/19/七大排序算法总结/index.html">
+<meta property="og:site_name" content="Idisfkj">
+<meta property="og:description" content="&amp;#x524D;&amp;#x9762;&amp;#x4ECB;&amp;#x7ECD;&amp;#x4E86;&amp;#x4E03;&amp;#x5927;&amp;#x7B97;&amp;#x6CD5;&amp;#x7684;&amp;#x601D;&amp;#x60F3;&amp;#x4E0E;&amp;#x5B9E;&amp;#x73B0;&amp;#x6B65;&amp;#x9AA4;&amp;#xFF0C;&amp;#x4E0B;&amp;#x9762;&amp;#x6765;&amp;#x505A;&amp;#x4E00;&amp;#x4E2A;&amp;#x5F52;">
+<meta property="og:updated_time" content="2016-06-19T09:47:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="七大排序算法总结">
+<meta name="twitter:description" content="&amp;#x524D;&amp;#x9762;&amp;#x4ECB;&amp;#x7ECD;&amp;#x4E86;&amp;#x4E03;&amp;#x5927;&amp;#x7B97;&amp;#x6CD5;&amp;#x7684;&amp;#x601D;&amp;#x60F3;&amp;#x4E0E;&amp;#x5B9E;&amp;#x73B0;&amp;#x6B65;&amp;#x9AA4;&amp;#xFF0C;&amp;#x4E0B;&amp;#x9762;&amp;#x6765;&amp;#x505A;&amp;#x4E00;&amp;#x4E2A;&amp;#x5F52;">
+
+  
+
+  
+  <!-- <link href="/favicon.ico" rel="icon" type="image/x-icon"> -->
+    <link rel="icon" href="/favicon.ico">
+    <!-- <link href="favicon.ico" rel="shortcut icon" type="image/x-icon" /> -->
+  
+  
+  <link href="/css/styles.css?v=5f7f1d39" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?ef89e68af5e136d5c22043f91cd139ea";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+
+  
+    <a href="#modal-one" class="toolbox-mobile">盒子</a>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#直接选择排序"><span class="toc-text">直接选择排序</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#思想"><span class="toc-text">思想</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#步骤"><span class="toc-text">步骤</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#冒泡排序"><span class="toc-text">冒泡排序</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#思想-1"><span class="toc-text">思想</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#步骤-1"><span class="toc-text">步骤</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#直接插入排序"><span class="toc-text">直接插入排序</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#思想-2"><span class="toc-text">思想</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#步骤-2"><span class="toc-text">步骤</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#归并排序"><span class="toc-text">归并排序</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#思想-3"><span class="toc-text">思想</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#步骤-3"><span class="toc-text">步骤</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#快速排序"><span class="toc-text">快速排序</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#思想-4"><span class="toc-text">思想</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#步骤-4"><span class="toc-text">步骤</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#希尔排序"><span class="toc-text">希尔排序</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#思想-5"><span class="toc-text">思想</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#步骤-5"><span class="toc-text">步骤</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#堆排序"><span class="toc-text">堆排序</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#思想-6"><span class="toc-text">思想</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#步骤-6"><span class="toc-text">步骤</span></a></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-七大排序算法总结" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">七大排序算法总结</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.06.19</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>idisfkj</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/java/">java</a>
+  </span>
+
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>&#x524D;&#x9762;&#x4ECB;&#x7ECD;&#x4E86;&#x4E03;&#x5927;&#x7B97;&#x6CD5;&#x7684;&#x601D;&#x60F3;&#x4E0E;&#x5B9E;&#x73B0;&#x6B65;&#x9AA4;&#xFF0C;&#x4E0B;&#x9762;&#x6765;&#x505A;&#x4E00;&#x4E2A;&#x5F52;&#x603B;&#x3002;</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">&#x6392;&#x5E8F;&#x65B9;&#x6CD5;</th>
+<th style="text-align:center">&#x5E73;&#x5747;&#x590D;&#x6742;&#x5EA6;</th>
+<th style="text-align:center">&#x6700;&#x574F;&#x590D;&#x6742;&#x5EA6;</th>
+<th style="text-align:center">&#x6700;&#x597D;&#x590D;&#x6742;&#x5EA6;</th>
+<th style="text-align:center">&#x8F85;&#x52A9;&#x7A7A;&#x95F4;</th>
+<th style="text-align:center">&#x7A33;&#x5B9A;&#x6027;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">&#x76F4;&#x63A5;&#x9009;&#x62E9;&#x6392;&#x5E8F;</td>
+<td style="text-align:center">O(n^2)</td>
+<td style="text-align:center">O(n^2)</td>
+<td style="text-align:center">O(n^2)</td>
+<td style="text-align:center">O(1)</td>
+<td style="text-align:center">&#x7A33;&#x5B9A;</td>
+</tr>
+<tr>
+<td style="text-align:center">&#x5192;&#x6CE1;&#x6392;&#x5E8F;</td>
+<td style="text-align:center">O(n^2)</td>
+<td style="text-align:center">O(n^2)</td>
+<td style="text-align:center">O(n^2)</td>
+<td style="text-align:center">O(1)</td>
+<td style="text-align:center">&#x7A33;&#x5B9A;</td>
+</tr>
+<tr>
+<td style="text-align:center">&#x76F4;&#x63A5;&#x63D2;&#x5165;&#x6392;&#x5E8F;</td>
+<td style="text-align:center">O(n^2)</td>
+<td style="text-align:center">O(n^2)</td>
+<td style="text-align:center">O(n^2)</td>
+<td style="text-align:center">O(1)</td>
+<td style="text-align:center">&#x7A33;&#x5B9A;</td>
+</tr>
+<tr>
+<td style="text-align:center">&#x5F52;&#x5E76;&#x6392;&#x5E8F;</td>
+<td style="text-align:center">O(nlogn)</td>
+<td style="text-align:center">O(nlogn)</td>
+<td style="text-align:center">O(nlogn)</td>
+<td style="text-align:center">O(n)</td>
+<td style="text-align:center">&#x7A33;&#x5B9A;</td>
+</tr>
+<tr>
+<td style="text-align:center">&#x5FEB;&#x901F;&#x6392;&#x5E8F;</td>
+<td style="text-align:center">O(nlogn)</td>
+<td style="text-align:center">O(n^2)</td>
+<td style="text-align:center">O(nlogn)</td>
+<td style="text-align:center">O(1)</td>
+<td style="text-align:center">&#x4E0D;&#x7A33;&#x5B9A;</td>
+</tr>
+<tr>
+<td style="text-align:center">&#x5E0C;&#x5C14;&#x6392;&#x5E8F;</td>
+<td style="text-align:center">O(nlogn)~O(n^2)</td>
+<td style="text-align:center">O(n^1.3)</td>
+<td style="text-align:center">O(n^2)</td>
+<td style="text-align:center">O(logn)~O(n)</td>
+<td style="text-align:center">&#x4E0D;&#x7A33;&#x5B9A;</td>
+</tr>
+<tr>
+<td style="text-align:center">&#x5806;&#x6392;&#x5E8F;</td>
+<td style="text-align:center">O(nlogn)</td>
+<td style="text-align:center">O(nlogn)</td>
+<td style="text-align:center">O(nlogn)</td>
+<td style="text-align:center">O(1)</td>
+<td style="text-align:center">&#x4E0D;&#x7A33;&#x5B9A;</td>
+</tr>
+</tbody>
+</table>
+<h1 id="&#x76F4;&#x63A5;&#x9009;&#x62E9;&#x6392;&#x5E8F;"><a href="#&#x76F4;&#x63A5;&#x9009;&#x62E9;&#x6392;&#x5E8F;" class="headerlink" title="&#x76F4;&#x63A5;&#x9009;&#x62E9;&#x6392;&#x5E8F;"></a>&#x76F4;&#x63A5;&#x9009;&#x62E9;&#x6392;&#x5E8F;</h1><h2 id="&#x601D;&#x60F3;"><a href="#&#x601D;&#x60F3;" class="headerlink" title="&#x601D;&#x60F3;"></a>&#x601D;&#x60F3;</h2><p><a href="http://idisfkj.github.io/2016/06/18/%E7%AE%97%E6%B3%95-%E4%B8%80-%E7%9B%B4%E6%8E%A5%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F/">&#x76F4;&#x63A5;&#x9009;&#x62E9;&#x6392;&#x5E8F;</a>&#xFF0C;&#x6574;&#x4F53;&#x601D;&#x60F3;&#x662F;&#x5C06;&#x6570;&#x636E;&#x5206;&#x6210;&#x4E24;&#x4E2A;&#x533A;&#x57DF;&#xFF0C;<code>&#x6709;&#x5E8F;&#x533A;</code>&#x4E0E;<code>&#x65E0;&#x5E8F;&#x533A;</code>&#x3002;&#x6392;&#x5E8F;&#x7684;&#x65F6;&#x5019;&#x662F;&#x6BCF;&#x6B21;&#x4ECE;<code>&#x65E0;&#x5E8F;&#x533A;</code>&#x4E2D;&#x9009;&#x62E9;&#x51FA;&#x6700;&#x5C0F;&#x7684;&#x6570;&#xFF0C;&#x7136;&#x540E;&#x63D2;&#x5165;&#x5230;<code>&#x6709;&#x5E8F;&#x533A;</code>&#x4E2D;&#x7684;&#x6700;&#x672B;&#x5C3E;&#xFF0C;&#x4ECE;&#x800C;&#x5F62;&#x6210;&#x66F4;&#x5927;&#x7684;<code>&#x6709;&#x5E8F;&#x533A;</code>&#x3002;&#x76F4;&#x5230;<code>&#x65E0;&#x5E8F;&#x533A;</code>&#x4E2D;&#x7684;&#x6570;&#x4E3A;&#x96F6;&#xFF0C;&#x7ED3;&#x675F;&#x6392;&#x5E8F;&#x3002;</p>
+<h2 id="&#x6B65;&#x9AA4;"><a href="#&#x6B65;&#x9AA4;" class="headerlink" title="&#x6B65;&#x9AA4;"></a>&#x6B65;&#x9AA4;</h2><p>&#x5047;&#x8BBE;&#x6392;&#x5E8F;&#x6570;&#x7EC4;&#x4E3A;a[0&#x2026;n-1];</p>
+<ol>
+<li>&#x9996;&#x5148;<code>&#x6709;&#x5E8F;&#x533A;</code>&#x4E2D;&#x7684;&#x4E2A;&#x6570;&#x4E3A;0&#xFF0C;&#x4EE4;<code>i = 0</code>&#x3002;&#x4ECE;<code>&#x65E0;&#x5E8F;&#x533A;</code>&#x4E2D;&#x9009;&#x62E9;&#x6700;&#x5C0F;&#x7684;&#x6570;&#xFF0C;&#x52A0;&#x5165;&#x5230;<code>&#x6709;&#x5E8F;&#x533A;a[i]</code>&#x4E2D;&#x3002;&#x4F7F;&#x5F97;<code>&#x6709;&#x5E8F;&#x533A;</code>&#x4E3A;<code>a[0..i]</code>,<code>&#x65E0;&#x5E8F;&#x533A;</code>&#x4E3A;<code>a[i...n-1]</code></li>
+<li>&#x5B8C;&#x6210;&#x540E; <code>i++</code> ,&#x7136;&#x540E;&#x7EE7;&#x7EED;&#x524D;&#x9762;&#x7684;&#x6B65;&#x9AA4;&#xFF0C;&#x76F4;&#x5230; <code>i = n-1</code> &#x4E3A;&#x6B62;&#x3002;&#x4F7F;&#x5F97;&#x5168;&#x90E8;&#x6570;&#x90FD;&#x5728;<code>&#x6709;&#x5E8F;&#x533A;</code>&#x4E2D;&#x3002;</li>
+</ol>
+<h1 id="&#x5192;&#x6CE1;&#x6392;&#x5E8F;"><a href="#&#x5192;&#x6CE1;&#x6392;&#x5E8F;" class="headerlink" title="&#x5192;&#x6CE1;&#x6392;&#x5E8F;"></a>&#x5192;&#x6CE1;&#x6392;&#x5E8F;</h1><h2 id="&#x601D;&#x60F3;-1"><a href="#&#x601D;&#x60F3;-1" class="headerlink" title="&#x601D;&#x60F3;"></a>&#x601D;&#x60F3;</h2><p><a href="http://idisfkj.github.io/2016/06/18/%E7%AE%97%E6%B3%95-%E4%BA%8C-%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F/">&#x5192;&#x6CE1;&#x6392;&#x5E8F;</a>&#x4E3B;&#x8981;&#x662F;&#x76F8;&#x90BB;&#x7684;&#x4E24;&#x4E2A;&#x6570;&#x4E24;&#x4E24;&#x8FDB;&#x884C;&#x6BD4;&#x8F83;&#xFF0C;&#x62FF;&#x4ECE;&#x5C0F;&#x5230;&#x5927;&#x8BF4;&#x660E;&#xFF0C;&#x8FDB;&#x884C;&#x5192;&#x6CE1;&#x6392;&#x5E8F;&#x540E;&#x4F1A;&#x5C06;&#x5927;&#x7684;&#x6570;<code>&#x6C89;</code>&#x5230;&#x5E95;&#x90E8;&#xFF0C;&#x5C06;&#x5C0F;&#x5F97;&#x6570;<code>&#x6D6E;</code>&#x5230;&#x9876;&#x90E8;&#x3002;&#x6240;&#x4EE5;&#x5192;&#x6CE1;&#x8BF4;&#x6CD5;&#x7531;&#x6B64;&#x5F97;&#x540D;&#x3002;</p>
+<h2 id="&#x6B65;&#x9AA4;-1"><a href="#&#x6B65;&#x9AA4;-1" class="headerlink" title="&#x6B65;&#x9AA4;"></a>&#x6B65;&#x9AA4;</h2><p>&#x4EE5;&#x4ECE;&#x5C0F;&#x5230;&#x5927;&#x4E3A;&#x4F8B;&#xFF0C;&#x6392;&#x5E8F;&#x6570;&#x7EC4;&#x5927;&#x5C0F;&#x4E3A;<code>n</code>&#x3002;</p>
+<ol>
+<li>&#x7B2C;<code>N = 0</code>&#x8D9F;&#x6392;&#x5E8F;&#x5F00;&#x59CB;&#x90FD;&#x4ECE;<code>a[0]</code>&#x5F00;&#x59CB;&#x4E0E;&#x5176;&#x4E0B;&#x9762;&#x7684;&#x76F8;&#x90BB;&#x7684;&#x6570;&#x8FDB;&#x884C;&#x6BD4;&#x8F83;&#xFF0C;&#x5982;&#x679C;&#x5927;&#x4E8E;&#x76F8;&#x90BB;&#x7684;&#x6570;&#x5219;&#x4EA4;&#x6362;&#x4ED6;&#x4EEC;&#x7684;&#x4F4D;&#x7F6E;&#x3002;</li>
+<li>&#x7EE7;&#x7EED;&#x4E0E;&#x4E0B;&#x4E00;&#x4E2A;&#x76F8;&#x90BB;&#x7684;&#x6570;&#x8FDB;&#x884C;&#x6BD4;&#x8F83;&#xFF0C;&#x5927;&#x4E8E;&#x76F8;&#x90BB;&#x7684;&#x5C31;&#x4EA4;&#x6362;&#xFF0C;&#x6700;&#x540E;&#x8FDB;&#x884C;&#x6BD4;&#x8F83;<code>n-1</code>&#x6B21;&#x540E;&#xFF0C;&#x7B2C;<code>N = 0</code>&#x8D9F;&#x6392;&#x5E8F;&#x7ED3;&#x675F;&#xFF0C;&#x6700;&#x5927;&#x7684;&#x6570;&#x5C31;&#x5728;&#x6570;&#x7EC4;&#x7684;<code>a[n-1]</code>&#x5904;&#x3002;</li>
+<li>&#x91CD;&#x590D;&#x524D;&#x9762;&#x7684;&#x6B65;&#x9AA4;&#xFF0C;&#x76F4;&#x5230; <code>N = n-1</code>,&#x6392;&#x5E8F;&#x7ED3;&#x675F;&#x3002;</li>
+</ol>
+<h1 id="&#x76F4;&#x63A5;&#x63D2;&#x5165;&#x6392;&#x5E8F;"><a href="#&#x76F4;&#x63A5;&#x63D2;&#x5165;&#x6392;&#x5E8F;" class="headerlink" title="&#x76F4;&#x63A5;&#x63D2;&#x5165;&#x6392;&#x5E8F;"></a>&#x76F4;&#x63A5;&#x63D2;&#x5165;&#x6392;&#x5E8F;</h1><h2 id="&#x601D;&#x60F3;-2"><a href="#&#x601D;&#x60F3;-2" class="headerlink" title="&#x601D;&#x60F3;"></a>&#x601D;&#x60F3;</h2><p><a href="http://idisfkj.github.io/2016/06/18/%E7%AE%97%E6%B3%95-%E4%B8%89-%E7%9B%B4%E6%8E%A5%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F/">&#x76F4;&#x63A5;&#x63D2;&#x5165;&#x6392;&#x5E8F;</a>&#x7684;&#x57FA;&#x672C;&#x601D;&#x60F3;&#x662F;:<code>&#x5C06;&#x9700;&#x8981;&#x6392;&#x5E8F;&#x7684;&#x5173;&#x952E;&#x6570;&#x4E0E;&#x524D;&#x9762;&#x5DF2;&#x7ECF;&#x6392;&#x597D;&#x5E8F;&#x7684;&#x6570;&#x636E;&#x4ECE;&#x540E;&#x5F80;&#x524D;&#x8FDB;&#x884C;&#x6BD4;&#x8F83;&#xFF0C;&#x4F7F;&#x5176;&#x63D2;&#x5165;&#x5230;&#x5408;&#x9002;&#x7684;&#x4F4D;&#x7F6E;</code>&#x3002;</p>
+<h2 id="&#x6B65;&#x9AA4;-2"><a href="#&#x6B65;&#x9AA4;-2" class="headerlink" title="&#x6B65;&#x9AA4;"></a>&#x6B65;&#x9AA4;</h2><p>&#x6392;&#x5E8F;&#x6570;&#x7EC4;&#x4E3A;<code>a[0...n]</code></p>
+<ol>
+<li>&#x5C06;<code>a[0]</code>&#x4F5C;&#x4E3A;&#x8D77;&#x59CB;&#x6570;&#x636E;&#xFF0C;&#x4ECE;<code>a[1]</code>&#x5F00;&#x59CB;&#x4F5C;&#x4E3A;&#x5173;&#x952E;&#x5B57;&#x5411;&#x524D;&#x8FDB;&#x884C;&#x6BD4;&#x8F83;&#xFF0C;&#x82E5;&#x5C0F;&#x4E8E;&#x524D;&#x9762;&#x6240;&#x9047;&#x5230;&#x7684;&#x6BD4;&#x8F83;&#x6570;&#xFF0C;&#x5219;&#x4EA4;&#x6362;&#x4E24;&#x4E2A;&#x6BD4;&#x8F83;&#x6570;&#x7684;&#x4F4D;&#x7F6E;&#xFF0C;&#x5426;&#x5219;&#x76F4;&#x63A5;&#x8FDB;&#x884C;&#x4E0B;&#x4E00;&#x4E2A;&#x5173;&#x952E;&#x5B57;&#x7684;&#x6BD4;&#x8F83;&#x3002;</li>
+<li>&#x91CD;&#x590D;&#x524D;&#x9762;&#x7684;&#x6B65;&#x9AA4;&#xFF0C;&#x76F4;&#x5230;&#x5C06;<code>a[n]</code>&#x4F5C;&#x4E3A;&#x5173;&#x952E;&#x5B57;&#x8FDB;&#x884C;&#x6BD4;&#x8F83;&#x3002;&#x6BD4;&#x8F83;&#x5B8C;&#x4EE5;&#x540E;&#x5219;&#x6392;&#x5E8F;&#x7ED3;&#x675F;&#x3002;</li>
+</ol>
+<h1 id="&#x5F52;&#x5E76;&#x6392;&#x5E8F;"><a href="#&#x5F52;&#x5E76;&#x6392;&#x5E8F;" class="headerlink" title="&#x5F52;&#x5E76;&#x6392;&#x5E8F;"></a>&#x5F52;&#x5E76;&#x6392;&#x5E8F;</h1><h2 id="&#x601D;&#x60F3;-3"><a href="#&#x601D;&#x60F3;-3" class="headerlink" title="&#x601D;&#x60F3;"></a>&#x601D;&#x60F3;</h2><p><a href="http://idisfkj.github.io/2016/06/18/%E7%AE%97%E6%B3%95-%E5%9B%9B-%E5%BD%92%E5%B9%B6%E6%8E%92%E5%BA%8F/">&#x5F52;&#x5E76;&#x6392;&#x5E8F;</a>&#x662F;&#x4E00;&#x4E2A;&#x6548;&#x7387;&#x76F8;&#x5BF9;&#x8F83;&#x9AD8;&#x7684;&#x6392;&#x5E8F;&#x7B97;&#x6CD5;&#xFF0C;&#x5B83;&#x91C7;&#x7528;&#x7684;&#x662F;<code>&#x5206;&#x6CBB;&#x7684;&#x601D;&#x60F3;</code>&#xFF0C;&#x5C06;&#x5F85;&#x6392;&#x5E8F;&#x7684;&#x5E8F;&#x5217;&#x5206;&#x6210;&#x82E5;&#x5E72;&#x7EC4;&#xFF0C;&#x4FDD;&#x8BC1;&#x6BCF;&#x7EC4;&#x90FD;&#x6709;&#x5E8F;&#xFF0C;&#x7136;&#x540E;&#x518D;&#x8FDB;&#x884C;&#x5408;&#x5E76;&#x6392;&#x5E8F;&#xFF0C;&#x6700;&#x7EC8;&#x4F7F;&#x6574;&#x4E2A;&#x5E8F;&#x5217;&#x6709;&#x5E8F;&#x3002;</p>
+<h2 id="&#x6B65;&#x9AA4;-3"><a href="#&#x6B65;&#x9AA4;-3" class="headerlink" title="&#x6B65;&#x9AA4;"></a>&#x6B65;&#x9AA4;</h2><ol>
+<li>&#x5C06;&#x5F85;&#x6392;&#x5E8F;&#x7684;&#x5E8F;&#x5217;&#x91C7;&#x7528;<code>&#x5206;&#x6CBB;&#x601D;&#x60F3;</code>&#x5C06;&#x5176;&#x5212;&#x5206;&#x6210;&#x82E5;&#x5E72;&#x7EC4;&#xFF0C;&#x4F7F;&#x5176;&#x6709;&#x5E8F;&#xFF0C;&#x5176;&#x4E2D;&#x53EF;&#x91C7;&#x7528;&#x9012;&#x5F52;&#x8FDB;&#x884C;&#x5212;&#x5206;&#x3002;</li>
+<li>&#x5C06;&#x6709;&#x5E8F;&#x7684;&#x7EC4;&#x5206;&#x522B;&#x8FDB;&#x884C;&#x5F52;&#x5E76;&#x64CD;&#x4F5C;&#xFF0C;&#x5176;&#x4E2D;&#x501F;&#x52A9;&#x4E00;&#x4E2A;&#x8F85;&#x52A9;&#x6570;&#x7EC4;&#xFF0C;&#x5C06;&#x5DE6;&#x53F3;&#x5212;&#x5206;&#x7684;&#x6709;&#x5E8F;&#x7EC4;&#x4ECE;&#x5934;&#x5F00;&#x59CB;&#x8FDB;&#x884C;&#x6BD4;&#x8F83;&#xFF0C;&#x5C06;&#x8F83;&#x5C0F;&#x7684;&#x6570;&#x52A0;&#x5165;&#x5230;&#x8F85;&#x52A9;&#x6570;&#x7EC4;&#x4E2D;&#xFF0C;&#x4E14;&#x8F83;&#x5C0F;&#x7684;&#x6240;&#x5728;&#x6709;&#x5E8F;&#x6570;&#x7EC4;&#x5411;&#x540E;&#x81EA;&#x589E;&#xFF0C;&#x518D;&#x4E0E;&#x539F;&#x6765;&#x6BD4;&#x8F83;&#x7684;&#x6570;&#x8FDB;&#x884C;&#x6BD4;&#x8F83;&#x3002;</li>
+<li>&#x91CD;&#x590D;&#x4E0A;&#x9762;<code>2</code>&#x7684;&#x6B65;&#x9AA4;&#xFF0C;&#x76F4;&#x5230;&#x6240;&#x6709;&#x6570;&#x636E;&#x6BD4;&#x8F83;&#x5B8C;&#x6BD5;&#xFF0C;&#x6216;&#x8005;&#x5C06;&#x8FD8;&#x6709;&#x5269;&#x4F59;&#x6570;&#x672A;&#x6BD4;&#x8F83;&#x7684;&#x6709;&#x5E8F;&#x6570;&#x636E;&#x76F4;&#x63A5;&#x6309;&#x539F;&#x6709;&#x7684;&#x987A;&#x5E8F;&#x52A0;&#x5165;&#x5230;&#x8F85;&#x52A9;&#x6570;&#x7EC4;&#x4E2D;,&#x6700;&#x540E;&#x5C06;&#x5DF2;&#x7ECF;&#x6392;&#x597D;&#x5E8F;&#x7684;&#x8F85;&#x52A9;&#x6570;&#x7EC4;&#x52A0;&#x5165;&#x5230;&#x539F;&#x6709;&#x6570;&#x7EC4;&#x7684;&#x76F8;&#x5E94;&#x4F4D;&#x7F6E;&#x3002;</li>
+<li>&#x91CD;&#x590D;&#x4E0A;&#x9762;&#x7684;<code>2</code>&#x3001;<code>3</code>&#x6B65;&#x9AA4;&#xFF0C;&#x76F4;&#x5230;&#x6240;&#x6709;&#x7684;&#x5DE6;&#x53F3;&#x5212;&#x5206;&#x5F52;&#x5E76;&#x5B8C;&#x6BD5;&#x3002;</li>
+</ol>
+<h1 id="&#x5FEB;&#x901F;&#x6392;&#x5E8F;"><a href="#&#x5FEB;&#x901F;&#x6392;&#x5E8F;" class="headerlink" title="&#x5FEB;&#x901F;&#x6392;&#x5E8F;"></a>&#x5FEB;&#x901F;&#x6392;&#x5E8F;</h1><h2 id="&#x601D;&#x60F3;-4"><a href="#&#x601D;&#x60F3;-4" class="headerlink" title="&#x601D;&#x60F3;"></a>&#x601D;&#x60F3;</h2><p><a href="http://idisfkj.github.io/2016/06/18/%E7%AE%97%E6%B3%95-%E4%BA%94-%E5%BF%AB%E9%80%9F%E6%8E%92%E5%BA%8F/">&#x5FEB;&#x901F;&#x6392;&#x5E8F;</a>&#x7684;&#x4E3B;&#x8981;&#x601D;&#x60F3;&#x662F;&#xFF1A;<code>&#x5C06;&#x4E00;&#x4E2A;&#x5F85;&#x6392;&#x5E8F;&#x5E8F;&#x5217;&#x5206;&#x6210;&#x4E24;&#x4E2A;&#x90E8;&#x5206;&#xFF0C;&#x4EE5;&#x5176;&#x4E2D;&#x7684;&#x4E00;&#x4E2A;&#x6570;&#x636E;&#x4F5C;&#x4E3A;&#x5206;&#x754C;&#x7EBF;&#xFF0C;&#x5176;&#x4E2D;&#x4E00;&#x90E8;&#x5206;&#x5C0F;&#x4E8E;&#x8FD9;&#x4E2A;&#x5206;&#x754C;&#x7EBF;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x53E6;&#x4E00;&#x90E8;&#x5206;&#x5927;&#x4E8E;&#x8FD9;&#x4E2A;&#x5206;&#x754C;&#x7EBF;&#x7684;&#x6570;&#x636E;&#x3002;&#x56E0;&#x4E3A;&#x91C7;&#x7528;&#x9012;&#x5F52;&#x7684;&#x601D;&#x60F3;&#xFF0C;&#x518D;&#x5BF9;&#x8FD9;&#x4E24;&#x4E2A;&#x5E8F;&#x5217;&#x8FDB;&#x884C;&#x5FEB;&#x901F;&#x6392;&#x5E8F;&#xFF0C;&#x76F4;&#x5230;&#x6240;&#x4EE5;&#x7684;&#x6570;&#x636E;&#x90FD;&#x662F;&#x6709;&#x5E8F;&#x7684;</code>&#x3002;</p>
+<h2 id="&#x6B65;&#x9AA4;-4"><a href="#&#x6B65;&#x9AA4;-4" class="headerlink" title="&#x6B65;&#x9AA4;"></a>&#x6B65;&#x9AA4;</h2><p>&#x5047;&#x8BBE;&#x5F85;&#x6392;&#x5E8F;&#x7684;&#x6570;&#x7EC4;&#x4E3A;<code>a[0...n-1]</code></p>
+<ol>
+<li>&#x4E00;&#x822C;&#x90FD;&#x5C06;&#x7B2C;&#x4E00;&#x4E2A;&#x6570;<code>a[i]</code> (<code>i = 0</code>) &#x4F5C;&#x4E3A;&#x5173;&#x952E;&#x6570;&#xFF0C;&#x5373;&#x5FEB;&#x901F;&#x6392;&#x5E8F;&#x7684;&#x5206;&#x754C;&#x6570;&#x3002;&#x5148;&#x4ECE;&#x6570;&#x7EC4;&#x7684;&#x540E;&#x9762;&#x5F00;&#x59CB;&#x5373;&#x521D;&#x503C;<code>j = n-1</code>&#xFF0C;&#x9010;&#x4E2A;&#x5411;&#x524D;&#x8FDB;&#x884C;&#x904D;&#x5386;&#x4E0E;&#x9009;&#x7684;&#x7684;&#x5173;&#x952E;&#x6570;&#x8FDB;&#x884C;&#x6BD4;&#x8F83;(<code>j--</code>)&#xFF0C;&#x82E5;&#x5927;&#x4E8E;&#x7B49;&#x4E8E;&#x5173;&#x952E;&#x6570;&#x5219;&#x7EE7;&#x7EED;&#x904D;&#x5386;&#xFF0C;&#x5426;&#x5219;&#x5C06;&#x5176;&#x4E0E;&#x5173;&#x952E;&#x6570;&#x6240;&#x5728;&#x7684;&#x4F4D;&#x7F6E;&#x8FDB;&#x884C;&#x4EA4;&#x6362;&#xFF0C;&#x5E76;&#x505C;&#x6B62;&#x904D;&#x5386;&#x4E14;<code>i++</code>&#x8BB0;&#x5F55;&#x6B64;&#x65F6;&#x7684;<code>i</code>&#x3001;<code>j</code>&#x3002;</li>
+<li>&#x505C;&#x6B62;&#x524D;&#x9762;&#x7684;&#x904D;&#x5386;&#xFF0C;&#x518D;&#x4ECE;&#x6570;&#x7EC4;&#x7684;&#x7B2C;<code>i</code>&#x4E2A;&#x4F4D;&#x7F6E;&#x5F00;&#x59CB;&#x5411;&#x540E;&#x8FDB;&#x884C;&#x904D;&#x5386;&#xFF0C;&#x9010;&#x4E2A;&#x4E0E;&#x5173;&#x952E;&#x6570;&#x8FDB;&#x884C;&#x6BD4;&#x8F83;(<code>i++</code>)&#xFF0C;&#x82E5;&#x5C0F;&#x4E8E;&#x7B49;&#x4E8E;&#x5173;&#x952E;&#x6570;&#x5219;&#x7EE7;&#x7EED;&#x904D;&#x5386;&#xFF0C;&#x5426;&#x5219;&#x5C06;&#x5176;&#x4E0E;&#x5173;&#x952E;&#x6570;&#x6240;&#x5728;&#x7684;&#x4F4D;&#x7F6E;&#x8FDB;&#x884C;&#x4EA4;&#x6362;&#xFF0C;&#x5E76;&#x505C;&#x6B62;&#x904D;&#x5386;&#x4E14;<code>j--</code>&#x8BB0;&#x5F55;&#x6B64;&#x65F6;&#x7684;<code>i</code>&#x3001;<code>j</code>&#x3002;</li>
+<li>&#x91CD;&#x590D;&#x4E0A;&#x9762;&#x7684;&#x6B65;&#x9AA4;&#xFF0C;&#x76F4;&#x5230;<code>i==j</code>&#x5C31;&#x7ED3;&#x675F;&#x672C;&#x6B21;&#x5FEB;&#x901F;&#x6392;&#x5E8F;&#x3002;</li>
+<li>&#x6B64;&#x65F6;&#x5DF2;&#x7ECF;&#x5C06;&#x5176;&#x6309;&#x5173;&#x952E;&#x6570;&#x5206;&#x6210;&#x4E24;&#x4E2A;&#x90E8;&#x5206;&#xFF0C;&#x518D;&#x91CD;&#x590D;&#x524D;&#x9762;&#x7684;&#x6B65;&#x9AA4;&#xFF0C;&#x5BF9;&#x5212;&#x5206;&#x7684;&#x90E8;&#x5206;&#x8FDB;&#x884C;&#x5FEB;&#x901F;&#x6392;&#x5E8F;&#xFF0C;&#x76F4;&#x5230;&#x5212;&#x5206;&#x7684;&#x7EC4;&#x4E2D;&#x7684;&#x6570;&#x636E;&#x4E2A;&#x6570;&#x4E3A;<code>1</code>&#x5373;&#x6B64;&#x65F6;&#x6240;&#x6709;&#x6570;&#x636E;&#x6709;&#x5E8F;&#x3002;</li>
+</ol>
+<h1 id="&#x5E0C;&#x5C14;&#x6392;&#x5E8F;"><a href="#&#x5E0C;&#x5C14;&#x6392;&#x5E8F;" class="headerlink" title="&#x5E0C;&#x5C14;&#x6392;&#x5E8F;"></a>&#x5E0C;&#x5C14;&#x6392;&#x5E8F;</h1><h2 id="&#x601D;&#x60F3;-5"><a href="#&#x601D;&#x60F3;-5" class="headerlink" title="&#x601D;&#x60F3;"></a>&#x601D;&#x60F3;</h2><p><a href="http://idisfkj.github.io/2016/06/19/%E7%AE%97%E6%B3%95-%E5%85%AD-%E5%B8%8C%E5%B0%94%E6%8E%92%E5%BA%8F/">&#x5E0C;&#x5C14;&#x6392;&#x5E8F;</a>&#x662F;&#x8BB0;&#x5F55;&#x589E;&#x91CF;&#x6765;&#x8FDB;&#x884C;&#x5206;&#x7EC4;&#xFF0C;&#x518D;&#x5BF9;&#x5206;&#x7EC4;&#x5185;&#x90E8;&#x8FDB;&#x884C;<a href="http://idisfkj.github.io/2016/06/18/%E7%AE%97%E6%B3%95-%E4%B8%89-%E7%9B%B4%E6%8E%A5%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F/">&#x76F4;&#x63A5;&#x63D2;&#x5165;&#x6392;&#x5E8F;</a>&#xFF0C;&#x968F;&#x7740;&#x589E;&#x91CF;&#x7684;&#x4E0D;&#x65AD;&#x51CF;&#x5C0F;&#xFF0C;&#x76F4;&#x5230;&#x589E;&#x91CF;&#x51CF;&#x5C0F;&#x5230;<code>1</code>&#x65F6;&#xFF0C;&#x5373;&#x6BCF;&#x4E2A;&#x5206;&#x7EC4;&#x4E2D;&#x7684;&#x6570;&#x636E;&#x91CF;&#x4E3A;<code>1</code>&#xFF0C;&#x6B64;&#x65F6;&#x6392;&#x5E8F;&#x7ED3;&#x675F;&#x3002;</p>
+<h2 id="&#x6B65;&#x9AA4;-5"><a href="#&#x6B65;&#x9AA4;-5" class="headerlink" title="&#x6B65;&#x9AA4;"></a>&#x6B65;&#x9AA4;</h2><p>&#x8BBE;&#x5F85;&#x6392;&#x5E8F;&#x7684;&#x6570;&#x7EC4;&#x4E3A;<code>a[0...n-1]</code></p>
+<ol>
+<li>&#x4E00;&#x822C;&#x5F00;&#x59CB;&#x53D6;&#x589E;&#x91CF;&#x6570;<code>d=n/2</code>&#x3002;&#x4ECE;<code>a[0]~a[d-1]</code>&#x5C06;&#x6570;&#x7EC4;&#x4E2D;&#x6570;&#x636E;&#x4E4B;&#x95F4;&#x7684;&#x95F4;&#x9694;&#x4E3A;&#x589E;&#x91CF;&#x6570;<code>d</code>&#x7684;&#x500D;&#x6570;&#x5F52;&#x4E3A;&#x76F8;&#x540C;&#x7EC4;&#x3002;</li>
+<li>&#x4F9D;&#x6B21;&#x5BF9;&#x6BCF;&#x7EC4;&#x4E2D;&#x7684;&#x6570;&#x636E;&#x8FDB;&#x884C;<a href="http://idisfkj.github.io/2016/06/18/%E7%AE%97%E6%B3%95-%E4%B8%89-%E7%9B%B4%E6%8E%A5%E6%8F%92%E5%85%A5%E6%8E%92%E5%BA%8F/">&#x76F4;&#x63A5;&#x63D2;&#x5165;&#x6392;&#x5E8F;</a>&#xFF0C;&#x4F7F;&#x5176;&#x6709;&#x5E8F;&#x3002;</li>
+<li>&#x518D;&#x589E;&#x91CF;&#x6570;<code>d=d/2</code>&#xFF0C;&#x91CD;&#x590D;&#x4E0A;&#x9762;&#x7684;&#x6B65;&#x9AA4;&#xFF0C;&#x76F4;&#x5230;<code>d=1</code>&#x4E3A;&#x6B62;&#x3002;</li>
+</ol>
+<h1 id="&#x5806;&#x6392;&#x5E8F;"><a href="#&#x5806;&#x6392;&#x5E8F;" class="headerlink" title="&#x5806;&#x6392;&#x5E8F;"></a>&#x5806;&#x6392;&#x5E8F;</h1><h2 id="&#x601D;&#x60F3;-6"><a href="#&#x601D;&#x60F3;-6" class="headerlink" title="&#x601D;&#x60F3;"></a>&#x601D;&#x60F3;</h2><p><a href="http://idisfkj.github.io/2016/06/19/%E7%AE%97%E6%B3%95-%E4%B8%83-%E5%A0%86%E6%8E%92%E5%BA%8F/">&#x5806;&#x6392;&#x5E8F;</a>&#x662F;&#x91C7;&#x7528;&#x6811;&#x7684;&#x5F62;&#x5F0F;&#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;&#x6765;&#x8FDB;&#x884C;&#x6392;&#x5E8F;&#x7684;&#xFF0C;&#x5176;&#x4E2D;&#x6BCF;&#x4E00;&#x4E2A;&#x5806;&#x90FD;&#x662F;&#x5B8C;&#x5168;&#x4E8C;&#x53C9;&#x6811;&#x3002;&#x5806;&#x6392;&#x5E8F;&#x5206;&#x4E3A;&#x5927;&#x6839;&#x5806;&#x4E0E;&#x5C0F;&#x6839;&#x5806;&#xFF0C;<code>&#x5927;&#x6839;&#x5806;&#xFF08;&#x5C0F;&#x6839;&#x5806;&#xFF09;&#x8868;&#x793A;&#x5728;&#x5B8C;&#x5168;&#x4E8C;&#x53C9;&#x6811;&#x4E2D;&#xFF0C;&#x6240;&#x7528;&#x7684;&#x975E;&#x53F6;&#x5B50;&#x8282;&#x70B9;&#x90FD;&#x5927;&#x4E8E;&#x7B49;&#x4E8E;&#xFF08;&#x5C0F;&#x4E8E;&#x7B49;&#x4E8E;&#xFF09;&#x4ED6;&#x4EEC;&#x5DE6;&#x53F3;&#x5B50;&#x8282;&#x70B9;&#xFF08;&#x5B58;&#x5728;&#xFF09;</code>&#x3002;&#x6240;&#x4EE5;&#x5806;&#x7684;&#x9876;&#x70B9;&#x4E0D;&#x662F;&#x6700;&#x5927;&#x6570;&#x5C31;&#x662F;&#x6700;&#x5C0F;&#x6570;&#x3002;&#x8FD9;&#x6837;&#x7684;&#x8BDD;&#x6211;&#x4EEC;&#x5C31;&#x53EF;&#x4EE5;&#x501F;&#x52A9;&#x8FD9;&#x79CD;&#x6027;&#x8D28;&#xFF0C;<code>&#x6BCF;&#x6B21;&#x90FD;&#x53D6;&#x51FA;&#x5927;&#x6839;&#x5806;&#xFF08;&#x5C0F;&#x6839;&#x5806;&#xFF09;&#x7684;&#x9876;&#x70B9;&#x6570;&#xFF0C;&#x5F62;&#x6210;&#x6709;&#x5E8F;&#x5E8F;&#x5217;</code>&#x3002;</p>
+<h2 id="&#x6B65;&#x9AA4;-6"><a href="#&#x6B65;&#x9AA4;-6" class="headerlink" title="&#x6B65;&#x9AA4;"></a>&#x6B65;&#x9AA4;</h2><ol>
+<li>&#x9996;&#x5148;&#x751F;&#x6210;&#x5C0F;&#x6839;&#x5806;&#x6216;&#x5927;&#x6839;&#x5806;&#xFF0C;&#x8FD9;&#x91CC;&#x4EE5;&#x5C0F;&#x6839;&#x5806;&#x4E3A;&#x4F8B;&#x3002;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x5C06;&#x6BCF;&#x4E00;&#x4E2A;&#x975E;&#x53F6;&#x5B50;&#x8282;&#x70B9;&#x90FD;&#x770B;&#x505A;&#x662F;&#x4E00;&#x4E2A;&#x6700;&#x5C0F;&#x7684;&#x5B8C;&#x5168;&#x4E8C;&#x53C9;&#x6811;&#xFF0C;&#x5C06;&#x4ED6;&#x4EEC;&#x90FD;&#x751F;&#x6210;&#x5C0F;&#x6839;&#x5806;&#xFF0C;&#x4ECE;&#x6700;&#x540E;&#x4E00;&#x4E2A;&#x975E;&#x53F6;&#x5B50;&#x8282;&#x70B9;&#x5F00;&#x59CB;&#xFF0C;&#x628A;&#x5176;&#x5F53;&#x505A;&#x662F;&#x6839;&#x8282;&#x70B9;&#xFF0C;&#x9010;&#x6B65;&#x5411;&#x524D;&#x8FDB;&#x884C;&#x521B;&#x5EFA;&#x5C0F;&#x6839;&#x5806;&#x3002;&#x4F8B;&#x5982;&#x4E0A;&#x56FE;&#x4E2D;&#x7684;&#x5927;&#x6839;&#x5806;&#xFF0C;&#x5C06;&#x5176;&#x53D8;&#x6210;&#x5C0F;&#x6839;&#x5806;&#x7684;&#x6B65;&#x9AA4;&#xFF0C;&#x5148;&#x4EE5;<code>30</code>&#x4E3A;&#x6839;&#x8282;&#x70B9;&#xFF0C;&#x6839;&#x636E;&#x5C0F;&#x6839;&#x5806;&#x7684;&#x6027;&#x8D28;&#xFF0C;&#x9700;&#x8981;&#x4E0E;<code>10</code>&#x4E92;&#x6362;&#x4F4D;&#x7F6E;;&#x518D;&#x4EE5;<code>60</code>&#x4E3A;&#x6839;&#x8282;&#x70B9;&#xFF0C;&#x53D1;&#x73B0;&#x9700;&#x8981;&#x4E0E;<code>15</code>&#x4E92;&#x6362;&#x4F4D;&#x7F6E;&#xFF1B;&#x6700;&#x540E;&#x4E0E;<code>70</code>&#x4E3A;&#x6839;&#x8282;&#x70B9;&#xFF0C;&#x9700;&#x8981;&#x4E0E;&#x539F;&#x6765;<code>30</code>&#x7684;&#x4F4D;&#x7F6E;&#x5373;&#x73B0;&#x5728;&#x4EA4;&#x6362;&#x4F4D;&#x7F6E;&#x7684;<code>10</code>&#x4E92;&#x6362;&#x4F4D;&#x7F6E;&#xFF0C;&#x6700;&#x7EC8;&#x5F62;&#x6210;&#x5C0F;&#x6839;&#x5806;&#x3002;</li>
+<li>&#x7136;&#x540E;&#x5C31;&#x662F;&#x53D6;&#x51FA;&#x5F62;&#x6210;&#x7684;&#x5C0F;&#x6839;&#x5806;&#x5F97;&#x9876;&#x70B9;&#x503C;&#xFF0C;&#x5C06;&#x5176;&#x4E0E;&#x5806;&#x4E2D;&#x7B2C;<code>N</code>(N=n)&#x4E2A;&#x8282;&#x70B9;&#x4E92;&#x6362;&#x4F4D;&#x7F6E;&#xFF0C;&#x5373;<code>a[N-1]</code>&#x3002;</li>
+<li>&#x6B64;&#x65F6;&#x5C0F;&#x6839;&#x5806;&#x88AB;&#x7834;&#x574F;&#xFF0C;&#x518D;&#x91CD;&#x65B0;&#x751F;&#x4EA7;&#x5C0F;&#x6839;&#x5806;<code>N--</code>&#xFF0C;&#x4F46;&#x6B64;&#x65F6;&#x8981;&#x751F;&#x6210;&#x7684;&#x6570;&#x7684;&#x8303;&#x56F4;&#x4E3A;<code>a[0...N-1]</code>&#x3002;</li>
+<li>&#x91CD;&#x590D;&#x4E0A;&#x9762;&#x7684;&#x6B65;&#x9AA4;<code>2</code>&#x3001;<code>3</code>&#xFF0C;&#x76F4;&#x5230;<code>N=1</code>&#xFF0C;&#x5373;<code>a[0]</code>&#xFF0C;&#x6392;&#x5E8F;&#x7ED3;&#x675F;&#x3002;</li>
+</ol>
+<p>&#x5982;&#x6709;&#x4E0D;&#x8DB3;&#x4E4B;&#x5904;&#x6B22;&#x8FCE;&#x6307;&#x51FA;&#xFF0C;&#x5168;&#x90E8;&#x4EE3;&#x7801;&#x5DF2;&#x7ECF;&#x653E;&#x5230;github&#x4E0A;&#xFF0C;&#x6709;&#x9700;&#x8981;&#x7684;&#x53EF;&#x4EE5;&#x4E0B;&#x8F7D;&#x3002;</p>
+<p>github&#x5730;&#x5740;&#xFF1A;<a href="https://github.com/idisfkj/Arithmetic" target="_blank" rel="external">https://github.com/idisfkj/Arithmetic</a></p>
+<blockquote>
+<p><em>&#x8F6C;&#x8F7D;&#x8BF7;&#x6307;&#x660E;&#x51FA;&#x5904; idisfkj&#x535A;&#x5BA2;&#xFF1A;<a href="http://idisfkj.github.io">http://idisfkj.github.io</a></em></p>
+</blockquote>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal-one" aria-hidden="true">
+  <a href="#close" class="cover" aria-hidden="true"></a>
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <a href="#close" class="btn-close" aria-hidden="true">关闭</a>
+    </div>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+  <section class="duoshuo-comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="" data-title="七大排序算法总结" data-url="http://idisfkj.github.io/2016/06/19/七大排序算法总结/index.html"></div>
+    <!-- 多说评论框 end -->
+  </section>
+
+
+
+
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"idisfkj"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?398', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
