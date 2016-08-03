@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+
+
+  <html class="light">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>RecyclerView下拉刷新与上拉更多 | Idisfkj</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="RecyclerView," />
+  
+
+  <meta name="description" content="&amp;#x524D;&amp;#x8A00;&amp;#x5728;&amp;#x539F;&amp;#x6765;&amp;#x7684;&amp;#x6587;&amp;#x7AE0;&amp;#x4E2D;&amp;#x6211;&amp;#x63D0;&amp;#x53CA;&amp;#x4E86;&amp;#x5982;&amp;#x4F55;&amp;#x4F7F;&amp;#x7528;RecyclerView&amp;#x6DFB;&amp;#x52A0;header&amp;#x4E0E;footer&amp;#xFF0C;&amp;#x4ECA;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RecyclerView下拉刷新与上拉更多">
+<meta property="og:url" content="https://idisfkj.github.io/2016/08/03/RecyclerView下拉刷新与上拉更多/index.html">
+<meta property="og:site_name" content="Idisfkj">
+<meta property="og:description" content="&amp;#x524D;&amp;#x8A00;&amp;#x5728;&amp;#x539F;&amp;#x6765;&amp;#x7684;&amp;#x6587;&amp;#x7AE0;&amp;#x4E2D;&amp;#x6211;&amp;#x63D0;&amp;#x53CA;&amp;#x4E86;&amp;#x5982;&amp;#x4F55;&amp;#x4F7F;&amp;#x7528;RecyclerView&amp;#x6DFB;&amp;#x52A0;header&amp;#x4E0E;footer&amp;#xFF0C;&amp;#x4ECA;">
+<meta property="og:image" content="https://idisfkj.github.io/2016/08/03/RecyclerView下拉刷新与上拉更多/1.gif">
+<meta property="og:updated_time" content="2016-08-03T08:35:29.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RecyclerView下拉刷新与上拉更多">
+<meta name="twitter:description" content="&amp;#x524D;&amp;#x8A00;&amp;#x5728;&amp;#x539F;&amp;#x6765;&amp;#x7684;&amp;#x6587;&amp;#x7AE0;&amp;#x4E2D;&amp;#x6211;&amp;#x63D0;&amp;#x53CA;&amp;#x4E86;&amp;#x5982;&amp;#x4F55;&amp;#x4F7F;&amp;#x7528;RecyclerView&amp;#x6DFB;&amp;#x52A0;header&amp;#x4E0E;footer&amp;#xFF0C;&amp;#x4ECA;">
+<meta name="twitter:image" content="https://idisfkj.github.io/2016/08/03/RecyclerView下拉刷新与上拉更多/1.gif">
+
+  
+
+  
+  <!-- <link href="/favicon.ico" rel="icon" type="image/x-icon"> -->
+    <link rel="icon" href="/favicon.ico">
+    <!-- <link href="favicon.ico" rel="shortcut icon" type="image/x-icon" /> -->
+  
+  
+  <link href="/css/styles.css?v=5f7f1d39" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?ef89e68af5e136d5c22043f91cd139ea";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+
+  
+    <a href="#modal-one" class="toolbox-mobile">盒子</a>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#前言"><span class="toc-text">前言</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#依赖"><span class="toc-text">依赖</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#EnhanceRecyclerView"><span class="toc-text">EnhanceRecyclerView</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#设置监听器"><span class="toc-text">设置监听器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#OnScrollListener"><span class="toc-text">OnScrollListener</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#onScrolled"><span class="toc-text">onScrolled</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#onScrollStateChanged"><span class="toc-text">onScrollStateChanged</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#OnTouchListener"><span class="toc-text">OnTouchListener</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ACTION-MOVE"><span class="toc-text">ACTION_MOVE</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ACTION-UP"><span class="toc-text">ACTION_UP</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#下拉与上拉接口"><span class="toc-text">下拉与上拉接口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#状态重置设置"><span class="toc-text">状态重置设置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#使用"><span class="toc-text">使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#xml中引用"><span class="toc-text">xml中引用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#设置监听"><span class="toc-text">设置监听</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#效果"><span class="toc-text">效果</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-RecyclerView下拉刷新与上拉更多" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">RecyclerView下拉刷新与上拉更多</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.08.03</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>idisfkj</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/android/">android</a>
+  </span>
+
+
+
+      
+        <span>
+          <i class="icon-comment"></i>
+          <a href="https://idisfkj.github.io//2016/08/03/RecyclerView下拉刷新与上拉更多/#disqus_thread"></a>
+        </span>
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <h1 id="&#x524D;&#x8A00;"><a href="#&#x524D;&#x8A00;" class="headerlink" title="&#x524D;&#x8A00;"></a>&#x524D;&#x8A00;</h1><p>&#x5728;&#x539F;&#x6765;&#x7684;&#x6587;&#x7AE0;&#x4E2D;&#x6211;&#x63D0;&#x53CA;&#x4E86;&#x5982;&#x4F55;&#x4F7F;&#x7528;<code>RecyclerView</code>&#x6DFB;&#x52A0;<code>header</code>&#x4E0E;<code>footer</code>&#xFF0C;&#x4ECA;&#x5929;&#x6211;&#x4EEC;&#x6765;&#x66F4;&#x6DF1;&#x5165;&#x7684;&#x6269;&#x5C55;&#x4E00;&#x4E0B;&#x4F7F;&#x7528;<code>RecyclerView</code>&#x5B9E;&#x73B0;&#x5E38;&#x7528;&#x7684;&#x4E0B;&#x62C9;&#x5237;&#x65B0;&#x4E0E;&#x4E0A;&#x62C9;&#x52A0;&#x8F7D;&#x66F4;&#x591A;&#x7684;&#x529F;&#x80FD;&#x3002;&#x5F53;&#x7136;&#x8FD9;&#x4E9B;&#x529F;&#x80FD;&#x7684;&#x5B9E;&#x73B0;&#x4E5F;&#x662F;&#x57FA;&#x4E8E;&#x524D;&#x9762;&#x7684;<a href="https://idisfkj.github.io/2016/07/05/RecyclerView%E6%B7%BB%E5%8A%A0header%E4%B8%8Efooter/">RecyclerView&#x6DFB;&#x52A0;header&#x4E0E;footer</a>&#x4E3A;&#x57FA;&#x7840;&#x6765;&#x5B9E;&#x73B0;&#x7684;&#xFF0C;&#x4E0D;&#x662F;&#x5F88;&#x4E86;&#x89E3;&#x7684;&#x53EF;&#x4EE5;&#x5148;&#x770B;&#x770B;&#x524D;&#x9762;&#x7684;&#x6587;&#x7AE0;&#x53EF;&#x80FD;&#x80FD;&#x66F4;&#x597D;&#x7684;&#x5E2E;&#x52A9;&#x7406;&#x89E3;&#x3002;</p>
+<h2 id="&#x4F9D;&#x8D56;"><a href="#&#x4F9D;&#x8D56;" class="headerlink" title="&#x4F9D;&#x8D56;"></a>&#x4F9D;&#x8D56;</h2><p>&#x4E3A;&#x4E86;&#x65B9;&#x6CD5;&#x5927;&#x5BB6;&#x7684;&#x4F7F;&#x7528;&#x6211;&#x5DF2;&#x7ECF;&#x628A;&#x4ED6;&#x4E0A;&#x4F20;&#x5230;<code>Jcenter</code>&#x4E2D;&#x4E86;&#xFF0C;&#x6240;&#x4EE5;&#x5927;&#x5BB6;&#x53EF;&#x4EE5;&#x8C03;&#x7528;&#x4E0B;&#x9762;&#x7684;&#x4EE3;&#x7801;&#x4E86;&#x76F4;&#x63A5;&#x83B7;&#x53D6;&#x4F7F;&#x7528;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">compile &apos;com.idisfkj.enchancerecyclerview:mylibrary:1.1.1&apos;</span><br></pre></td></tr></table></figure>
+<h2 id="EnhanceRecyclerView"><a href="#EnhanceRecyclerView" class="headerlink" title="EnhanceRecyclerView"></a>EnhanceRecyclerView</h2><p>&#x6211;&#x5C06;&#x8FD9;&#x4E2A;&#x6269;&#x5C55;&#x7684;<code>RecyclerView</code>&#x547D;&#x540D;&#x4E3A;<code>EnhanceRecyclerView</code>&#xFF0C;&#x7EE7;&#x627F;<code>RecyclerView</code>&#x3002;&#x6211;&#x4EEC;&#x77E5;&#x9053;&#x65E2;&#x7136;&#x8981;&#x5B9E;&#x73B0;&#x4E0B;&#x62C9;&#x5237;&#x65B0;&#x4E0E;&#x4E0A;&#x62C9;&#x66F4;&#x591A;&#x81EA;&#x7136;&#x5148;&#x8981;&#x5B9E;&#x73B0;&#x5934;&#x90E8;&#x4E0E;&#x5C3E;&#x90E8;&#x7684;&#x5E03;&#x5C40;&#xFF0C;&#x6240;&#x4EE5;&#x6211;&#x4EEC;&#x5148;&#x5229;&#x7528;&#x524D;&#x9762;&#x7684;&#x77E5;&#x8BC6;&#x6765;&#x4E3A;<code>EnhanceRecycleView</code>&#x6DFB;&#x52A0;<code>header</code>&#x4E0E;<code>footer</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public void initView() {</span><br><span class="line">        View headerView = LayoutInflater.from(getContext()).inflate(R.layout.head_layout, null);</span><br><span class="line">        View footerView = LayoutInflater.from(getContext()).inflate(R.layout.footer_layout, null);</span><br><span class="line">        addHeaderView(headerView);</span><br><span class="line">        addFooterView(footerView);</span><br><span class="line">    }</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><em>&#x5176;&#x4E2D;&#x7684;&#x5E03;&#x5C40;&#x6587;&#x4EF6;&#x5C31;&#x4E0D;&#x591A;&#x8BF4;&#x4E86;&#xFF0C;&#x81F3;&#x4E8E;addHeaderView&#x4E0E;addFooterView&#x65B9;&#x6CD5;&#x53EF;&#x4EE5;&#x67E5;&#x770B;&#x6211;&#x524D;&#x9762;&#x7684;&#x90A3;&#x7BC7;&#x6587;&#x7AE0;&#xFF0C;&#x6709;&#x8BE6;&#x7EC6;&#x7684;&#x4ECB;&#x7ECD;</em></p>
+</blockquote>
+<h2 id="&#x8BBE;&#x7F6E;&#x76D1;&#x542C;&#x5668;"><a href="#&#x8BBE;&#x7F6E;&#x76D1;&#x542C;&#x5668;" class="headerlink" title="&#x8BBE;&#x7F6E;&#x76D1;&#x542C;&#x5668;"></a>&#x8BBE;&#x7F6E;&#x76D1;&#x542C;&#x5668;</h2><p>&#x65E2;&#x7136;&#x8981;&#x5B9E;&#x73B0;&#x4E0B;&#x62C9;&#x5237;&#x65B0;&#x4E0E;&#x4E0A;&#x62C9;&#x52A0;&#x8F7D;&#xFF0C;&#x81EA;&#x7136;&#x5C11;&#x4E0D;&#x4E86;&#x5BF9;&#x76D1;&#x542C;&#x5668;&#x7684;&#x5904;&#x7406;&#xFF0C;&#x6240;&#x4EE5;&#x4E0B;&#x9762;&#x6765;&#x8BE6;&#x7EC6;&#x4ECB;&#x7ECD;&#x4E0B;&#x5BF9;&#x76D1;&#x542C;&#x5668;<code>OnScrollListener</code>&#x4E0E;<code>OnTouchListener</code>&#x7684;&#x5904;&#x7406;&#x3002;</p>
+<h2 id="OnScrollListener"><a href="#OnScrollListener" class="headerlink" title="OnScrollListener"></a>OnScrollListener</h2><p>&#x4E3A;<code>EnhanceRecyclerView</code>&#x6DFB;&#x52A0;<code>addOnScrollListener</code>&#x5B9E;&#x73B0;&#x5176;&#x4E2D;&#x7684;<code>onScrollStateChanged</code>&#x4E0E;<code>onScrolled</code>&#x65B9;&#x6CD5;&#x3002;</p>
+<h3 id="onScrolled"><a href="#onScrolled" class="headerlink" title="onScrolled"></a>onScrolled</h3><p>&#x5728;<code>onScrolled</code>&#x4E2D;&#x6211;&#x4EEC;&#x4E3B;&#x8981;&#x505A;&#x7684;&#x662F;&#x83B7;&#x53D6;<code>EnhanceRcyclerView</code>&#x4E2D;<code>item</code>&#x7684;&#x603B;&#x6570;&#x91CF;&#x3001;&#x89C6;&#x56FE;&#x663E;&#x793A;&#x4E2D;&#x7684;&#x7B2C;&#x4E00;&#x4E2A;<code>item</code>&#x5728;<code>EnhanceRecyclerView</code>&#x4E2D;&#x6240;&#x5904;&#x7684;&#x4F4D;&#x7F6E;&#x4E0E;&#x89C6;&#x56FE;&#x663E;&#x793A;&#x4E2D;&#x6700;&#x540E;&#x4E00;&#x4E2A;<code>item</code>&#x5728;<code>EnhanceRecyclerView</code>&#x4E2D;&#x6240;&#x5904;&#x7684;&#x4F4D;&#x7F6E;&#x3002;</p>
+<p>&#x5BF9;&#x4E8E;<code>item</code>&#x7684;&#x603B;&#x6570;&#x91CF;&#x5F88;&#x597D;&#x83B7;&#x53D6;&#x76F4;&#x63A5;&#x8C03;&#x7528;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">totalCount = getLayoutManager().getItemCount();</span><br></pre></td></tr></table></figure>
+<p>&#x7531;&#x4E8E;<code>RecyclerView</code>&#x80FD;&#x5B9E;&#x73B0;<code>LinearLayoutManager</code>&#x3001;<code>GridLayoutManager</code>&#x4E0E;<code>StaggeredGridLayoutManager</code>&#x4E0D;&#x540C;&#x7684;&#x5E03;&#x5C40;&#xFF0C;&#x6240;&#x4EE5;&#x53E6;&#x5916;&#x4E24;&#x4E2A;&#x8981;&#x6839;&#x636E;&#x4E0D;&#x540C;&#x7684;<code>manager</code>&#x6765;&#x83B7;&#x53D6;,&#x8FD8;&#x662F;&#x770B;&#x5177;&#x4F53;&#x4EE3;&#x7801;&#x5427;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">if (getLayoutManager() instanceof LinearLayoutManager) {</span><br><span class="line">                    lastItem = ((LinearLayoutManager) getLayoutManager()).findLastVisibleItemPosition();</span><br><span class="line">                    firstVisible = ((LinearLayoutManager) getLayoutManager()).findFirstVisibleItemPosition();</span><br><span class="line">                } else {</span><br><span class="line">                    into = ((StaggeredGridLayoutManager) getLayoutManager()).findLastVisibleItemPositions(into);</span><br><span class="line">                    firstInto = ((StaggeredGridLayoutManager) getLayoutManager()).findFirstVisibleItemPositions(firstInto);</span><br><span class="line">                    lastItem = into[0];</span><br><span class="line">                    firstVisible = firstInto[0];</span><br><span class="line">                }</span><br></pre></td></tr></table></figure>
+<h3 id="onScrollStateChanged"><a href="#onScrollStateChanged" class="headerlink" title="onScrollStateChanged"></a>onScrollStateChanged</h3><p>&#x83B7;&#x53D6;&#x5230;&#x4E86;&#x90A3;&#x4E09;&#x4E2A;&#x5173;&#x952E;&#x6570;&#x636E;&#x4EE5;&#x540E;&#xFF0C;&#x5C31;&#x53EF;&#x4EE5;&#x5728;<code>onScrollStateChanged</code>&#x4E2D;&#x5B9E;&#x73B0;&#x5177;&#x4F53;&#x7684;&#x903B;&#x8F91;&#xFF0C;&#x5728;&#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;&#x4E2D;&#x4E3B;&#x8981;&#x5B9E;&#x73B0;&#x7684;&#x662F;&#x5BF9;&#x4E0A;&#x62C9;&#x52A0;&#x8F7D;&#x66F4;&#x591A;&#x7684;&#x5904;&#x7406;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">if (lastItem == adapter.getItemCount() + 1 &amp;&amp; newState == RecyclerView.SCROLL_STATE_IDLE &amp;&amp; !isLoad) {</span><br><span class="line">                    ViewGroup.LayoutParams params = getFooterView(0).getLayoutParams();</span><br><span class="line">                    params.width = RecyclerView.LayoutParams.MATCH_PARENT;</span><br><span class="line">                    params.height = RecyclerView.LayoutParams.WRAP_CONTENT;</span><br><span class="line">                    getFooterView(0).setLayoutParams(params);</span><br><span class="line">                    getFooterView(0).setVisibility(View.VISIBLE);</span><br><span class="line">                    smoothScrollToPosition(totalCount);</span><br><span class="line">                    isLoad = true;</span><br><span class="line">                    loadMoreListener.onLoadMore();</span><br><span class="line">                }</span><br><span class="line">                if (firstVisible == 0) {</span><br><span class="line">                    isTop = true;</span><br><span class="line">                } else {</span><br><span class="line">                    isTop = false;</span><br><span class="line">                    RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) getHeaderView(0).getLayoutParams();</span><br><span class="line">                    params.width = RecyclerView.LayoutParams.MATCH_PARENT;</span><br><span class="line">                    params.height = RecyclerView.LayoutParams.WRAP_CONTENT;</span><br><span class="line">                    params.setMargins(0, -getHeaderView(0).getHeight(), 0, 0);</span><br><span class="line">                    getHeaderView(0).setLayoutParams(params);</span><br><span class="line">                }</span><br></pre></td></tr></table></figure>
+<p>&#x7B80;&#x5355;&#x8BF4;&#x660E;&#x4E0B;&#xFF0C;&#x6838;&#x5FC3;&#x5C31;&#x662F;&#x5224;&#x65AD;<code>lastItem</code>&#x662F;&#x5426;&#x5904;&#x5728;&#x6700;&#x540E;&#x7684;&#x4F4D;&#x7F6E;&#xFF0C;&#x5982;&#x679C;&#x662F;&#x7684;&#x8BDD;&#x5C31;&#x7EE7;&#x7EED;&#x52A0;&#x8F7D;&#x66F4;&#x591A;&#x7684;&#x64CD;&#x4F5C;&#xFF0C;&#x8FD9;&#x91CC;&#x63D0;&#x4F9B;&#x4E86;&#x4E00;&#x4E2A;&#x5BF9;&#x6570;&#x636E;&#x5904;&#x7406;&#x7684;&#x63A5;&#x53E3;&#x6240;&#x4EE5;&#x53EA;&#x8981;&#x5B9E;&#x73B0;<code>loadMoreListener.onLoadMore();</code>&#x5373;&#x53EF;&#x3002;</p>
+<blockquote>
+<p><em>&#x4E0A;&#x62C9;&#x52A0;&#x8F7D;&#x66F4;&#x591A;&#x6838;&#x5FC3;&#x5C31;&#x662F;&#x8FD9;&#x4E48;&#x591A;&#xFF0C;&#x5176;&#x5B83;&#x7684;&#x53EF;&#x4EE5;&#x67E5;&#x770B;&#x6E90;&#x7801;</em></p>
+</blockquote>
+<h2 id="OnTouchListener"><a href="#OnTouchListener" class="headerlink" title="OnTouchListener"></a>OnTouchListener</h2><p>&#x8FD9;&#x4E2A;&#x76D1;&#x542C;&#x5668;&#x4E3B;&#x8981;&#x662F;&#x5BF9;&#x4E0B;&#x62C9;&#x5237;&#x65B0;&#x8FDB;&#x884C;&#x5904;&#x7406;&#x3002;&#x6211;&#x4EEC;&#x8981;&#x5206;&#x522B;&#x5BF9;&#x5176;&#x4E2D;&#x6211;&#x4EEC;&#x6240;&#x719F;&#x6089;&#x7684;<code>MotionEvent.ACTION_DOWN</code>&#x3001;<code>MotionEvent.ACTION_MOVE</code>&#x4E0E;<code>MotionEvent.ACTION_UP</code>&#x8FDB;&#x884C;&#x5904;&#x7406;&#x3002;<code>ACTION_DOWN</code>&#x5C31;&#x662F;&#x7B80;&#x5355;&#x7684;&#x83B7;&#x53D6;&#x6309;&#x4E0B;&#x7684;&#x5750;&#x6807;&#x4F4D;&#x7F6E;&#xFF0C;&#x8FD9;&#x91CC;&#x5C31;&#x4E0D;&#x591A;&#x8BF4;&#x4E86;&#xFF0C;&#x4E0B;&#x9762;&#x4E3B;&#x8981;&#x7684;&#x9488;&#x5BF9;&#x53E6;&#x5916;&#x7684;&#x4E24;&#x4E2A;&#x8FDB;&#x884C;&#x7B80;&#x5355;&#x8BF4;&#x660E;&#x3002;</p>
+<h3 id="ACTION-MOVE"><a href="#ACTION-MOVE" class="headerlink" title="ACTION_MOVE"></a>ACTION_MOVE</h3><p>&#x8FD9;&#x505A;&#x7684;&#x903B;&#x8F91;&#x5C31;&#x662F;&#x5BF9;&#x89E6;&#x6478;&#x540E;&#x7684;&#x5904;&#x7406;&#xFF0C;&#x6839;&#x636E;&#x6ED1;&#x52A8;&#x7684;&#x8DDD;&#x79BB;&#x6765;&#x52A8;&#x6001;&#x7684;&#x6539;&#x53D8;<code>header</code>&#x7684;&#x6587;&#x672C;&#x4E0E;&#x5E03;&#x5C40;&#x89C6;&#x56FE;&#x7684;&#x663E;&#x793A;&#x3002;    </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">public void touchMove(MotionEvent event) {</span><br><span class="line">        endY = event.getY();</span><br><span class="line">        moveY = endY - startY;</span><br><span class="line">        //&#x9632;&#x6B62;item&#x5411;&#x4E0A;&#x6ED1;&#x51FA;</span><br><span class="line">        if (moveY &gt; 0 &amp;&amp; !isRefreshing) {</span><br><span class="line">            //&#x9632;&#x6B62;&#x56DE;&#x9000;&#x6587;&#x672C;&#x663E;&#x793A;&#x5F02;&#x5E38;</span><br><span class="line">            scrollToPosition(0);</span><br><span class="line"></span><br><span class="line">            if (getHeaderView(0).getVisibility() == GONE)</span><br><span class="line">                getHeaderView(0).setVisibility(VISIBLE);</span><br><span class="line"></span><br><span class="line">            RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) getHeaderView(0).getLayoutParams();</span><br><span class="line">            params.width = RecyclerView.LayoutParams.MATCH_PARENT;</span><br><span class="line">            params.height = RecyclerView.LayoutParams.WRAP_CONTENT;</span><br><span class="line">            //&#x4F7F;header&#x968F;moveY&#x7684;&#x503C;&#x4ECE;&#x9876;&#x90E8;&#x6E10;&#x6E10;&#x51FA;&#x73B0;</span><br><span class="line">            if (moveY &gt;= 400) {</span><br><span class="line">                moveY = 100 + moveY / 4;</span><br><span class="line">            } else {</span><br><span class="line">                moveY = moveY / 2;</span><br><span class="line">            }</span><br><span class="line">            viewHeight = getHeaderView(0).getHeight();</span><br><span class="line">            if (viewHeight &lt;= 0)</span><br><span class="line">                viewHeight = 130;</span><br><span class="line">            moveY = moveY - viewHeight;</span><br><span class="line">            params.setMargins(0, (int) moveY, 0, 0);</span><br><span class="line">            getHeaderView(0).setLayoutParams(params);</span><br><span class="line">            if (moveY &gt; 80) {</span><br><span class="line">                text.setText(getResources().getString(R.string.release_to_refresh));</span><br><span class="line">            } else {</span><br><span class="line">                text.setText(getResources().getString(R.string.pull_to_refresh));</span><br><span class="line">            }</span><br><span class="line">        } else {</span><br><span class="line">            if (getHeaderView(0).getVisibility() != GONE &amp;&amp; !isRefreshing) {</span><br><span class="line">                getHeaderView(0).setVisibility(GONE);</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    }</span><br></pre></td></tr></table></figure>
+<p>&#x81F3;&#x4E8E;&#x4E0B;&#x62C9;&#x65F6;&#x4E0E;&#x9876;&#x90E8;&#x7684;&#x8DDD;&#x79BB;&#x53D8;&#x5316;&#x662F;&#x901A;&#x8FC7;&#x8BBE;&#x7F6E;<code>margin</code>&#x6765;&#x52A8;&#x6001;&#x6539;&#x53D8;&#x7684;&#x3002;</p>
+<h3 id="ACTION-UP"><a href="#ACTION-UP" class="headerlink" title="ACTION_UP"></a>ACTION_UP</h3><p>&#x6700;&#x540E;&#x7684;&#x89E6;&#x6478;&#x5904;&#x7406;&#x5C31;&#x662F;&#x5728;&#x79BB;&#x5F00;&#x5C4F;&#x5E55;&#x65F6;&#x6839;&#x636E;&#x6ED1;&#x52A8;&#x7684;&#x8DDD;&#x79BB;&#xFF0C;&#x662F;&#x5426;&#x8C03;&#x7528;&#x52A0;&#x8F7D;&#x6570;&#x636E;&#x7684;&#x63A5;&#x53E3;&#xFF0C;&#x6216;&#x8005;&#x9690;&#x85CF;&#x4E0B;&#x62C9;&#x5237;&#x65B0;&#x5934;&#x90E8;&#xFF0C;&#x5177;&#x4F53;&#x8FD8;&#x662F;&#x770B;&#x4EE3;&#x7801;&#x5427;&#x3002;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">public void touchUp() {</span><br><span class="line">        if (!isRefreshing &amp;&amp; (endY -startY) != 0 ) {</span><br><span class="line"></span><br><span class="line">            RecyclerView.LayoutParams params1 = (RecyclerView.LayoutParams) getHeaderView(0).getLayoutParams();</span><br><span class="line">            params1.width = RecyclerView.LayoutParams.MATCH_PARENT;</span><br><span class="line">            params1.height = RecyclerView.LayoutParams.WRAP_CONTENT;</span><br><span class="line"></span><br><span class="line">            if (moveY &gt;= 80) {</span><br><span class="line">                text.setText(getResources().getString(R.string.refreshing));</span><br><span class="line">                params1.setMargins(0, 0, 0, 0);</span><br><span class="line">                isRefreshing = true;</span><br><span class="line">                //&#x5237;&#x65B0;&#x6570;&#x636E;</span><br><span class="line">                pullToRefresh.onRefreshing();</span><br><span class="line">            } else {</span><br><span class="line">                if (viewHeight &lt;= 0)</span><br><span class="line">                    viewHeight = 130;</span><br><span class="line">                params1.setMargins(0, -viewHeight, 0, 0);</span><br><span class="line">                getHeaderView(0).setVisibility(GONE);</span><br><span class="line">            }</span><br><span class="line">            getHeaderView(0).setLayoutParams(params1);</span><br><span class="line">        }</span><br><span class="line">    }</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><em>&#x4EE3;&#x7801;&#x4E2D;&#x91CD;&#x8981;&#x7684;&#x5730;&#x65B9;&#x90FD;&#x6709;&#x6307;&#x51FA;&#x76F8;&#x4FE1;&#x90FD;&#x80FD;&#x770B;&#x61C2;&#xFF0C;&#x8FD9;&#x6837;&#x4E0B;&#x62C9;&#x4E0E;&#x4E0A;&#x62C9;&#x7684;&#x903B;&#x8F91;&#x5C31;&#x57FA;&#x672C;&#x5B9E;&#x73B0;&#x4E86;&#xFF0C;&#x4E0B;&#x9762;&#x6765;&#x770B;&#x63A5;&#x53E3;&#x7684;&#x8BBE;&#x8BA1;&#x5427;</em></p>
+</blockquote>
+<h2 id="&#x4E0B;&#x62C9;&#x4E0E;&#x4E0A;&#x62C9;&#x63A5;&#x53E3;"><a href="#&#x4E0B;&#x62C9;&#x4E0E;&#x4E0A;&#x62C9;&#x63A5;&#x53E3;" class="headerlink" title="&#x4E0B;&#x62C9;&#x4E0E;&#x4E0A;&#x62C9;&#x63A5;&#x53E3;"></a>&#x4E0B;&#x62C9;&#x4E0E;&#x4E0A;&#x62C9;&#x63A5;&#x53E3;</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">public interface PullToRefreshListener {</span><br><span class="line">        void onRefreshing();</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    public void setPullToRefreshListener(PullToRefreshListener pullToRefresh) {</span><br><span class="line">        if (loadMoreListener == null) {</span><br><span class="line">            initListener();</span><br><span class="line">        }</span><br><span class="line">        this.pullToRefresh = pullToRefresh;</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    public interface LoadMoreListener {</span><br><span class="line">        void onLoadMore();</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    public void setLoadMoreListener(LoadMoreListener loadMoreListener) {</span><br><span class="line">        if (pullToRefresh == null) {</span><br><span class="line">            initListener();</span><br><span class="line">        }</span><br><span class="line">        this.loadMoreListener = loadMoreListener;</span><br><span class="line">    }</span><br></pre></td></tr></table></figure>
+<p>&#x5728;&#x8FD0;&#x7528;&#x662F;&#x6DFB;&#x52A0;&#x63A5;&#x53E3;&#x76D1;&#x542C;&#x65F6;&#x521D;&#x59CB;&#x5316;&#x524D;&#x9762;&#x4E3A;<code>EnhanceRecyclerView</code>&#x6240;&#x8BBE;&#x7F6E;&#x7684;&#x76D1;&#x542C;&#x3002;</p>
+<h2 id="&#x72B6;&#x6001;&#x91CD;&#x7F6E;&#x8BBE;&#x7F6E;"><a href="#&#x72B6;&#x6001;&#x91CD;&#x7F6E;&#x8BBE;&#x7F6E;" class="headerlink" title="&#x72B6;&#x6001;&#x91CD;&#x7F6E;&#x8BBE;&#x7F6E;"></a>&#x72B6;&#x6001;&#x91CD;&#x7F6E;&#x8BBE;&#x7F6E;</h2><p>&#x5728;&#x8C03;&#x7528;&#x4E0B;&#x62C9;&#x5237;&#x65B0;&#x6216;&#x8005;&#x4E0A;&#x62C9;&#x52A0;&#x8F7D;&#x66F4;&#x591A;&#x4E4B;&#x540E;&#xFF0C;&#x6211;&#x4EEC;&#x4E3A;&#x5176;&#x6784;&#x9020;&#x901A;&#x7528;&#x65B9;&#x6CD5;&#x5B9E;&#x73B0;&#xFF0C;&#x72B6;&#x6001;&#x7684;&#x91CD;&#x7F6E;&#x4E0E;&#x6570;&#x636E;&#x7684;&#x66F4;&#x65B0;&#xFF0C;&#x65B9;&#x4FBF;&#x7EDF;&#x4E00;&#x8C03;&#x7528;&#x3002;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">public void setLoadMoreComplete() {</span><br><span class="line">       RecyclerView.LayoutParams params = (LayoutParams) getFooterView(0).getLayoutParams();</span><br><span class="line">       params.width = 0;</span><br><span class="line">       params.height = 0;</span><br><span class="line">       getFooterView(0).setLayoutParams(params);</span><br><span class="line">       getFooterView(0).setVisibility(View.GONE);</span><br><span class="line">       this.getAdapter().notifyDataSetChanged();</span><br><span class="line">       isLoad = false;</span><br><span class="line">   }</span><br><span class="line"></span><br><span class="line">   public void setRefreshComplete() {</span><br><span class="line">       RecyclerView.LayoutParams params1 = (RecyclerView.LayoutParams) getHeaderView(0).getLayoutParams();</span><br><span class="line">       params1.width = RecyclerView.LayoutParams.MATCH_PARENT;</span><br><span class="line">       params1.height = RecyclerView.LayoutParams.WRAP_CONTENT;</span><br><span class="line">       params1.setMargins(0, -getHeaderView(0).getHeight(), 0, 0);</span><br><span class="line">       getHeaderView(0).setLayoutParams(params1);</span><br><span class="line">       getHeaderView(0).setVisibility(GONE);</span><br><span class="line">       this.getAdapter().notifyDataSetChanged();</span><br><span class="line">       isRefreshing = false;</span><br><span class="line">   }</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><em>&#x6240;&#x7528;&#x5DE5;&#x4F5C;&#x5DF2;&#x7ECF;&#x5B8C;&#x6210;&#x4E0B;&#x9762;&#x6765;&#x505A;&#x4E2A;&#x8C03;&#x7528;&#x793A;&#x8303;</em></p>
+</blockquote>
+<h2 id="&#x4F7F;&#x7528;"><a href="#&#x4F7F;&#x7528;" class="headerlink" title="&#x4F7F;&#x7528;"></a>&#x4F7F;&#x7528;</h2><h3 id="xml&#x4E2D;&#x5F15;&#x7528;"><a href="#xml&#x4E2D;&#x5F15;&#x7528;" class="headerlink" title="xml&#x4E2D;&#x5F15;&#x7528;"></a>xml&#x4E2D;&#x5F15;&#x7528;</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;com.idisfkj.mylibrary.EnhanceRecyclerView</span><br><span class="line">        android:id=&quot;@+id/recyclerView&quot;</span><br><span class="line">        android:layout_width=&quot;match_parent&quot;</span><br><span class="line">        android:layout_height=&quot;match_parent&quot;&gt;</span><br><span class="line">&lt;/com.idisfkj.mylibrary.EnhanceRecyclerView&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="&#x8BBE;&#x7F6E;&#x76D1;&#x542C;"><a href="#&#x8BBE;&#x7F6E;&#x76D1;&#x542C;" class="headerlink" title="&#x8BBE;&#x7F6E;&#x76D1;&#x542C;"></a>&#x8BBE;&#x7F6E;&#x76D1;&#x542C;</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">mRecyclerView.setPullToRefreshListener(new com.idisfkj.mylibrary.EnhanceRecyclerView.PullToRefreshListener() {</span><br><span class="line">           @Override</span><br><span class="line">           public void onRefreshing() {</span><br><span class="line">               refreshData();</span><br><span class="line">           }</span><br><span class="line">       });</span><br><span class="line">       mRecyclerView.setLoadMoreListener(new EnhanceRecyclerView.LoadMoreListener() {</span><br><span class="line">           @Override</span><br><span class="line">           public void onLoadMore() {</span><br><span class="line">               loadMoreData();</span><br><span class="line">           }</span><br><span class="line">       });</span><br></pre></td></tr></table></figure>
+<p>&#x81F3;&#x4E8E;&#x5176;&#x4ED6;&#x7684;<code>Adapter</code>&#x3001;<code>LayoutManager</code>&#x7B49;&#x7684;&#x8BBE;&#x7F6E;&#x5C31;&#x4E0D;&#x591A;&#x8BF4;&#x4E86;&#xFF0C;&#x4E0E;&#x539F;&#x751F;&#x7684;<code>RecyclerView</code>&#x662F;&#x4E00;&#x6837;&#x7684;&#x3002;</p>
+<h2 id="&#x6548;&#x679C;"><a href="#&#x6548;&#x679C;" class="headerlink" title="&#x6548;&#x679C;"></a>&#x6548;&#x679C;</h2><p><img src="/2016/08/03/RecyclerView&#x4E0B;&#x62C9;&#x5237;&#x65B0;&#x4E0E;&#x4E0A;&#x62C9;&#x66F4;&#x591A;/1.gif" alt="&#x6548;&#x679C;&#x56FE;"></p>
+<h1 id="&#x603B;&#x7ED3;"><a href="#&#x603B;&#x7ED3;" class="headerlink" title="&#x603B;&#x7ED3;"></a>&#x603B;&#x7ED3;</h1><p>&#x5176;&#x5B9E;&#x603B;&#x7684;&#x6765;&#x8BF4;&#x96BE;&#x70B9;&#x6709;&#x4E24;&#x4E2A;</p>
+<ul>
+<li>&#x6DFB;&#x52A0;<code>header</code>&#x4E0E;<code>footer</code>&#x3002;&#x8FD9;&#x4E2A;&#x524D;&#x9762;&#x5DF2;&#x7ECF;&#x653B;&#x514B;&#x4E86;&#xFF0C;&#x800C;&#x4E14;&#x539F;&#x7406;&#x4E5F;&#x76F8;&#x5BF9;&#x7B80;&#x5355;</li>
+<li>&#x5B9E;&#x73B0;&#x89E6;&#x6478;&#x4E0E;&#x6ED1;&#x52A8;&#x76D1;&#x542C;&#x903B;&#x8F91;&#x3002;&#x8FD9;&#x4E2A;&#x4E3B;&#x8981;&#x662F;&#x5BF9;&#x903B;&#x8F91;&#x7684;&#x7406;&#x89E3;&#xFF0C;&#x5BF9;&#x6574;&#x4E2A;&#x5237;&#x65B0;&#x7684;&#x8FC7;&#x7A0B;&#x505A;&#x4E2A;&#x6574;&#x4F53;&#x5206;&#x6790;&#xFF0C;&#x5C31;&#x80FD;&#x5F88;&#x597D;&#x7684;&#x7406;&#x89E3;&#x4E0A;&#x9762;&#x7684;&#x4EE3;&#x7801;&#x3002;&#x5BF9;&#x5176;&#x4E2D;&#x89C6;&#x56FE;&#x7684;&#x52A8;&#x6001;&#x663E;&#x793A;&#x505A;&#x76F8;&#x5E94;&#x7684;&#x53D8;&#x5316;&#x4E0E;&#x63A5;&#x53E3;&#x7684;&#x8C03;&#x7528;&#x5C31;&#x80FD;&#x5F88;&#x597D;&#x7684;&#x5904;&#x7406;&#x8FD9;&#x4E9B;&#x5DE5;&#x7A0B;&#x3002;</li>
+</ul>
+<p>&#x5F53;&#x7136;&#x4E0A;&#x9762;&#x7684;&#x5B9E;&#x73B0;&#x53EF;&#x80FD;&#x8FD8;&#x6709;&#x7455;&#x75B5;&#xFF0C;&#x5E0C;&#x671B;&#x6307;&#x51FA;&#xFF0C;&#x6211;&#x4F1A;&#x76F8;&#x5E94;&#x7684;&#x505A;&#x4FEE;&#x6539;&#x6216;&#x8005;&#x4F60;&#x4EEC;&#x4FEE;&#x6539;&#x540E;&#x53EF;&#x4EE5;&#x63D0;&#x4EA4;&#x7ED9;&#x6211;&#xFF0C;&#x6211;&#x7EDF;&#x4E00;&#x505A;&#x4FEE;&#x6539;&#xFF0C;&#x8C22;&#x8C22;&#xFF01;</p>
+<blockquote>
+<p><em>&#x8F6C;&#x8F7D;&#x8BF7;&#x6307;&#x660E;&#x51FA;&#x5904; idisfkj&#x535A;&#x5BA2;&#xFF1A;<a href="https://idisfkj.github.io">https://idisfkj.github.io</a></em></p>
+</blockquote>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal-one" aria-hidden="true">
+  <a href="#close" class="cover" aria-hidden="true"></a>
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <a href="#close" class="btn-close" aria-hidden="true">关闭</a>
+    </div>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+  <section class="disqus-comments">
+    <div id="disqus_thread">
+      <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+  </section>
+
+  <script>
+    var disqus_shortname = 'idisfkj';
+    
+    var disqus_url = 'https://idisfkj.github.io/2016/08/03/RecyclerView下拉刷新与上拉更多/';
+    
+    (function(){
+      var dsq = document.createElement('script');
+      dsq.type = 'text/javascript';
+      dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+
+  <script id="dsq-count-scr" src="//idisfkj.disqus.com/count.js" async></script>
+
+
+
+    
+
+
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?398', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
