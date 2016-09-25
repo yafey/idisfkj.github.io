@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+
+
+  <html class="light">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>AIDL入门 | Idisfkj</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="AIDL," />
+  
+
+  <meta name="description" content="&amp;#x4E00;&amp;#x76F4;&amp;#x542C;&amp;#x8BF4;AIDL&amp;#x4F46;&amp;#x662F;&amp;#x81EA;&amp;#x5DF1;&amp;#x8FD8;&amp;#x6CA1;&amp;#x6709;&amp;#x771F;&amp;#x6B63;&amp;#x4F7F;&amp;#x7528;&amp;#x8FC7;&amp;#xFF0C;&amp;#x56E0;&amp;#x4E3A;&amp;#x6CA1;&amp;#x6709;&amp;#x78B0;&amp;#x5230;&amp;#x8FC7;&amp;#x4">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AIDL入门">
+<meta property="og:url" content="https://idisfkj.github.io/2016/09/25/AIDL入门/index.html">
+<meta property="og:site_name" content="Idisfkj">
+<meta property="og:description" content="&amp;#x4E00;&amp;#x76F4;&amp;#x542C;&amp;#x8BF4;AIDL&amp;#x4F46;&amp;#x662F;&amp;#x81EA;&amp;#x5DF1;&amp;#x8FD8;&amp;#x6CA1;&amp;#x6709;&amp;#x771F;&amp;#x6B63;&amp;#x4F7F;&amp;#x7528;&amp;#x8FC7;&amp;#xFF0C;&amp;#x56E0;&amp;#x4E3A;&amp;#x6CA1;&amp;#x6709;&amp;#x78B0;&amp;#x5230;&amp;#x8FC7;&amp;#x4">
+<meta property="og:image" content="https://idisfkj.github.io/2016/09/25/AIDL入门/1.png">
+<meta property="og:image" content="https://idisfkj.github.io/2016/09/25/AIDL入门/2.png">
+<meta property="og:image" content="https://idisfkj.github.io/2016/09/25/AIDL入门/3.png">
+<meta property="og:updated_time" content="2016-09-25T13:53:01.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AIDL入门">
+<meta name="twitter:description" content="&amp;#x4E00;&amp;#x76F4;&amp;#x542C;&amp;#x8BF4;AIDL&amp;#x4F46;&amp;#x662F;&amp;#x81EA;&amp;#x5DF1;&amp;#x8FD8;&amp;#x6CA1;&amp;#x6709;&amp;#x771F;&amp;#x6B63;&amp;#x4F7F;&amp;#x7528;&amp;#x8FC7;&amp;#xFF0C;&amp;#x56E0;&amp;#x4E3A;&amp;#x6CA1;&amp;#x6709;&amp;#x78B0;&amp;#x5230;&amp;#x8FC7;&amp;#x4">
+<meta name="twitter:image" content="https://idisfkj.github.io/2016/09/25/AIDL入门/1.png">
+
+  
+
+  
+  <!-- <link href="/favicon.ico" rel="icon" type="image/x-icon"> -->
+    <link rel="icon" href="/favicon.ico">
+    <!-- <link href="favicon.ico" rel="shortcut icon" type="image/x-icon" /> -->
+  
+  
+  <link href="/css/styles.css?v=5f7f1d39" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?ef89e68af5e136d5c22043f91cd139ea";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+
+  
+    <a href="#modal-one" class="toolbox-mobile">盒子</a>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#什么是AIDL"><span class="toc-text">什么是AIDL</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实现AIDL的步骤"><span class="toc-text">实现AIDL的步骤</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建-aidl文件与接口"><span class="toc-text">创建.aidl文件与接口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#接口的实现"><span class="toc-text">接口的实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#调用"><span class="toc-text">调用</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-AIDL入门" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">AIDL入门</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.09.25</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>idisfkj</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/android/">android</a>
+  </span>
+
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>&#x4E00;&#x76F4;&#x542C;&#x8BF4;<code>AIDL</code>&#x4F46;&#x662F;&#x81EA;&#x5DF1;&#x8FD8;&#x6CA1;&#x6709;&#x771F;&#x6B63;&#x4F7F;&#x7528;&#x8FC7;&#xFF0C;&#x56E0;&#x4E3A;&#x6CA1;&#x6709;&#x78B0;&#x5230;&#x8FC7;&#x4F7F;&#x7528;&#x5B83;&#x7684;&#x573A;&#x666F;&#xFF0C;&#x4F46;&#x8FD9;&#x5E76;&#x4E0D;&#x80FD;&#x6210;&#x4E3A;&#x6211;&#x4E0D;&#x53BB;&#x4E86;&#x89E3;&#x5B83;&#x7684;&#x501F;&#x53E3;&#x3002;&#x73B0;&#x5728;&#x8FD8;&#x6CA1;&#x6709;&#x4E86;&#x89E3;&#x7684;&#x53EF;&#x4EE5;&#x548C;&#x6211;&#x4E00;&#x8D77;&#x8FDB;&#x884C;&#x4E86;&#x89E3;&#xFF08;&#x4EC5;&#x9650;&#x4E8E;&#x5165;&#x95E8;&#xFF0C;&#x5927;&#x795E;&#x53EF;&#x4EE5;&#x79FB;&#x6B65;&#x4E86;&#xFF09;</p>
+<h2 id="&#x4EC0;&#x4E48;&#x662F;AIDL"><a href="#&#x4EC0;&#x4E48;&#x662F;AIDL" class="headerlink" title="&#x4EC0;&#x4E48;&#x662F;AIDL"></a>&#x4EC0;&#x4E48;&#x662F;AIDL</h2><p>&#x4EC0;&#x4E48;&#x662F;AIDL&#x5462;&#xFF1F;&#x5B83;&#x7684;&#x5168;&#x79F0;&#x662F;<code>Android Interface Definition Language</code>,&#x4E2D;&#x6587;&#x540D;&#x5B57;&#x5C31;&#x662F;<code>Android</code>&#x63A5;&#x53E3;&#x5B9A;&#x4E49;&#x8BED;&#x8A00;&#x3002;<code>Android</code>&#x4E2D;&#x7684;&#x8FDB;&#x7A0B;&#x95F4;&#x4E0D;&#x80FD;&#x8FDB;&#x884C;&#x5185;&#x5B58;&#x5171;&#x4EAB;&#xFF0C;&#x6240;&#x4EE5;&#x4E0D;&#x540C;&#x7684;&#x8FDB;&#x7A0B;&#x95F4;&#x7684;&#x901A;&#x4FE1;&#xFF0C;<code>Android</code>&#x91C7;&#x7528;&#x8FDC;&#x7A0B;&#x8FC7;&#x7A0B;&#x8C03;&#x5EA6;&#xFF0C;&#x540C;&#x65F6;&#x4F7F;&#x7528;&#x4E00;&#x79CD;&#x5B9A;&#x4E49;&#x63A5;&#x53E3;&#x4E0E;&#x516C;&#x5F00;&#x63A5;&#x53E3;&#x7684;&#x65B9;&#x5F0F;&#x6765;&#x5B9E;&#x73B0;&#x3002;&#x4ECE;&#x800C;&#x8FBE;&#x5230;&#x8DE8;&#x8FDB;&#x7A0B;&#x95F4;&#x7684;&#x901A;&#x4FE1;&#xFF0C;&#x8FD9;&#x6837;&#x7684;&#x65B9;&#x5F0F;&#x6210;&#x4E3A;AIDL&#x3002;</p>
+<h2 id="&#x5B9E;&#x73B0;AIDL&#x7684;&#x6B65;&#x9AA4;"><a href="#&#x5B9E;&#x73B0;AIDL&#x7684;&#x6B65;&#x9AA4;" class="headerlink" title="&#x5B9E;&#x73B0;AIDL&#x7684;&#x6B65;&#x9AA4;"></a>&#x5B9E;&#x73B0;AIDL&#x7684;&#x6B65;&#x9AA4;</h2><p>&#x603B;&#x4F53;&#x6765;&#x8BF4;&#x6211;&#x628A;&#x5176;&#x5206;&#x4E3A;3&#x4E2A;&#x6B65;&#x9AA4;</p>
+<ul>
+<li>&#x521B;&#x5EFA;&#x76F8;&#x5E94;&#x7684;<code>.aidl</code>&#x6587;&#x4EF6;&#xFF0C;&#x4E0E;&#x9700;&#x8981;&#x7684;&#x63A5;&#x53E3;</li>
+<li>&#x5B9E;&#x73B0;&#x521B;&#x5EFA;&#x7684;&#x63A5;&#x53E3;</li>
+<li>&#x5411;&#x5BA2;&#x6237;&#x7AEF;&#x66B4;&#x9732;&#x5B9E;&#x73B0;&#x7684;&#x63A5;&#x53E3;&#xFF0C;&#x5B9E;&#x73B0;&#x8C03;&#x7528;</li>
+</ul>
+<p>&#x4E0B;&#x9762;&#x6765;&#x8BE6;&#x7EC6;&#x7684;&#x8BF4;&#x8BF4;&#x5404;&#x4E2A;&#x6B65;&#x9AA4;&#x7684;&#x5B9E;&#x73B0;</p>
+<h2 id="&#x521B;&#x5EFA;-aidl&#x6587;&#x4EF6;&#x4E0E;&#x63A5;&#x53E3;"><a href="#&#x521B;&#x5EFA;-aidl&#x6587;&#x4EF6;&#x4E0E;&#x63A5;&#x53E3;" class="headerlink" title="&#x521B;&#x5EFA;.aidl&#x6587;&#x4EF6;&#x4E0E;&#x63A5;&#x53E3;"></a>&#x521B;&#x5EFA;.aidl&#x6587;&#x4EF6;&#x4E0E;&#x63A5;&#x53E3;</h2><p>&#x5728;<code>Android Studio</code>&#x4E2D;&#x65B0;&#x5EFA;&#x9879;&#x76EE;&#xFF0C;&#x5728;&#x9879;&#x76EE;&#x7684;<code>src</code>&#x76EE;&#x5F55;&#x4E0B;&#x65B0;&#x5EFA;&#x4E00;&#x4E2A;<code>.aidl</code>&#x6587;&#x4EF6;</p>
+<p><img src="/2016/09/25/AIDL&#x5165;&#x95E8;/1.png" alt="&#x6548;&#x679C;&#x56FE;"></p>
+<p>&#x8FD9;&#x4E2A;&#x65B0;&#x5EFA;&#x7684;<code>.aidl</code>&#x6587;&#x4EF6;&#x662F;&#x5B9A;&#x4E49;&#x8FDC;&#x7A0B;&#x8FDB;&#x7A0B;&#x6240;&#x4EE5;&#x66B4;&#x9732;&#x7684;&#x63A5;&#x53E3;,&#x6211;&#x8FD9;&#x91CC;&#x547D;&#x540D;&#x4E3A;<code>IRemoteService</code>&#x3002;&#x521B;&#x5EFA;&#x5B8C;&#x4E4B;&#x540E;&#xFF0C;&#x6211;&#x4EEC;&#x80FD;&#x5728;<code>src/main/aidl</code>&#x4E2D;&#x627E;&#x5230;&#x8FD9;&#x4E2A;&#x6587;&#x4EF6;&#xFF0C;&#x4E0B;&#x9762;&#x662F;&#x6211;&#x4EEC;&#x66B4;&#x9732;&#x4E00;&#x4E2A;<code>sayHello</code>&#x7684;&#x63A5;&#x53E3;&#xFF0C;&#x5B83;&#x7684;&#x7C7B;&#x578B;&#x662F;<code>HelloMessage</code>&#xFF0C;&#x662F;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;&#x7C7B;&#x578B;&#x3002;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">// IRemoteService.aidl</div><div class="line">package com.idisfkj.aidldemo;</div><div class="line"></div><div class="line">// Declare any non-default types here with import statements</div><div class="line">import com.idisfkj.aidldemo.HelloMessage;</div><div class="line">interface IRemoteService {</div><div class="line">    /**</div><div class="line">     * Demonstrates some basic types that you can use as parameters</div><div class="line">     * and return values in AIDL.</div><div class="line">     */</div><div class="line">    void basicTypes(int anInt, long aLong, boolean aBoolean, float aFloat,</div><div class="line">            double aDouble, String aString);</div><div class="line"></div><div class="line">    HelloMessage sayHello();</div><div class="line">}</div></pre></td></tr></table></figure>
+<p>&#x73B0;&#x5728;&#x6211;&#x4EEC;&#x6765;&#x521B;&#x5EFA;<code>HelloMessage</code>&#x7C7B;&#xFF0C;&#x5728;&#x6211;&#x4EEC;&#x65E5;&#x5E38;&#x521B;&#x5EFA;&#x6587;&#x4EF6;&#x7684;<code>main/java</code>&#x4E2D;&#x521B;&#x5EFA;&#x3002;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div></pre></td><td class="code"><pre><div class="line">package com.idisfkj.aidldemo;</div><div class="line"></div><div class="line">import android.os.Parcel;</div><div class="line">import android.os.Parcelable;</div><div class="line"></div><div class="line">public class HelloMessage implements Parcelable{</div><div class="line">    private String message;</div><div class="line">    private int pId;</div><div class="line"></div><div class="line">    public HelloMessage(String message, int pId) {</div><div class="line">        this.message = message;</div><div class="line">        this.pId = pId;</div><div class="line">    }</div><div class="line"></div><div class="line">    protected HelloMessage(Parcel in) {</div><div class="line">        message = in.readString();</div><div class="line">        pId = in.readInt();</div><div class="line">    }</div><div class="line"></div><div class="line">    public static final Creator&lt;HelloMessage&gt; CREATOR = new Creator&lt;HelloMessage&gt;() {</div><div class="line">        @Override</div><div class="line">        public HelloMessage createFromParcel(Parcel in) {</div><div class="line">            return new HelloMessage(in);</div><div class="line">        }</div><div class="line"></div><div class="line">        @Override</div><div class="line">        public HelloMessage[] newArray(int size) {</div><div class="line">            return new HelloMessage[size];</div><div class="line">        }</div><div class="line">    };</div><div class="line"></div><div class="line">    public String getMessage() {</div><div class="line">        return message;</div><div class="line">    }</div><div class="line"></div><div class="line">    public void setMessage(String message) {</div><div class="line">        this.message = message;</div><div class="line">    }</div><div class="line"></div><div class="line">    public int getpId() {</div><div class="line">        return pId;</div><div class="line">    }</div><div class="line"></div><div class="line">    public void setpId(int pId) {</div><div class="line">        this.pId = pId;</div><div class="line">    }</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public int describeContents() {</div><div class="line">        return 0;</div><div class="line">    }</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public void writeToParcel(Parcel parcel, int i) {</div><div class="line">        parcel.writeString(message);</div><div class="line">        parcel.writeInt(pId);</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+<p>&#x5B83;&#x5305;&#x62EC;&#x4E24;&#x4E2A;&#x5C5E;&#x6027;&#x5B57;&#x6BB5;<code>message</code>&#x4E0E;<code>pId</code>,&#x4EE3;&#x8868;&#x4E0B;&#x9762;&#x6211;&#x4EEC;&#x8981;&#x4F20;&#x9012;&#x7684;&#x4FE1;&#x606F;&#x4E0E;&#x65B9;&#x4FBF;&#x67E5;&#x770B;&#x7684;&#x8FDB;&#x7A0B;<code>ID</code>&#x3002;&#x8FD9;&#x91CC;&#x5B9E;&#x73B0;&#x4E86;<code>Parcelable</code>&#x63A5;&#x53E3;&#xFF0C;&#x8FDB;&#x884C;&#x5E8F;&#x5217;&#x5316;&#x3002;&#x56E0;&#x4E3A;&#x4F7F;&#x7528;&#x5230;&#x4E86;<code>Parcelable</code>&#x6240;&#x4EE5;&#x6211;&#x4EEC;&#x8981;&#x56DE;&#x5230;<code>aidl</code>&#x76EE;&#x5F55;&#xFF0C;&#x518D;&#x65B0;&#x5EFA;&#x4E00;&#x4E2A;&#x4E0E;<code>HelloMessage</code>&#x76F8;&#x540C;&#x540D;&#x5B57;&#x7684;<code>.aidl</code>&#x6587;&#x4EF6;&#xFF0C;&#x5185;&#x5BB9;&#x4E3A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">// HelloMessage.aidl</div><div class="line">package com.idisfkj.aidldemo;</div><div class="line"></div><div class="line">// Declare any non-default types here with import statements</div><div class="line"></div><div class="line">parcelable HelloMessage;</div></pre></td></tr></table></figure>
+<p>&#x6700;&#x540E;&#x5728;&#x524D;&#x9762;&#x65B0;&#x5EFA;&#x7684;<code>IRemoteService.aidl</code>&#x6587;&#x4EF6;&#x4E2D;&#x5BFC;&#x5165;&#x8BE5;&#x7C7B;&#x578B;&#x7684;&#x5305;&#x3002;&#xFF08;&#x53EF;&#x4EE5;&#x67E5;&#x770B;&#x524D;&#x9762;&#x8D34;&#x7684;&#x4EE3;&#x7801;&#xFF0C;&#x6211;&#x5DF2;&#x7ECF;&#x5B9E;&#x73B0;&#x4E86;&#xFF09;&#xFF0C;&#x8FD9;&#x6837;&#x6240;&#x9700;&#x7684;<code>.aidl</code>&#x6587;&#x4EF6;&#x4E0E;&#x63A5;&#x53E3;&#x90FD;&#x5DF2;&#x7ECF;&#x5EFA;&#x597D;&#x4E86;&#xFF0C;&#x6700;&#x540E;&#x518D;<code>Build -&gt; Make Project</code>(&#x5982;&#x679C;&#x4F60;&#x662F;&#x5728;<code>Module</code>&#x4E2D;&#x5219;<code>Build -&gt; Make Module App</code>)&#x3002;&#x5B8C;&#x4E86;&#x4E4B;&#x540E;&#x6211;&#x4EEC;&#x5C31;&#x80FD;&#x5728;<code>build/generated/source/aidl</code>&#x4E2D;&#x67E5;&#x770B;&#x751F;&#x6210;&#x7684;<code>IRemoteService</code>&#x3002;&#x6253;&#x5F00;&#x4E4B;&#x540E;&#x80FD;&#x770B;&#x5230;&#x5982;&#x4E0B;&#x4FE1;&#x606F;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">public interface IRemoteService extends android.os.IInterface</div><div class="line">{</div><div class="line">/** Local-side IPC implementation stub class. */</div><div class="line">public static abstract class Stub extends android.os.Binder implements com.idisfkj.aidldemo.IRemoteService</div><div class="line">{</div><div class="line">private static final java.lang.String DESCRIPTOR = &quot;com.idisfkj.aidldemo.IRemoteService&quot;;</div><div class="line">/** Construct the stub at attach it to the interface. */</div><div class="line">public Stub()</div><div class="line">{</div><div class="line">this.attachInterface(this, DESCRIPTOR);</div><div class="line">}</div><div class="line">/**</div><div class="line"> * Cast an IBinder object into an com.idisfkj.aidldemo.IRemoteService interface,</div><div class="line"> * generating a proxy if needed.</div><div class="line"> */</div><div class="line">public static com.idisfkj.aidldemo.IRemoteService asInterface(android.os.IBinder obj)</div><div class="line">{</div><div class="line"> //&#x7701;&#x7565;</div></pre></td></tr></table></figure>
+<p>&#x4F1A;&#x53D1;&#x73B0;&#x5B83;&#x5B9E;&#x73B0;&#x4E86;&#x4E00;&#x4E2A;&#x9759;&#x6001;&#x62BD;&#x8C61;&#x7C7B;<code>Stub</code>&#xFF0C;&#x5B83;&#x7EE7;&#x627F;&#x4E8E;<code>Binder</code>&#x540C;&#x65F6;&#x5B9E;&#x73B0;&#x6211;&#x4EEC;&#x5B9A;&#x4E49;&#x7684;<code>IRemoteService</code>&#xFF0C;&#x8FD9;&#x6837;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;<code>New IRemoteService.Stub()</code>&#x6765;&#x5B9E;&#x73B0;&#x6211;&#x4EEC;&#x5B9A;&#x4E49;&#x7684;&#x63A5;&#x53E3;,&#x540C;&#x65F6;&#x901A;&#x8FC7;<code>asInterface</code>&#x6765;&#x83B7;&#x53D6;&#x5176;&#x4EE3;&#x7406;&#xFF0C;&#x8C03;&#x7528;&#x63A5;&#x53E3;&#x65B9;&#x6CD5;&#x3002;</p>
+<h2 id="&#x63A5;&#x53E3;&#x7684;&#x5B9E;&#x73B0;"><a href="#&#x63A5;&#x53E3;&#x7684;&#x5B9E;&#x73B0;" class="headerlink" title="&#x63A5;&#x53E3;&#x7684;&#x5B9E;&#x73B0;"></a>&#x63A5;&#x53E3;&#x7684;&#x5B9E;&#x73B0;</h2><p>&#x9996;&#x5148;&#x5EFA;&#x4E00;&#x4E2A;<code>Service</code>&#xFF0C;&#x901A;&#x8FC7;<code>Service</code>&#x7684;<code>onBind</code>&#x7684;&#x65B9;&#x6CD5;&#x6765;&#x4F20;&#x9012;&#x7ED1;&#x5B9A;&#x7684;<code>IBinder</code>&#xFF0C;&#x4E0A;&#x9762;&#x5DF2;&#x7ECF;&#x8BF4;&#x4E86;<code>Stub</code>&#x7EE7;&#x627F;&#x4E0E;<code>Binder</code>&#x800C;<code>Binder</code>&#x5B9E;&#x73B0;&#x4E86;<code>IBinder</code>&#x63A5;&#x53E3;&#xFF0C;&#x6240;&#x4EE5;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;<code>Stub</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">public class RemoteService extends Service {</div><div class="line">    public RemoteService() {</div><div class="line">    }</div><div class="line"></div><div class="line">    IRemoteService.Stub mBinder = new IRemoteService.Stub() {</div><div class="line">        @Override</div><div class="line">        public void basicTypes(int anInt, long aLong, boolean aBoolean, float aFloat, double aDouble, String aString) throws RemoteException {</div><div class="line"></div><div class="line">        }</div><div class="line"></div><div class="line">        @Override</div><div class="line">        public HelloMessage sayHello() throws RemoteException {</div><div class="line">            return new HelloMessage(&quot;&#x5F53;&#x524D;&#x7EBF;&#x7A0B;:&quot; + Thread.currentThread().toString() + &quot;\n&quot;</div><div class="line">                    + &quot;&#x5F53;&#x524D;&#x7EBF;&#x7A0B;id:&quot; + Thread.currentThread().getId() + &quot;\n&quot;</div><div class="line">                    + &quot;&#x4E3B;&#x7EBF;&#x7A0B;id:&quot; + getMainLooper().getThread().getId(), Process.myPid());</div><div class="line">        }</div><div class="line">    };</div><div class="line"></div><div class="line">    @Override</div><div class="line">    public IBinder onBind(Intent intent) {</div><div class="line">        // TODO: Return the communication channel to the service.</div><div class="line">        return mBinder;</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+<h2 id="&#x8C03;&#x7528;"><a href="#&#x8C03;&#x7528;" class="headerlink" title="&#x8C03;&#x7528;"></a>&#x8C03;&#x7528;</h2><p>&#x5728;<code>MainActivity</code>&#x4E2D;&#x7ED1;&#x5B9A;&#x5F00;&#x542F;<code>Service</code>&#xFF0C;&#x5B9E;&#x73B0;<code>ServiceConnection</code>,&#x5728;<code>onServiceConnected</code>&#x4E2D;&#x901A;&#x8FC7;<code>iRemoteService = IRemoteService.Stub.asInterface(iBinder);</code>&#x6765;&#x83B7;&#x53D6;&#x8C03;&#x7528;&#x7684;&#x4EE3;&#x7406;&#xFF0C;&#x6700;&#x540E;&#x8C03;&#x7528;<code>iRemoteService.sayHello()</code>&#x83B7;&#x53D6;&#x901A;&#x4FE1;&#x7684;&#x4FE1;&#x606F;&#x3002;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div></pre></td><td class="code"><pre><div class="line">public class MainActivity extends AppCompatActivity {</div><div class="line"></div><div class="line">    private TextView mPidText;</div><div class="line">    private IRemoteService iRemoteService;</div><div class="line">    private boolean mBind = false;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    protected void onCreate(Bundle savedInstanceState) {</div><div class="line">        super.onCreate(savedInstanceState);</div><div class="line">        setContentView(R.layout.activity_main);</div><div class="line">        mPidText = (TextView) findViewById(R.id.pid_text);</div><div class="line">        mPidText.setText(&quot;&#x672C;&#x5730;id:&quot; + Process.myPid());</div><div class="line">    }</div><div class="line"></div><div class="line">    @Override</div><div class="line">    protected void onStart() {</div><div class="line">        super.onStart();</div><div class="line">        Intent intent = new Intent(MainActivity.this, RemoteService.class);</div><div class="line">        bindService(intent, conn, BIND_AUTO_CREATE);</div><div class="line">    }</div><div class="line"></div><div class="line">    @Override</div><div class="line">    protected void onStop() {</div><div class="line">        super.onStop();</div><div class="line">        unbindService(conn);</div><div class="line">        mBind = false;</div><div class="line">    }</div><div class="line"></div><div class="line">    private ServiceConnection conn = new ServiceConnection() {</div><div class="line">        @Override</div><div class="line">        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {</div><div class="line">            iRemoteService = IRemoteService.Stub.asInterface(iBinder);</div><div class="line">            mBind = true;</div><div class="line">        }</div><div class="line"></div><div class="line">        @Override</div><div class="line">        public void onServiceDisconnected(ComponentName componentName) {</div><div class="line">            iRemoteService = null;</div><div class="line">            mBind = false;</div><div class="line">        }</div><div class="line">    };</div><div class="line"></div><div class="line">    public void myClick(View view) {</div><div class="line">        switch (view.getId()) {</div><div class="line">            case R.id.show_pid_bt:</div><div class="line">                if (mBind) {</div><div class="line">                    try {</div><div class="line">                        Log.v(&quot;TAG&quot;, &quot;&#x8FDC;&#x7A0B;id:&quot; + iRemoteService.sayHello().getpId());</div><div class="line">                    } catch (RemoteException e) {</div><div class="line">                        e.printStackTrace();</div><div class="line">                    }</div><div class="line">                }</div><div class="line">                break;</div><div class="line">            case R.id.show_message_bt:</div><div class="line">                if (mBind) {</div><div class="line">                    try {</div><div class="line">                        Log.v(&quot;TAG&quot;, &quot;Message:&quot; + iRemoteService.sayHello().getMessage());</div><div class="line">                    } catch (RemoteException e) {</div><div class="line">                        e.printStackTrace();</div><div class="line">                    }</div><div class="line">                }</div><div class="line">                break;</div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+<p>&#x5F53;&#x7136;&#x5728;<code>AndroidManifest.xml</code>&#x4E2D;&#x8981;&#x5BF9;<code>Service</code>&#x8FDB;&#x884C;&#x914D;&#x7F6E;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;service</div><div class="line">            android:name=&quot;.RemoteService&quot;</div><div class="line">            android:enabled=&quot;true&quot;</div><div class="line">            android:exported=&quot;true&quot;</div><div class="line">            android:process=&quot;:remote&quot;&gt;&lt;/service&gt;</div></pre></td></tr></table></figure>
+<blockquote>
+<p><em>&#x6CE8;&#x610F;&#x56E0;&#x4E3A;&#x8981;&#x6A21;&#x4EFF;&#x8FDC;&#x7A0B;&#x95F4;&#x7684;&#x901A;&#x4FE1;&#xFF0C;&#x6240;&#x4EE5;&#x8981;&#x5C06;process&#x8BBE;&#x7F6E;&#x6210;remote&#xFF0C;&#x5982;&#x679C;&#x4E0D;&#x8BBE;&#x7F6E;&#x5F53;&#x7136;&#x4E5F;&#x53EF;&#x4EE5;&#xFF0C;&#x4F46;&#x8FD9;&#x5C31;&#x4E0D;&#x662F;&#x4E0D;&#x540C;&#x8FDB;&#x7A0B;&#x4E2D;&#x7684;&#x901A;&#x4FE1;&#x4E86;&#xFF0C;aidl&#x5C31;&#x6CA1;&#x4EC0;&#x4E48;&#x610F;&#x4E49;&#x4E86;</em></p>
+</blockquote>
+<p>&#x6765;&#x770B;&#x4E0B;&#x6548;&#x679C;&#x5427;</p>
+<p><img src="/2016/09/25/AIDL&#x5165;&#x95E8;/2.png" alt="&#x6548;&#x679C;"></p>
+<p><img src="/2016/09/25/AIDL&#x5165;&#x95E8;/3.png" alt="&#x6548;&#x679C;"></p>
+<p>&#x5BA2;&#x6237;&#x7AEF;&#x8FDB;&#x7A0B;&#x662F;<code>26951</code>&#x800C;&#x670D;&#x52A1;&#x7AEF;&#x8FDB;&#x7A0B;&#x4E3A;<code>26974</code>&#xFF0C;&#x8BF4;&#x660E;&#x4ED6;&#x4EEC;&#x5904;&#x4E8E;&#x4E0D;&#x540C;&#x7684;&#x8FDB;&#x7A0B;&#xFF0C;&#x8FD9;&#x6837;<code>AIDL</code>&#x4E5F;&#x5C31;&#x5B9E;&#x73B0;&#x4E86;&#x3002;&#x5F53;&#x7136;&#x5982;&#x4E0A;&#x6240;&#x8FF0;&#x5C06;<code>process</code>&#x53BB;&#x6389;&#xFF0C;&#x5C31;&#x4F1A;&#x53D1;&#x73B0;&#xFF0C;&#x5BA2;&#x6237;&#x7AEF;&#x4E0E;&#x670D;&#x52A1;&#x7AEF;&#x7684;&#x8FDB;&#x7A0B;&#x5C31;&#x662F;&#x4E00;&#x6837;&#x7684;&#x4E86;&#x3002;&#x8FD9;&#x4E2A;&#x5C31;&#x7559;&#x4E2A;&#x8BFB;&#x8005;&#x81EA;&#x884C;&#x6D4B;&#x8BD5;&#x4E86;&#x3002;</p>
+<blockquote>
+<p><em>&#x8F6C;&#x8F7D;&#x8BF7;&#x6307;&#x660E;&#x51FA;&#x5904;idisfkj&#x535A;&#x5BA2;&#xFF1A;<a href="https://idisfkj.github.io">https://idisfkj.github.io</a></em></p>
+</blockquote>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal-one" aria-hidden="true">
+  <a href="#close" class="cover" aria-hidden="true"></a>
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <a href="#close" class="btn-close" aria-hidden="true">关闭</a>
+    </div>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+  <section class="duoshuo-comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="" data-title="AIDL入门" data-url="https://idisfkj.github.io/2016/09/25/AIDL入门/index.html"></div>
+    <!-- 多说评论框 end -->
+  </section>
+
+
+
+
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"idisfkj"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?398', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
