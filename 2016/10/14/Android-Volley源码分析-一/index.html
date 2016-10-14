@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+
+
+  <html class="light">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>Android Volley源码分析(一) | Idisfkj</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="源码分析," />
+  
+
+  <meta name="description" content="volley&amp;#x662F;&amp;#x4E00;&amp;#x4E2A;&amp;#x975E;&amp;#x5E38;&amp;#x6D41;&amp;#x884C;&amp;#x7684;Android&amp;#x5F00;&amp;#x6E90;&amp;#x6846;&amp;#x67B6;&amp;#xFF0C;&amp;#x81EA;&amp;#x5DF1;&amp;#x5E73;&amp;#x65F6;&amp;#x4E5F;&amp;#x7ECF;&amp;#x5E38;&amp;#x4F7F;&amp;#x7528;&amp;#x5B83;&amp;#x">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android Volley源码分析(一)">
+<meta property="og:url" content="https://idisfkj.github.io/2016/10/14/Android-Volley源码分析-一/index.html">
+<meta property="og:site_name" content="Idisfkj">
+<meta property="og:description" content="volley&amp;#x662F;&amp;#x4E00;&amp;#x4E2A;&amp;#x975E;&amp;#x5E38;&amp;#x6D41;&amp;#x884C;&amp;#x7684;Android&amp;#x5F00;&amp;#x6E90;&amp;#x6846;&amp;#x67B6;&amp;#xFF0C;&amp;#x81EA;&amp;#x5DF1;&amp;#x5E73;&amp;#x65F6;&amp;#x4E5F;&amp;#x7ECF;&amp;#x5E38;&amp;#x4F7F;&amp;#x7528;&amp;#x5B83;&amp;#x">
+<meta property="og:image" content="https://idisfkj.github.io/2016/10/14/Android-Volley源码分析-一/Volley框架图.png">
+<meta property="og:updated_time" content="2016-10-14T11:25:33.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android Volley源码分析(一)">
+<meta name="twitter:description" content="volley&amp;#x662F;&amp;#x4E00;&amp;#x4E2A;&amp;#x975E;&amp;#x5E38;&amp;#x6D41;&amp;#x884C;&amp;#x7684;Android&amp;#x5F00;&amp;#x6E90;&amp;#x6846;&amp;#x67B6;&amp;#xFF0C;&amp;#x81EA;&amp;#x5DF1;&amp;#x5E73;&amp;#x65F6;&amp;#x4E5F;&amp;#x7ECF;&amp;#x5E38;&amp;#x4F7F;&amp;#x7528;&amp;#x5B83;&amp;#x">
+<meta name="twitter:image" content="https://idisfkj.github.io/2016/10/14/Android-Volley源码分析-一/Volley框架图.png">
+
+  
+
+  
+  <!-- <link href="/favicon.ico" rel="icon" type="image/x-icon"> -->
+    <link rel="icon" href="/favicon.ico">
+    <!-- <link href="favicon.ico" rel="shortcut icon" type="image/x-icon" /> -->
+  
+  
+  <link href="/css/styles.css?v=5f7f1d39" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?ef89e68af5e136d5c22043f91cd139ea";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+
+  
+    <a href="#modal-one" class="toolbox-mobile">盒子</a>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#newRequestQueue"><span class="toc-text">newRequestQueue</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#RequestQueue"><span class="toc-text">RequestQueue</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#start"><span class="toc-text">start</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#add"><span class="toc-text">add</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#finish"><span class="toc-text">finish</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CacheDispatcher"><span class="toc-text">CacheDispatcher</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#run"><span class="toc-text">run</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ExecutorDelivery"><span class="toc-text">ExecutorDelivery</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#postResponse"><span class="toc-text">postResponse</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ResponseDeliveryRunnable"><span class="toc-text">ResponseDeliveryRunnable</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#NetworkDispatcher"><span class="toc-text">NetworkDispatcher</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#run-1"><span class="toc-text">run</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-Android-Volley源码分析-一" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Android Volley源码分析(一)</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.10.14</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>idisfkj</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/android/">android</a>
+  </span>
+
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p><code>volley</code>&#x662F;&#x4E00;&#x4E2A;&#x975E;&#x5E38;&#x6D41;&#x884C;&#x7684;<code>Android</code>&#x5F00;&#x6E90;&#x6846;&#x67B6;&#xFF0C;&#x81EA;&#x5DF1;&#x5E73;&#x65F6;&#x4E5F;&#x7ECF;&#x5E38;&#x4F7F;&#x7528;&#x5B83;&#xFF0C;&#x4F46;&#x81EA;&#x5DF1;&#x5BF9;&#x4E8E;&#x5B83;&#x7684;&#x5185;&#x90E8;&#x7684;&#x5B9E;&#x73B0;&#x8FC7;&#x7A0B;&#x5E76;&#x6CA1;&#x6709;&#x8FDB;&#x884C;&#x592A;&#x591A;&#x7684;&#x6DF1;&#x7A76;&#x3002;&#x6240;&#x4EE5;&#x4E3A;&#x4E86;&#x4EE5;&#x540E;&#x80FD;&#x66F4;&#x901A;&#x900F;&#x7684;&#x4F7F;&#x7528;&#x5B83;&#xFF0C;&#x4E86;&#x89E3;&#x5B83;&#x7684;&#x5B9E;&#x73B0;&#x662F;&#x4E00;&#x4E2A;&#x975E;&#x5E38;&#x91CD;&#x8981;&#x7684;&#x8FC7;&#x7A0B;&#x3002;&#x81EA;&#x5DF1;&#x6709;&#x4E86;&#x4E00;&#x70B9;&#x7814;&#x7A76;&#xFF0C;&#x505A;&#x4E2A;&#x7B14;&#x8BB0;&#x540C;&#x65F6;&#x4E0E;&#x5927;&#x5BB6;&#x4E00;&#x8D77;&#x5206;&#x4EAB;&#x3002;&#x671F;&#x95F4;&#x81EA;&#x5DF1;&#x4E5F;&#x753B;&#x4E86;&#x4E00;&#x5F20;&#x56FE;&#xFF0C;&#x5E0C;&#x671B;&#x80FD;&#x66F4;&#x597D;&#x7684;&#x5E2E;&#x52A9;&#x6211;&#x4EEC;&#x7406;&#x89E3;&#x5176;&#x4E2D;&#x7684;&#x6B65;&#x9AA4;&#x4E0E;&#x539F;&#x7406;&#x3002;&#x5982;&#x4E0B;&#xFF1A;<br><img src="/2016/10/14/Android-Volley&#x6E90;&#x7801;&#x5206;&#x6790;-&#x4E00;/Volley&#x6846;&#x67B6;&#x56FE;.png" alt="Volley&#x6846;&#x67B6;&#x56FE;"><br>&#x5F00;&#x59CB;&#x770B;&#x53EF;&#x80FD;&#x4F1A;&#x4E00;&#x8138;&#x61F5;&#x903C;&#xFF0C;&#x6211;&#x4EEC;&#x5148;&#x7ED3;&#x5408;&#x6E90;&#x7801;&#x4E00;&#x6B65;&#x4E00;&#x6B65;&#x6765;&#xFF0C;&#x73B0;&#x5728;&#x8BA9;&#x6211;&#x4EEC;&#x4E00;&#x8D77;&#x8FDB;&#x5165;<code>Volley</code>&#x7684;&#x6E90;&#x7801;&#x4E16;&#x754C;&#xFF0C;&#x6765;&#x89E3;&#x8BFB;&#x5927;&#x795E;&#x4EEC;&#x7684;&#x7F16;&#x7A0B;&#x601D;&#x60F3;&#x3002;</p>
+<h1 id="newRequestQueue"><a href="#newRequestQueue" class="headerlink" title="newRequestQueue"></a>newRequestQueue</h1><p>&#x5982;&#x679C;&#x4F7F;&#x7528;&#x8FC7;<code>Volley</code>&#x7684;&#x90FD;&#x77E5;&#x9053;&#xFF0C;&#x4E0D;&#x7BA1;&#x662F;&#x8FDB;&#x884C;&#x7F51;&#x7EDC;&#x8BF7;&#x6C42;&#x8FD8;&#x662F;&#x4EC0;&#x4E48;&#x522B;&#x7684;&#x56FE;&#x7247;&#x52A0;&#x8F7D;&#xFF0C;&#x9996;&#x5148;&#x90FD;&#x8981;&#x521B;&#x5EFA;&#x597D;&#x4E00;&#x4E2A;<code>RequestQueue</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">public static final RequestQueue volleyQueue = Volley.newRequestQueue(App.mContext);</div></pre></td></tr></table></figure>
+<p>&#x800C;<code>RequestQueue</code>&#x7684;&#x521B;&#x5EFA;&#x81EA;&#x7136;&#x79BB;&#x4E0D;&#x5F00;<code>Volley</code>&#x4E2D;&#x7684;&#x9759;&#x6001;&#x65B9;&#x6CD5;<code>newRequestQueue</code>&#xFF0C;&#x4ECE;&#x4E0A;&#x9762;&#x7684;&#x56FE;&#x7247;&#x4E5F;&#x80FD;&#x77E5;&#x9053;&#x9996;&#x5148;&#x8FDB;&#x5165;&#x70B9;&#x662F;<code>newRequestQueue</code>,&#x597D;&#x4E86;&#x73B0;&#x5728;&#x6211;&#x4EEC;&#x6765;&#x770B;&#x4E0B;&#x8BE5;&#x65B9;&#x6CD5;&#x4E2D;&#x5230;&#x5E95;&#x505A;&#x4E86;&#x4EC0;&#x4E48;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">public static RequestQueue newRequestQueue(Context context, HttpStack stack) {</div><div class="line">        File cacheDir = new File(context.getCacheDir(), DEFAULT_CACHE_DIR);</div><div class="line">        String userAgent = &quot;volley/0&quot;;</div><div class="line">        try {</div><div class="line">            String packageName = context.getPackageName();</div><div class="line">            PackageInfo info = context.getPackageManager().getPackageInfo(packageName, 0);</div><div class="line">            userAgent = packageName + &quot;/&quot; + info.versionCode;</div><div class="line">        } catch (NameNotFoundException e) {</div><div class="line">        }</div><div class="line">        if (stack == null) {</div><div class="line">            if (Build.VERSION.SDK_INT &gt;= 9) {</div><div class="line">                stack = new HurlStack();</div><div class="line">            } else {</div><div class="line">                // Prior to Gingerbread, HttpUrlConnection was unreliable.</div><div class="line">                // See: http://android-developers.blogspot.com/2011/09/androids-http-clients.html</div><div class="line">                stack = new HttpClientStack(AndroidHttpClient.newInstance(userAgent));</div><div class="line">            }</div><div class="line">        }</div><div class="line">        Network network = new BasicNetwork(stack);</div><div class="line">        RequestQueue queue = new RequestQueue(new DiskBasedCache(cacheDir), network);</div><div class="line">        queue.start();</div><div class="line">        return queue;</div><div class="line">    }</div></pre></td></tr></table></figure>
+<p>&#x4ECE;&#x4E0A;&#x9762;&#x7684;&#x6E90;&#x7801;&#x4E2D;&#x6211;&#x4EEC;&#x80FD;&#x53D1;&#x73B0;&#x6709;&#x4E00;&#x4E2A;<code>stack</code>&#xFF0C;&#x5B83;&#x4EE3;&#x8868;&#x7740;&#x7F51;&#x7EDC;&#x8BF7;&#x6C42;&#x901A;&#x4FE1;<code>HttpClient</code>&#x4E0E;<code>HttpUrlConnection</code>&#xFF0C;&#x4F46;&#x6211;&#x4EEC;&#x4E00;&#x822C;&#x90FD;&#x662F;&#x9ED8;&#x8BA4;&#x8BBE;&#x7F6E;&#x4E3A;<code>null</code>&#x3002;&#x56E0;&#x4E3A;&#x5B83;&#x4F1A;&#x9ED8;&#x8BA4;&#x5E2E;&#x6211;&#x4EEC;&#x8FDB;&#x5224;&#x65AD;&#x9009;&#x62E9;&#x66F4;&#x9002;&#x5408;&#x7684;&#x3002;&#x5F53;&#x624B;&#x673A;&#x7248;&#x672C;&#x5927;&#x4E8E;&#x7B49;&#x4E8E;<code>9</code>&#x65F6;&#x4F1A;&#x4F7F;&#x7528;<code>HurlStack</code>&#x5B83;&#x91CC;&#x9762;&#x4F7F;&#x7528;<code>HttpUrlConnection</code>&#x8FDB;&#x884C;&#x5B9E;&#x73B0;&#x901A;&#x4FE1;&#x7684;&#xFF0C;&#x800C;&#x5C0F;&#x4E8E;<code>9</code>&#x65F6;&#x5219;&#x521B;&#x5EFA;<code>HttpClientStack</code>&#xFF0C;&#x5B83;&#x91CC;&#x9762;&#x81EA;&#x7136;&#x662F;<code>HttpClient</code>&#x7684;&#x5B9E;&#x73B0;&#x3002;&#x901A;&#x8FC7;<code>BasicNetwork</code>&#x6784;&#x9020;&#x6210;<code>Network</code>&#x6765;&#x8FDB;&#x884C;&#x4F20;&#x9012;&#x4F7F;&#x7528;&#xFF1B;&#x5728;&#x8FD9;&#x4E4B;&#x540E;&#x6784;&#x5EFA;&#x4E86;<code>RequestQueue</code>&#xFF0C;&#x5176;&#x4E2D;&#x5E2E;&#x6211;&#x4EEC;&#x6784;&#x9020;&#x4E86;&#x4E00;&#x4E2A;&#x7F13;&#x5B58;<code>new DiskBasedCache(cacheDir)</code>&#xFF0C;&#x9ED8;&#x8BA4;&#x4E3A;<code>5MB</code>,&#x7F13;&#x5B58;&#x76EE;&#x5F55;&#x4E3A;<code>volley</code>&#x3002;&#x6240;&#x4EE5;&#x6211;&#x4EEC;&#x80FD;&#x5728;<code>data/data/&#x5E94;&#x7528;&#x5305;&#x540D;/volley</code>&#x4E0B;&#x627E;&#x5230;&#x7F13;&#x5B58;&#x3002;&#x6700;&#x540E;&#x8C03;&#x7528;&#x5176;<code>start</code>&#x65B9;&#x6CD5;&#xFF0C;&#x5E76;&#x8FD4;&#x56DE;<code>RequestQueue</code>&#x3002;&#x8FD9;&#x5C31;&#x662F;&#x6211;&#x4EEC;&#x524D;&#x9762;&#x7B2C;&#x4E00;&#x6BB5;&#x4EE3;&#x7801;&#x7684;&#x5185;&#x90E8;&#x5B9E;&#x73B0;&#x3002;&#x4E0B;&#x9762;&#x6211;&#x4EEC;&#x8FDB;&#x5165;<code>RequestQueue</code>&#x4E2D;&#x7684;<code>start</code>&#x65B9;&#x6CD5;&#x770B;&#x4E0B;&#x5B83;&#x5230;&#x5E95;&#x505A;&#x4E86;&#x4EC0;&#x4E48;&#x5462;&#xFF1F;</p>
+<h1 id="RequestQueue"><a href="#RequestQueue" class="headerlink" title="RequestQueue"></a>RequestQueue</h1><p>&#x5728;<code>RequestQueue</code>&#x4E2D;&#x901A;&#x8FC7;<code>this</code>&#x8C03;&#x7528;&#x81EA;&#x8EAB;&#x6765;&#x9ED8;&#x8BA4;&#x5E2E;&#x6211;&#x4EEC;&#x8C03;&#x7528;&#x4E86;&#x4E0B;&#x9762;&#x7684;&#x6784;&#x9020;&#x51FD;&#x6570;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">public RequestQueue(Cache cache, Network network, int threadPoolSize,</div><div class="line">            ResponseDelivery delivery) {</div><div class="line">        mCache = cache;</div><div class="line">        mNetwork = network;</div><div class="line">        mDispatchers = new NetworkDispatcher[threadPoolSize];</div><div class="line">        mDelivery = delivery;</div><div class="line">    }</div></pre></td></tr></table></figure>
+<p><code>cache</code>&#x540E;&#x7EED;&#x5728;<code>NetworkDispatcher</code>&#x4E2D;&#x4F1A;&#x5E2E;&#x6211;&#x4EEC;&#x8FDB;&#x884C;<code>response.cacheEntry</code>&#x7684;&#x7F13;&#x5B58;&#xFF0C;<code>netWork</code>&#x662F;&#x524D;&#x9762;&#x7684;&#x6839;&#x636E;&#x7248;&#x672C;&#x6240;&#x5C01;&#x88C5;&#x7684;&#x901A;&#x4FE1;&#xFF0C;<code>threadPoolSize</code>&#x7EBF;&#x7A0B;&#x6C60;&#x5927;&#x5C0F;&#x9ED8;&#x8BA4;&#x4E3A;<code>4</code>&#xFF0C;<code>delivery</code>,&#x662F;<code>ExecutorDelivery</code>&#x4F5C;&#x7528;&#x5728;&#x4E3B;&#x7EBF;&#x7A0B;,&#x5728;&#x6700;&#x540E;&#x5BF9;&#x8BF7;&#x6C42;&#x54CD;&#x5E94;&#x7684;&#x5206;&#x53D1;&#x3002;</p>
+<h2 id="start"><a href="#start" class="headerlink" title="start"></a>start</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">public void start() {</div><div class="line">        stop();  // Make sure any currently running dispatchers are stopped.</div><div class="line">        // Create the cache dispatcher and start it.</div><div class="line">        mCacheDispatcher = new CacheDispatcher(mCacheQueue, mNetworkQueue, mCache, mDelivery);</div><div class="line">        mCacheDispatcher.start();</div><div class="line">        // Create network dispatchers (and corresponding threads) up to the pool size.</div><div class="line">        for (int i = 0; i &lt; mDispatchers.length; i++) {</div><div class="line">            NetworkDispatcher networkDispatcher = new NetworkDispatcher(mNetworkQueue, mNetwork,</div><div class="line">                    mCache, mDelivery);</div><div class="line">            mDispatchers[i] = networkDispatcher;</div><div class="line">            networkDispatcher.start();</div><div class="line">        }</div><div class="line">    }</div></pre></td></tr></table></figure>
+<p>&#x5728;<code>start</code>&#x65B9;&#x6CD5;&#x4E2D;&#x6211;&#x4EEC;&#x53D1;&#x73B0;&#x5B83;&#x5B9E;&#x73B0;&#x4E86;&#x4E24;&#x4E2A;<code>dispatch</code>,&#x4E00;&#x4E2A;&#x662F;<code>CacheDispatcher</code>&#x7F13;&#x5B58;&#x6D3E;&#x9063;,&#x53E6;&#x4E00;&#x4E2A;&#x662F;<code>networkDispatcher</code>&#x8FDB;&#x884C;&#x7F51;&#x7EDC;&#x6D3E;&#x9063;&#xFF0C;&#x5176;&#x5B9E;&#x4ED6;&#x4EEC;&#x90FD;&#x662F;<code>Thread</code>&#xFF0C;&#x6240;&#x4EE5;&#x90FD;&#x8C03;&#x7528;&#x4E86;&#x4ED6;&#x4EEC;&#x7684;<code>start</code>&#x65B9;&#x6CD5;&#x3002;&#x5176;&#x4E2D;<code>networkDispatcher</code>&#x9ED8;&#x8BA4;&#x6784;&#x5EFA;&#x4E86;<code>4</code>&#x4E2A;&#xFF0C;&#x76F8;&#x5F53;&#x4E8E;&#x5305;&#x542B;<code>4</code>&#x4E2A;&#x7EBF;&#x7A0B;&#x7684;&#x7EBF;&#x7A0B;&#x6C60;&#x3002;&#x73B0;&#x5728;&#x6211;&#x4EEC;&#x5148;&#x4E0D;&#x53BB;&#x770B;&#x4ED6;&#x4EEC;&#x5185;&#x90E8;&#x7684;<code>run</code>&#x65B9;&#x6CD5;&#x5230;&#x5E95;&#x5B9E;&#x73B0;&#x4E86;&#x4EC0;&#x4E48;&#xFF0C;&#x6211;&#x4EEC;&#x8FD8;&#x662F;&#x63A5;&#x7740;&#x770B;<code>RequestQueue</code>&#x4E2D;&#x6211;&#x4EEC;&#x9891;&#x7E41;&#x4F7F;&#x7528;&#x7684;<code>add</code>&#x65B9;&#x6CD5;&#x3002;</p>
+<h2 id="add"><a href="#add" class="headerlink" title="add"></a>add</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">public &lt;T&gt; Request&lt;T&gt; add(Request&lt;T&gt; request) {</div><div class="line">        // Tag the request as belonging to this queue and add it to the set of current requests.</div><div class="line">        request.setRequestQueue(this);</div><div class="line">        synchronized (mCurrentRequests) {</div><div class="line">            mCurrentRequests.add(request);</div><div class="line">        }</div><div class="line">        // Process requests in the order they are added.</div><div class="line">        request.setSequence(getSequenceNumber());</div><div class="line">        request.addMarker(&quot;add-to-queue&quot;);</div><div class="line">        // If the request is uncacheable, skip the cache queue and go straight to the network.</div><div class="line">        if (!request.shouldCache()) {</div><div class="line">            mNetworkQueue.add(request);</div><div class="line">            return request;</div><div class="line">        }</div><div class="line">        // Insert request into stage if there&apos;s already a request with the same cache key in flight.</div><div class="line">        synchronized (mWaitingRequests) {</div><div class="line">            String cacheKey = request.getCacheKey();</div><div class="line">            if (mWaitingRequests.containsKey(cacheKey)) {</div><div class="line">                // There is already a request in flight. Queue up.</div><div class="line">                Queue&lt;Request&lt;?&gt;&gt; stagedRequests = mWaitingRequests.get(cacheKey);</div><div class="line">                if (stagedRequests == null) {</div><div class="line">                    stagedRequests = new LinkedList&lt;Request&lt;?&gt;&gt;();</div><div class="line">                }</div><div class="line">                stagedRequests.add(request);</div><div class="line">                mWaitingRequests.put(cacheKey, stagedRequests);</div><div class="line">                if (VolleyLog.DEBUG) {</div><div class="line">                    VolleyLog.v(&quot;Request for cacheKey=%s is in flight, putting on hold.&quot;, cacheKey);</div><div class="line">                }</div><div class="line">            } else {</div><div class="line">                // Insert &apos;null&apos; queue for this cacheKey, indicating there is now a request in</div><div class="line">                // flight.</div><div class="line">                mWaitingRequests.put(cacheKey, null);</div><div class="line">                mCacheQueue.add(request);</div><div class="line">            }</div><div class="line">            return request;</div><div class="line">        }</div><div class="line">    }</div></pre></td></tr></table></figure>
+<p>&#x6211;&#x4EEC;&#x7ED3;&#x5408;&#x4EE3;&#x7801;&#x4E0E;&#x524D;&#x9762;&#x7684;&#x56FE;&#xFF0C;&#x9996;&#x5148;&#x4F1A;&#x4E3A;&#x5F53;&#x524D;&#x7684;<code>request</code>&#x8BBE;&#x7F6E;<code>RequestQueue</code>,&#x5E76;&#x4E14;&#x6839;&#x636E;&#x60C5;&#x51B5;&#x540C;&#x6B65;&#x662F;&#x5426;&#x662F;&#x5F53;&#x524D;&#x6B63;&#x5728;&#x8FDB;&#x884C;&#x7684;&#x8BF7;&#x6C42;&#xFF0C;&#x52A0;&#x5165;&#x5230;<code>mCurrentRequests</code>&#x4E2D;&#xFF0C;&#x770B;<code>11</code>&#x884C;&#x4EE3;&#x7801;&#xFF0C;&#x4E4B;&#x540E;&#x5BF9;&#x5F53;&#x524D;<code>request</code>&#x8FDB;&#x884C;&#x5224;&#x65AD;&#x662F;&#x5426;&#x9700;&#x8981;&#x7F13;&#x5B58;&#xFF08;&#x9ED8;&#x8BA4;&#x5B9E;&#x73B0;&#x662F;<code>true</code>&#xFF0C;&#x5982;&#x679C;&#x4E0D;&#x9700;&#x8981;&#x53EF;&#x8C03;&#x7528;<code>request.setShouldCache()</code>&#x8FDB;&#x884C;&#x8BBE;&#x7F6E;&#xFF09;,&#x5982;&#x679C;&#x4E0D;&#x9700;&#x8981;&#x5219;&#x76F4;&#x63A5;&#x52A0;&#x5165;&#x5230;&#x524D;&#x9762;&#x7684;<code>mNetworkQueue</code>&#x4E2D;&#xFF0C;&#x5B83;&#x4F1A;&#x5728;<code>CacheDispatcher</code>&#x4E0E;<code>NetworkDispatcher</code>&#x4E2D;&#x505A;&#x76F8;&#x5E94;&#x7684;&#x5904;&#x7406;&#xFF0C;&#x7136;&#x540E;&#x8FD4;&#x56DE;<code>request</code>&#x3002;&#x5982;&#x679C;&#x9700;&#x8981;&#x7F13;&#x5B58;&#xFF0C;&#x770B;16&#x884C;&#x4EE3;&#x7801;&#xFF0C;&#x5219;&#x5BF9;<code>mWaitingRequests</code>&#x4E2D;&#x662F;&#x5426;&#x5305;&#x542B;<code>cacheKey</code>&#x8FDB;&#x884C;&#x76F8;&#x5E94;&#x7684;&#x5904;&#x7406;&#x3002;&#x5176;&#x4E2D;<code>cacheKey</code>&#x4E3A;&#x8BF7;&#x6C42;&#x7684;<code>url</code>&#x3002;&#x6700;&#x540E;&#x518D;&#x52A0;&#x5165;&#x5230;&#x7F13;&#x5B58;&#x961F;&#x5217;<code>mCacheQueue</code>&#x4E2D;&#x3002;</p>
+<h2 id="finish"><a href="#finish" class="headerlink" title="finish"></a>finish</h2><p>&#x7EC6;&#x5FC3;&#x7684;&#x4EBA;&#x4F1A;&#x53D1;&#x73B0;&#x5F53;&#x5BF9;&#x5E94;<code>cacheKey</code>&#x7684;<code>value</code>&#x4E0D;&#x4E3A;&#x7A7A;&#x65F6;&#xFF0C;&#x521B;&#x5EFA;&#x4E86;<code>LinkedList</code>&#x5373;<code>Queue</code>,&#x53EA;&#x662F;&#x5C06;<code>request</code>&#x52A0;&#x5165;&#x5230;&#x4E86;<code>Queue</code>&#x4E2D;&#xFF0C;&#x53EA;&#x662F;&#x66F4;&#x65B0;&#x4E86;<code>mWaitingRequests</code>&#x4E2D;&#x76F8;&#x5E94;&#x7684;<code>value</code>&#x4F46;&#x5E76;&#x6CA1;&#x6709;&#x52A0;&#x5165;&#x5230;<code>mCacheQueue</code>&#x4E2D;&#x3002;&#x5176;&#x5B9E;&#x4E0D;&#x7136;&#xFF0C;&#x56E0;&#x4E3A;&#x540E;&#x7EED;&#x4F1A;&#x8C03;&#x7528;<code>finish</code>&#x65B9;&#x6CD5;,&#x6211;&#x4EEC;&#x6765;&#x770B;&#x4E0B;&#x6E90;&#x7801;:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">&lt;T&gt; void finish(Request&lt;T&gt; request) {</div><div class="line">        // Remove from the set of requests currently being processed.</div><div class="line">        synchronized (mCurrentRequests) {</div><div class="line">            mCurrentRequests.remove(request);</div><div class="line">        }</div><div class="line">        synchronized (mFinishedListeners) {</div><div class="line">          for (RequestFinishedListener&lt;T&gt; listener : mFinishedListeners) {</div><div class="line">            listener.onRequestFinished(request);</div><div class="line">          }</div><div class="line">        }</div><div class="line">        if (request.shouldCache()) {</div><div class="line">            synchronized (mWaitingRequests) {</div><div class="line">                String cacheKey = request.getCacheKey();</div><div class="line">                Queue&lt;Request&lt;?&gt;&gt; waitingRequests = mWaitingRequests.remove(cacheKey);</div><div class="line">                if (waitingRequests != null) {</div><div class="line">                    if (VolleyLog.DEBUG) {</div><div class="line">                        VolleyLog.v(&quot;Releasing %d waiting requests for cacheKey=%s.&quot;,</div><div class="line">                                waitingRequests.size(), cacheKey);</div><div class="line">                    }</div><div class="line">                    // Process all queued up requests. They won&apos;t be considered as in flight, but</div><div class="line">                    // that&apos;s not a problem as the cache has been primed by &apos;request&apos;.</div><div class="line">                    mCacheQueue.addAll(waitingRequests);</div><div class="line">                }</div><div class="line">            }</div><div class="line">        }</div><div class="line">    }</div></pre></td></tr></table></figure>
+<p>&#x770B;<code>14</code>&#x3001;<code>22</code>&#x884C;&#x4EE3;&#x7801;&#xFF0C;&#x6B63;&#x5982;&#x4E0A;&#x9762;&#x6211;&#x6240;&#x8BF4;&#xFF0C;&#x4F1A;&#x5C06;<code>Queue</code>&#x4E2D;&#x7684;<code>request</code>&#x5168;&#x90E8;&#x52A0;&#x5165;&#x5230;<code>mCacheQueue</code>&#x4E2D;&#x3002;<br>&#x597D;&#x4E86;<code>RequestQueue</code>&#x7684;&#x4E3B;&#x8981;&#x6E90;&#x7801;&#x5DEE;&#x4E0D;&#x591A;&#x5C31;&#x8FD9;&#x4E9B;&#xFF0C;&#x4E0B;&#x9762;&#x6211;&#x4EEC;&#x8FDB;&#x5165;<code>CacheDispatcher</code>&#x7684;&#x6E90;&#x7801;&#x5206;&#x6790;,&#x770B;&#x5B83;&#x7A76;&#x7ADF;&#x5982;&#x4F55;&#x5DE5;&#x4F5C;&#x7684;&#x5462;&#xFF1F;</p>
+<h1 id="CacheDispatcher"><a href="#CacheDispatcher" class="headerlink" title="CacheDispatcher"></a>CacheDispatcher</h1><p>&#x524D;&#x9762;&#x63D0;&#x5230;&#x4E86;&#x5B83;&#x4E0E;<code>NetworkDispatcher</code>&#x672C;&#x8D28;&#x90FD;&#x662F;<code>Thread</code>&#xFF0C;&#x90A3;&#x4E48;&#x6211;&#x4EEC;&#x81EA;&#x7136;&#x662F;&#x770B;<code>run</code>&#x65B9;&#x6CD5;</p>
+<h2 id="run"><a href="#run" class="headerlink" title="run"></a>run</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">    public void run() {</div><div class="line">        if (DEBUG) VolleyLog.v(&quot;start new dispatcher&quot;);</div><div class="line">                Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);</div><div class="line">        </div><div class="line">        // Make a blocking call to initialize the cache.</div><div class="line">        mCache.initialize();</div><div class="line">                </div><div class="line">        while (true) {</div><div class="line">            try {</div><div class="line">                // Get a request from the cache triage queue, blocking until</div><div class="line">                // at least one is available.</div><div class="line">                final Request&lt;?&gt; request = mCacheQueue.take();</div><div class="line">                request.addMarker(&quot;cache-queue-take&quot;);</div><div class="line">                </div><div class="line">                // If the request has been canceled, don&apos;t bother dispatching it.</div><div class="line">                if (request.isCanceled()) {</div><div class="line">                    request.finish(&quot;cache-discard-canceled&quot;);</div><div class="line">                    continue;</div><div class="line">                }</div><div class="line">                </div><div class="line">                // Attempt to retrieve this item from cache.</div><div class="line">                Cache.Entry entry = mCache.get(request.getCacheKey());</div><div class="line">                if (entry == null) {</div><div class="line">                    request.addMarker(&quot;cache-miss&quot;);</div><div class="line">                    // Cache miss; send off to the network dispatcher.</div><div class="line">                    mNetworkQueue.put(request);</div><div class="line">                    continue;</div><div class="line">                }</div><div class="line">                </div><div class="line">                // If it is completely expired, just send it to the network.</div><div class="line">                if (entry.isExpired()) {</div><div class="line">                    request.addMarker(&quot;cache-hit-expired&quot;);</div><div class="line">                    request.setCacheEntry(entry);</div><div class="line">                    mNetworkQueue.put(request);</div><div class="line">                    continue;</div><div class="line">                }</div><div class="line">                </div><div class="line">                // We have a cache hit; parse its data for delivery back to the request.</div><div class="line">                request.addMarker(&quot;cache-hit&quot;);</div><div class="line">                Response&lt;?&gt; response = request.parseNetworkResponse(</div><div class="line">                        new NetworkResponse(entry.data, entry.responseHeaders));</div><div class="line">                request.addMarker(&quot;cache-hit-parsed&quot;);</div><div class="line">                    </div><div class="line">                if (!entry.refreshNeeded()) {</div><div class="line">                    // Completely unexpired cache hit. Just deliver the response.</div><div class="line">                    mDelivery.postResponse(request, response);</div><div class="line">                } else {</div><div class="line">                    // Soft-expired cache hit. We can deliver the cached response,</div><div class="line">                    // but we need to also send the request to the network for</div><div class="line">                    // refreshing.</div><div class="line">                    request.addMarker(&quot;cache-hit-refresh-needed&quot;);</div><div class="line">                    request.setCacheEntry(entry);</div><div class="line">                    </div><div class="line">                    // Mark the response as intermediate.</div><div class="line">                    response.intermediate = true;</div><div class="line">             </div><div class="line">                    // Post the intermediate response back to the user and have</div><div class="line">                    // the delivery then forward the request along to the network.</div><div class="line">                    mDelivery.postResponse(request, response, new Runnable() {</div><div class="line">                        @Override</div><div class="line">                        public void run() {</div><div class="line">                            try {</div><div class="line">                                                                            mNetworkQueue.put(request);</div><div class="line">                            } catch (InterruptedException e) {</div><div class="line">                                // Not much we can do about this.</div><div class="line">                            }</div><div class="line">                        }</div><div class="line">                    });</div><div class="line">                }</div><div class="line">                                                                                          </div><div class="line">            } catch (InterruptedException e) {</div><div class="line">                // We may have been interrupted because it was time to quit.</div><div class="line">                if (mQuit) {</div><div class="line">                    return;</div><div class="line">                }</div><div class="line">                continue;</div><div class="line">            }</div><div class="line">        }</div><div class="line">    }</div></pre></td></tr></table></figure>
+<p>&#x770B;&#x8D77;&#x6765;&#x5F88;&#x591A;&#xFF0C;&#x6211;&#x4EEC;&#x7ED3;&#x5408;&#x56FE;&#x6765;&#x6311;&#x4E3B;&#x8981;&#x7684;&#x770B;&#x3002;&#x9996;&#x5148;&#x521B;&#x5EFA;&#x4E86;&#x4E00;&#x4E2A;&#x65E0;&#x9650;&#x5FAA;&#x73AF;&#x4E00;&#x76F4;&#x5728;&#x76D1;&#x89C6;&#x7740;<code>request</code>&#x7684;&#x53D8;&#x5316;&#x3002;&#x4ECE;&#x7F13;&#x5B58;&#x961F;&#x5217;<code>mCacheQueue</code>&#x4E2D;&#x83B7;&#x53D6;<code>request</code>,&#x5982;&#x679C;&#x8BE5;&#x8BF7;&#x6C42;&#x662F;<code>cancle</code>&#x4E86;&#xFF0C;&#x8C03;&#x7528;<code>request.finish()</code>&#x6E05;&#x9664;&#x76F8;&#x5E94;&#x6570;&#x636E;&#x5E76;&#x8FDB;&#x884C;&#x4E0B;&#x4E00;&#x4E2A;&#x8BF7;&#x6C42;&#x7684;&#x64CD;&#x4F5C;&#xFF0C;&#x5426;&#x5219;&#x4ECE;&#x524D;&#x9762;&#x63D0;&#x5230;&#x7684;<code>mCache</code>&#x4E2D;&#x83B7;&#x53D6;<code>Cache.Entry</code>&#x3002;&#x5982;&#x679C;&#x4E0D;&#x5B58;&#x5728;&#x6216;&#x8005;&#x5DF2;&#x7ECF;&#x8FC7;&#x671F;&#xFF0C;&#x5C06;&#x8BF7;&#x6C42;&#x52A0;&#x5165;&#x5230;&#x7F51;&#x7EDC;&#x961F;&#x5217;&#x4E2D;<code>mNetWorkQueue</code>&#xFF0C;&#x8FDB;&#x884C;&#x540E;&#x7EED;&#x7684;&#x7F51;&#x7EDC;&#x8BF7;&#x6C42;&#x3002;&#x5982;&#x679C;&#x5B58;&#x5728;&#xFF08;<code>41</code>&#x884C;&#x4EE3;&#x7801;&#xFF09;&#x5219;&#x8FDB;&#x884C;<code>request.parseNetworkResponse()</code>&#x89E3;&#x6790;&#x51FA;<code>response</code>,&#x4E0D;&#x540C;&#x7684;<code>request</code>&#x5BF9;&#x5E94;&#x4E0D;&#x540C;&#x7684;&#x89E3;&#x6790;&#x65B9;&#x6CD5;&#x3002;&#x4F8B;&#x5982;<code>StringRequest</code>&#x4E0E;<code>JsonObjectRequest</code>&#x6709;&#x5404;&#x81EA;&#x7684;&#x89E3;&#x6790;&#x5B9E;&#x73B0;&#x3002;&#x518D;&#x770B;<code>45</code>&#x884C;&#xFF0C;&#x53D1;&#x73B0;&#x4E0D;&#x7BA1;<code>entry</code>&#x662F;&#x5426;&#x9700;&#x8981;&#x66F4;&#x65B0;&#x7684;&#xFF0C;&#x90FD;&#x4F1A;&#x8FDB;&#x4E00;&#x6B65;&#x5BF9;<code>response</code>&#x8FDB;&#x884C;<code>mDelivery.postResponse(request, response)</code>&#x9012;&#x9001;&#xFF0C;&#x4E0D;&#x540C;&#x7684;&#x662F;&#x9700;&#x8981;&#x66F4;&#x65B0;&#x7684;&#x8BDD;&#x91CD;&#x65B0;&#x8BBE;&#x7F6E;<code>request</code>&#x7684;<code>entry</code>&#x4E0E;&#x52A0;&#x5165;&#x5230;<code>mNetworkQueue</code>&#x4E2D;&#xFF0C;&#x4E5F;&#x5C31;&#x76F8;&#x5F53;&#x4E0E;&#x91CD;&#x65B0;&#x8FDB;&#x884C;&#x7F51;&#x7EDC;&#x8BF7;&#x6C42;&#x4E00;&#x904D;&#x3002;&#x90A3;&#x4E48;&#x518D;&#x56DE;&#x5230;&#x9012;&#x9001;&#x7684;&#x9636;&#x6BB5;&#xFF0C;&#x524D;&#x9762;&#x5DF2;&#x7ECF;&#x63D0;&#x5230;&#x5728;&#x521B;&#x5EFA;<code>RequestQueue</code>&#x662F;&#x5B9E;&#x73B0;&#x4E86;<code>ExecutorDelivery</code>,<code>mDelivery.postResponse</code>&#x5C31;&#x662F;&#x5176;&#x4E2D;&#x7684;&#x65B9;&#x6CD5;&#x3002;&#x6211;&#x4EEC;&#x6765;&#x770B;&#x4E00;&#x4E0B;</p>
+<h2 id="ExecutorDelivery"><a href="#ExecutorDelivery" class="headerlink" title="ExecutorDelivery"></a>ExecutorDelivery</h2><p>&#x5728;&#x8FD9;&#x91CC;&#x521B;&#x5EFA;&#x4E86;&#x4E00;&#x4E2A;<code>Executor</code>&#xFF0C;&#x5BF9;&#x540E;&#x9762;&#x8FDB;&#x884C;&#x9012;&#x9001;,&#x4F5C;&#x7528;&#x5728;&#x4E3B;&#x7EBF;&#x7A0B;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public ExecutorDelivery(final Handler handler) {</div><div class="line">        // Make an Executor that just wraps the handler.</div><div class="line">        mResponsePoster = new Executor() {</div><div class="line">            @Override</div><div class="line">            public void execute(Runnable command) {</div><div class="line">                handler.post(command);</div><div class="line">            }</div><div class="line">        };</div><div class="line">    }</div></pre></td></tr></table></figure></p>
+<h3 id="postResponse"><a href="#postResponse" class="headerlink" title="postResponse"></a>postResponse</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">    public void postResponse(Request&lt;?&gt; request, Response&lt;?&gt; response) {</div><div class="line">        postResponse(request, response, null);</div><div class="line">    }</div><div class="line"> </div><div class="line">    @Override</div><div class="line">    public void postResponse(Request&lt;?&gt; request, Response&lt;?&gt; response, Runnable runnable) {</div><div class="line">        request.markDelivered();</div><div class="line">        request.addMarker(&quot;post-response&quot;);</div><div class="line">        mResponsePoster.execute(new ResponseDeliveryRunnable(request, response, runnable));</div><div class="line">    }</div></pre></td></tr></table></figure>
+<p>&#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;&#x5C31;&#x7B80;&#x5355;&#x4E86;&#x5C31;&#x662F;&#x8C03;&#x7528;<code>execute</code>&#x8FDB;&#x884C;&#x6267;&#x884C;&#xFF0C;&#x5728;&#x8FDB;&#x5165;<code>ResponseDeliveryRunnable</code>&#x7684;<code>run</code>&#x770B;&#x5B83;&#x5982;&#x4F55;&#x6267;&#x884C;</p>
+<h3 id="ResponseDeliveryRunnable"><a href="#ResponseDeliveryRunnable" class="headerlink" title="ResponseDeliveryRunnable"></a>ResponseDeliveryRunnable</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">public void run() {</div><div class="line">            // If this request has canceled, finish it and don&apos;t deliver.</div><div class="line">            if (mRequest.isCanceled()) {</div><div class="line">                mRequest.finish(&quot;canceled-at-delivery&quot;);</div><div class="line">                return;</div><div class="line">            }</div><div class="line"> </div><div class="line">            // Deliver a normal response or error, depending.</div><div class="line">            if (mResponse.isSuccess()) {</div><div class="line">                 mRequest.deliverResponse(mResponse.result);</div><div class="line">            } else {</div><div class="line">                mRequest.deliverError(mResponse.error);</div><div class="line">            }</div><div class="line"> </div><div class="line">            // If this is an intermediate response, add a marker, otherwise we&apos;re done</div><div class="line">            // and the request can be finished.</div><div class="line">            if (mResponse.intermediate) {</div><div class="line">                mRequest.addMarker(&quot;intermediate-response&quot;);</div><div class="line">            } else {</div><div class="line">                mRequest.finish(&quot;done&quot;);</div><div class="line">            }</div><div class="line"> </div><div class="line">            // If we have been provided a post-delivery runnable, run it.</div><div class="line">            if (mRunnable != null) {</div><div class="line">                mRunnable.run();</div><div class="line">            }</div><div class="line">       }</div></pre></td></tr></table></figure>
+<p>&#x4E3B;&#x8981;&#x662F;&#x7B2C;<code>9</code>&#x884C;&#x4EE3;&#x7801;&#xFF0C;&#x5BF9;&#x4E8E;&#x4E0D;&#x540C;&#x7684;&#x54CD;&#x5E94;&#x505A;&#x4E0D;&#x540C;&#x7684;&#x9012;&#x9001;&#xFF0C;<code>deliverResponse</code>&#x4E0E;<code>deliverError</code>&#x5185;&#x90E8;&#x5206;&#x522B;&#x8C03;&#x7528;&#x7684;&#x5C31;&#x662F;&#x6211;&#x4EEC;&#x975E;&#x5E38;&#x719F;&#x6089;&#x7684;<code>Listener</code>&#x4E2D;&#x7684;<code>onResponse</code>&#x4E0E;<code>onErrorResponse</code>&#x65B9;&#x6CD5;&#xFF0C;&#x8FDB;&#x800C;&#x8FD4;&#x56DE;&#x5230;&#x6211;&#x4EEC;&#x5BF9;&#x7F51;&#x7EDC;&#x8BF7;&#x6C42;&#x7ED3;&#x679C;&#x7684;&#x5904;&#x7406;&#x51FD;&#x6570;&#x3002;</p>
+<p>&#x8FD9;&#x5C31;&#x662F;&#x6574;&#x4E2A;&#x7684;&#x7F13;&#x5B58;&#x6D3E;&#x9063;&#xFF0C;&#x7B80;&#x800C;&#x8A00;&#x4E4B;&#xFF0C;&#x5B58;&#x5728;&#x8BF7;&#x6C42;&#x54CD;&#x5E94;&#x7684;&#x7F13;&#x5B58;&#x6570;&#x636E;&#x5C31;&#x4E0D;&#x8FDB;&#x884C;&#x7F51;&#x7EDC;&#x8BF7;&#x6C42;&#xFF0C;&#x76F4;&#x63A5;&#x8C03;&#x7528;&#x7F13;&#x5B58;&#x4E2D;&#x7684;&#x6570;&#x636E;&#x8FDB;&#x884C;&#x5206;&#x53D1;&#x9012;&#x9001;&#x3002;&#x53CD;&#x4E4B;&#x6267;&#x884C;&#x7F51;&#x7EDC;&#x8BF7;&#x6C42;&#x3002;<br>&#x4E0B;&#x9762;&#x6211;&#x6765;&#x770B;&#x4E0B;<code>NetworkDispatcher</code>&#x662F;&#x5982;&#x4F55;&#x5904;&#x7406;&#x7684;</p>
+<h1 id="NetworkDispatcher"><a href="#NetworkDispatcher" class="headerlink" title="NetworkDispatcher"></a>NetworkDispatcher</h1><h2 id="run-1"><a href="#run-1" class="headerlink" title="run"></a>run</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">    public void run() {</div><div class="line">         Process.setThreadPriority(Process.THREAD_PRIORITY_BACKGROUND);</div><div class="line">        while (true) {</div><div class="line">            long startTimeMs = SystemClock.elapsedRealtime();</div><div class="line">            Request&lt;?&gt; request;</div><div class="line">            try {</div><div class="line">                // Take a request from the queue.</div><div class="line">                request = mQueue.take();</div><div class="line">            } catch (InterruptedException e) {</div><div class="line">                // We may have been interrupted because it was time to quit.</div><div class="line">                if (mQuit) {</div><div class="line">                    return;</div><div class="line">                }</div><div class="line">                continue;</div><div class="line">            }</div><div class="line"> </div><div class="line">            try {</div><div class="line">                request.addMarker(&quot;network-queue-take&quot;);</div><div class="line"> </div><div class="line">                // If the request was cancelled already, do not perform the</div><div class="line">                // network request.</div><div class="line">                if (request.isCanceled()) {</div><div class="line">                    request.finish(&quot;network-discard-cancelled&quot;);</div><div class="line">                    continue;</div><div class="line">                }</div><div class="line"> </div><div class="line">                addTrafficStatsTag(request);</div><div class="line"> </div><div class="line">                // Perform the network request.</div><div class="line">                NetworkResponse networkResponse = mNetwork.performRequest(request);</div><div class="line">                request.addMarker(&quot;network-http-complete&quot;);</div><div class="line"> </div><div class="line">                // If the server returned 304 AND we delivered a response already,</div><div class="line">                // we&apos;re done -- don&apos;t deliver a second identical response.</div><div class="line">                if (networkResponse.notModified &amp;&amp; request.hasHadResponseDelivered()) {</div><div class="line">                    request.finish(&quot;not-modified&quot;);</div><div class="line">                    continue;</div><div class="line">                }</div><div class="line"> </div><div class="line">                // Parse the response here on the worker thread.</div><div class="line">                Response&lt;?&gt; response = request.parseNetworkResponse(networkResponse);</div><div class="line">                request.addMarker(&quot;network-parse-complete&quot;);</div><div class="line"> </div><div class="line">                // Write to cache if applicable.</div><div class="line">                // TODO: Only update cache metadata instead of entire record for 304s.</div><div class="line">                if (request.shouldCache() &amp;&amp; response.cacheEntry != null) {</div><div class="line">                     mCache.put(request.getCacheKey(), response.cacheEntry);</div><div class="line">                    request.addMarker(&quot;network-cache-written&quot;);</div><div class="line">                }</div><div class="line"> </div><div class="line">                // Post the response back.</div><div class="line">                request.markDelivered();</div><div class="line">                mDelivery.postResponse(request, response);</div><div class="line">            } catch (VolleyError volleyError) {</div><div class="line">                 volleyError.setNetworkTimeMs(SystemClock.elapsedRealtime() - startTimeMs);</div><div class="line">                parseAndDeliverNetworkError(request, volleyError);</div><div class="line">            } catch (Exception e) {</div><div class="line">                VolleyLog.e(e, &quot;Unhandled exception %s&quot;, e.toString());</div><div class="line">                VolleyError volleyError = new VolleyError(e);</div><div class="line">                 volleyError.setNetworkTimeMs(SystemClock.elapsedRealtime() - startTimeMs);</div><div class="line">                mDelivery.postError(request, volleyError);</div><div class="line">            }</div><div class="line">        }</div><div class="line">    }</div></pre></td></tr></table></figure>
+<p>&#x5728;&#x8FD9;&#x91CC;&#x4E5F;&#x521B;&#x5EFA;&#x4E86;&#x4E00;&#x4E2A;&#x65E0;&#x9650;&#x5FAA;&#x73AF;&#x7684;<code>while</code>,&#x540C;&#x6837;&#x4E5F;&#x662F;&#x5148;&#x83B7;&#x53D6;<code>request</code>&#xFF0C;&#x4E0D;&#x8FC7;&#x662F;&#x4ECE;<code>mQueue</code>&#x4E2D;&#xFF0C;&#x5373;&#x524D;&#x9762;&#x591A;&#x6B21;&#x51FA;&#x73B0;&#x7684;<code>mNetWorkQueue</code>,&#x901A;&#x8FC7;&#x770B;&#x4EE3;&#x7801;&#x53D1;&#x73B0;&#x4E00;&#x4E9B;&#x5B9E;&#x73B0;&#x8DDF;<code>CacheDispatcher</code>&#x4E2D;&#x7684;&#x7C7B;&#x4F3C;&#x3002;&#x4E5F;&#x6B63;&#x5982;&#x56FE;&#x7247;&#x4E2D;&#x6240;&#x5C55;&#x793A;&#x7684;&#x4E00;&#x6837;&#xFF0C;&#xFF08;<code>23</code>&#x884C;&#xFF09;&#x5982;&#x4F55;&#x8BF7;&#x6C42;&#x53D6;&#x6D88;&#x4E86;&#xFF0C;&#x76F4;&#x63A5;<code>finish</code>&#xFF1B;&#x5426;&#x5219;&#x8FDB;&#x884C;&#x7F51;&#x7EDC;&#x8BF7;&#x6C42;&#xFF0C;&#x8C03;&#x7528;(<code>31</code>&#x884C;)<code>mNetwork.performRequest(request)</code>&#xFF0C;&#x8FD9;&#x91CC;&#x7684;<code>mNetWork</code>&#x5373;&#x4E3A;&#x524D;&#x9762;<code>RequestQueue</code>&#x4E2D;&#x5BF9;&#x4E0D;&#x540C;&#x7248;&#x672C;&#x8FDB;&#x884C;&#x9009;&#x62E9;&#x7684;<code>stack</code>&#x7684;&#x5C01;&#x88C5;&#xFF0C;&#x5206;&#x522B;&#x8C03;&#x7528;<code>HurlStack</code>&#x4E0E;<code>HttpClientStack</code>&#x5404;&#x81EA;&#x7684;<code>performRequest</code>&#x65B9;&#x6CD5;&#xFF0C;&#x8BE5;&#x65B9;&#x6CD5;&#x4E2D;&#x6784;&#x9020;&#x8BF7;&#x6C42;&#x5934;&#x4E0E;&#x53C2;&#x6570;&#x5206;&#x522B;&#x4F7F;&#x7528;<code>HttpClient</code>&#x6216;&#x8005;<code>HttpUrlConnection</code>&#x8FDB;&#x884C;&#x7F51;&#x7EDC;&#x8BF7;&#x6C42;&#x3002;&#x6211;&#x4EEC;&#x518D;&#x6765;&#x770B;<code>42</code>&#x884C;&#xFF0C;&#x662F;&#x4E0D;&#x662F;&#x5F88;&#x719F;&#x6089;&#xFF0C;&#x4E0E;<code>CacheDispatcher</code>&#x4E2D;&#x7684;&#x4E00;&#x6837;&#x8FDB;&#x884C;<code>response</code>&#x8FDB;&#x884C;&#x89E3;&#x6790;&#xFF0C;&#x7136;&#x540E;&#x5982;&#x679C;&#x9700;&#x8981;&#x7F13;&#x5B58;&#x5C31;&#x52A0;&#x5165;&#x5230;&#x7F13;&#x5B58;&#x4E2D;&#xFF0C;&#x6700;&#x540E;&#xFF08;<code>54</code>&#x884C;&#xFF09;&#x518D;&#x8C03;&#x7528;<code>mDelivery.postResponse(request, response)</code>&#x8FDB;&#x884C;&#x9012;&#x9001;&#x3002;&#x81F3;&#x4E8E;&#x540E;&#x9762;&#x7684;&#x5269;&#x4F59;&#x7684;&#x6B65;&#x9AA4;&#x4E0E;<code>CacheDispatcher</code>&#x4E2D;&#x7684;&#x4E00;&#x6A21;&#x4E00;&#x6837;&#xFF0C;&#x8FD9;&#x91CC;&#x5C31;&#x4E0D;&#x591A;&#x7D2F;&#x8D58;&#x4E86;&#x3002;</p>
+<blockquote>
+<p><em>&#x597D;&#x4E86;&#xFF0C;<code>Volley</code>&#x7684;&#x6E90;&#x7801;&#x89E3;&#x6790;&#x5148;&#x5C31;&#x5230;&#x8FD9;&#x91CC;&#x4E86;&#xFF0C;&#x6211;&#x4EEC;&#x518D;&#x56DE;&#x8FC7;&#x53BB;&#x770B;&#x90A3;&#x5F20;&#x56FE;&#x662F;&#x4E0D;&#x662F;&#x611F;&#x89C9;&#x5F88;&#x6E05;&#x6670;&#x4E86;&#x5462;?</em></p>
+</blockquote>
+<h1 id="&#x603B;&#x7ED3;"><a href="#&#x603B;&#x7ED3;" class="headerlink" title="&#x603B;&#x7ED3;"></a>&#x603B;&#x7ED3;</h1><p>&#x6211;&#x4EEC;&#x6765;&#x5BF9;&#x4F7F;&#x7528;<code>Volley</code>&#x7F51;&#x7EDC;&#x8BF7;&#x6C42;&#x505A;&#x4E2A;&#x603B;&#x7ED3;</p>
+<ul>
+<li>&#x901A;&#x8FC7;<code>newRequestQueue</code>&#x521D;&#x59CB;&#x5316;&#x4E0E;&#x6784;&#x9020;<code>RequestQueue</code></li>
+<li>&#x8C03;&#x7528;<code>RequestQueue</code>&#x4E2D;&#x7684;<code>add</code>&#x65B9;&#x6CD5;&#x6DFB;&#x52A0;<code>request</code>&#x5230;&#x8BF7;&#x6C42;&#x961F;&#x5217;&#x4E2D;</li>
+<li>&#x7F13;&#x5B58;&#x6D3E;&#x9063;&#xFF0C;&#x5148;&#x8FDB;&#x884C;<code>CacheDispatcher</code>,&#x5224;&#x65AD;&#x7F13;&#x5B58;&#x4E2D;&#x662F;&#x5426;&#x5B58;&#x5728;&#xFF0C;&#x6709;&#x5219;&#x89E3;&#x6790;<code>response</code>&#xFF0C;&#x518D;&#x76F4;&#x63A5;<code>postResponse</code>&#x9012;&#x9001;&#xFF0C;&#x5426;&#x5219;&#x8FDB;&#x884C;&#x540E;&#x7EED;&#x7684;&#x7F51;&#x7EDC;&#x8BF7;&#x6C42;</li>
+<li>&#x7F51;&#x7EDC;&#x6D3E;&#x9063;&#xFF0C;<code>NetworkDispatcher</code>&#x4E2D;&#x8FDB;&#x884C;&#x76F8;&#x5E94;&#x7684;<code>request</code>&#x8BF7;&#x6C42;&#xFF0C;&#x89E3;&#x6790;<code>response</code>&#x5982;&#x8BBE;&#x7F6E;&#x4E86;&#x7F13;&#x5B58;&#x5C31;&#x5C06;&#x7ED3;&#x679C;&#x4FDD;&#x5B58;&#x5230;<code>cache</code>&#x4E2D;&#xFF0C;&#x518D;&#x8FDB;&#x884C;&#x6700;&#x540E;&#x7684;<code>postResponse</code>&#x9012;&#x9001;&#x3002;</li>
+</ul>
+<blockquote>
+<p><em>&#x8F6C;&#x8F7D;&#x8BF7;&#x6307;&#x660E;&#x51FA;&#x5904;idisfkj&#x535A;&#x5BA2;&#xFF1A;<a href="https://idisfkj.github.io">https://idisfkj.github.io</a></em></p>
+</blockquote>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal-one" aria-hidden="true">
+  <a href="#close" class="cover" aria-hidden="true"></a>
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <a href="#close" class="btn-close" aria-hidden="true">关闭</a>
+    </div>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+  <section class="duoshuo-comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="" data-title="Android Volley源码分析(一)" data-url="https://idisfkj.github.io/2016/10/14/Android-Volley源码分析-一/index.html"></div>
+    <!-- 多说评论框 end -->
+  </section>
+
+
+
+
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"idisfkj"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?398', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
