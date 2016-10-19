@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+
+
+  <html class="light">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>Handler、Looper与MessageQueue源码分析 | Idisfkj</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="源码分析," />
+  
+
+  <meta name="description" content="&amp;#x5728;Android&amp;#x4E2D;&amp;#x53EF;&amp;#x4EE5;&amp;#x901A;&amp;#x8FC7;Handler&amp;#x6765;&amp;#x66F4;&amp;#x65B0;&amp;#x4E3B;&amp;#x7EBF;&amp;#x7A0B;&amp;#x4E2D;UI&amp;#x7684;&amp;#x53D8;&amp;#x5316;&amp;#xFF0C;&amp;#x66F4;&amp;#x65B0;UI&amp;#x53EA;&amp;#x80FD;&amp;#x5728;&amp;#x4E3">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Handler、Looper与MessageQueue源码分析">
+<meta property="og:url" content="https://idisfkj.github.io/2016/10/19/Android-Handler、Looper与MessageQueue源码分析/index.html">
+<meta property="og:site_name" content="Idisfkj">
+<meta property="og:description" content="&amp;#x5728;Android&amp;#x4E2D;&amp;#x53EF;&amp;#x4EE5;&amp;#x901A;&amp;#x8FC7;Handler&amp;#x6765;&amp;#x66F4;&amp;#x65B0;&amp;#x4E3B;&amp;#x7EBF;&amp;#x7A0B;&amp;#x4E2D;UI&amp;#x7684;&amp;#x53D8;&amp;#x5316;&amp;#xFF0C;&amp;#x66F4;&amp;#x65B0;UI&amp;#x53EA;&amp;#x80FD;&amp;#x5728;&amp;#x4E3">
+<meta property="og:image" content="https://idisfkj.github.io/2016/10/19/Android-Handler、Looper与MessageQueue源码分析/Handler、Looper与MessageQueue.png">
+<meta property="og:updated_time" content="2016-10-19T08:30:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Handler、Looper与MessageQueue源码分析">
+<meta name="twitter:description" content="&amp;#x5728;Android&amp;#x4E2D;&amp;#x53EF;&amp;#x4EE5;&amp;#x901A;&amp;#x8FC7;Handler&amp;#x6765;&amp;#x66F4;&amp;#x65B0;&amp;#x4E3B;&amp;#x7EBF;&amp;#x7A0B;&amp;#x4E2D;UI&amp;#x7684;&amp;#x53D8;&amp;#x5316;&amp;#xFF0C;&amp;#x66F4;&amp;#x65B0;UI&amp;#x53EA;&amp;#x80FD;&amp;#x5728;&amp;#x4E3">
+<meta name="twitter:image" content="https://idisfkj.github.io/2016/10/19/Android-Handler、Looper与MessageQueue源码分析/Handler、Looper与MessageQueue.png">
+
+  
+
+  
+  <!-- <link href="/favicon.ico" rel="icon" type="image/x-icon"> -->
+    <link rel="icon" href="/favicon.ico">
+    <!-- <link href="favicon.ico" rel="shortcut icon" type="image/x-icon" /> -->
+  
+  
+  <link href="/css/styles.css?v=5f7f1d39" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?ef89e68af5e136d5c22043f91cd139ea";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+
+  
+    <a href="#modal-one" class="toolbox-mobile">盒子</a>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ActivityThread-main"><span class="toc-text">ActivityThread.main</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Looper"><span class="toc-text">Looper</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#prepare"><span class="toc-text">prepare</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#loop"><span class="toc-text">loop</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Message"><span class="toc-text">Message</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Handler"><span class="toc-text">Handler</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#dispatchMessage"><span class="toc-text">dispatchMessage</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sendMessageAtTime"><span class="toc-text">sendMessageAtTime</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#enqueueMessage"><span class="toc-text">enqueueMessage</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#总结"><span class="toc-text">总结</span></a></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-Android-Handler、Looper与MessageQueue源码分析" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">Handler、Looper与MessageQueue源码分析</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.10.19</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>idisfkj</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/android/">android</a>
+  </span>
+
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>&#x5728;<code>Android</code>&#x4E2D;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;<code>Handler</code>&#x6765;&#x66F4;&#x65B0;&#x4E3B;&#x7EBF;&#x7A0B;&#x4E2D;<code>UI</code>&#x7684;&#x53D8;&#x5316;&#xFF0C;&#x66F4;&#x65B0;<code>UI</code>&#x53EA;&#x80FD;&#x5728;&#x4E3B;&#x7EBF;&#x7A0B;&#x4E2D;&#x8FDB;&#x884C;&#x66F4;&#x65B0;&#xFF0C;&#x800C;&#x4E3A;&#x4E86;&#x8BA9;&#x5176;&#x4ED6;&#x7EBF;&#x7A0B;&#x4E5F;&#x80FD;&#x63A7;&#x5236;<code>UI</code>&#x7684;&#x53D8;&#x5316;&#xFF0C;<code>Android</code>&#x63D0;&#x4F9B;&#x4E86;&#x4E00;&#x79CD;&#x673A;&#x5236;<code>Handler</code>&#x3001;<code>Looper</code>&#x4E0E;<code>MessageQueue</code>&#x4E00;&#x540C;&#x534F;&#x4F5C;&#x6765;&#x8FBE;&#x5230;&#x5176;&#x4ED6;&#x7EBF;&#x7A0B;&#x66F4;&#x65B0;<code>UI</code>&#x7684;&#x76EE;&#x7684;&#x3002;</p>
+<p>&#x4E00;&#x822C;&#x6211;&#x4EEC;&#x4F1A;&#x5728;&#x4E3B;&#x7EBF;&#x7A0B;&#x4E2D;&#x901A;&#x8FC7;&#x5982;&#x4E0B;&#x65B9;&#x6CD5;&#x5B9A;&#x4E49;&#x4E00;&#x4E2A;<code>Handler</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">private Handler mHandler = new Handler() {</div><div class="line">        @Override</div><div class="line">        public void handleMessage(Message msg) {</div><div class="line">            tv.setText(&quot;mHandler change UI&quot;);</div><div class="line">            super.handleMessage(msg);</div><div class="line">        }</div><div class="line">    };</div></pre></td></tr></table></figure>
+<p>&#x4E00;&#x822C;&#x90FD;&#x89C1;&#x4E0D;&#x5230;<code>Looper</code>&#x4E0E;<code>MessageQueue</code>&#x7684;&#xFF0C;&#x90A3;&#x4E48;&#x5B83;&#x4EEC;&#x90FD;&#x662F;&#x5728;&#x54EA;&#x91CC;&#x8C03;&#x7528;&#x4E0E;&#x5982;&#x4F55;&#x534F;&#x4F5C;&#x7684;&#x5462;&#xFF1F;&#x5728;&#x4E3B;&#x7EBF;&#x7A0B;&#x4E0D;&#x4F1A;&#x663E;&#x5F0F;&#x7684;&#x8C03;&#x7528;<code>Looper</code>&#x800C;&#x662F;&#x4F1A;&#x5728;<code>ActivityThread.main</code>&#x65B9;&#x6CD5;&#x4E2D;&#x9ED8;&#x8BA4;&#x8C03;&#x7528;&#x3002;</p>
+<h1 id="ActivityThread-main"><a href="#ActivityThread-main" class="headerlink" title="ActivityThread.main"></a>ActivityThread.main</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line">public static void main(String[] args) {</div><div class="line">         Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, &quot;ActivityThreadMain&quot;);</div><div class="line">        SamplingProfilerIntegration.start();</div><div class="line"> </div><div class="line">        // CloseGuard defaults to true and can be quite spammy.  We</div><div class="line">        // disable it here, but selectively enable it later (via</div><div class="line">        // StrictMode) on debug builds, but using DropBox, not logs.</div><div class="line">        CloseGuard.setEnabled(false);</div><div class="line"> </div><div class="line">        Environment.initForCurrentUser();</div><div class="line"> </div><div class="line">        // Set the reporter for event logging in libcore</div><div class="line">        EventLogger.setReporter(new EventLoggingReporter());</div><div class="line"> </div><div class="line">        // Make sure TrustedCertificateStore looks in the right place for CA certificates</div><div class="line">        final File configDir = Environment.getUserConfigDirectory(UserHandle.myUserId());</div><div class="line">         TrustedCertificateStore.setDefaultUserDirectory(configDir);</div><div class="line"> </div><div class="line">        Process.setArgV0(&quot;&lt;pre-initialized&gt;&quot;);</div><div class="line"> </div><div class="line">        Looper.prepareMainLooper();//&#x521B;&#x5EFA;Looper</div><div class="line"> </div><div class="line">        ActivityThread thread = new ActivityThread();</div><div class="line">        thread.attach(false);</div><div class="line"> </div><div class="line">        if (sMainThreadHandler == null) {</div><div class="line">            sMainThreadHandler = thread.getHandler();</div><div class="line">        }</div><div class="line"> </div><div class="line">        if (false) {</div><div class="line">            Looper.myLooper().setMessageLogging(new</div><div class="line">                    LogPrinter(Log.DEBUG, &quot;ActivityThread&quot;));</div><div class="line">        }</div><div class="line"> </div><div class="line">        // End of event ActivityThreadMain.</div><div class="line">         Trace.traceEnd(Trace.TRACE_TAG_ACTIVITY_MANAGER);</div><div class="line">        Looper.loop();//&#x5F00;&#x542F;Looper&#x5FAA;&#x73AF;</div><div class="line"> </div><div class="line">        throw new RuntimeException(&quot;Main thread loop unexpectedly exited&quot;);</div><div class="line">    }</div></pre></td></tr></table></figure>
+<p>&#x5982;&#x4E0A;&#x4EE3;&#x7801;&#xFF0C;&#x8C03;&#x7528;&#x4E86;<code>Looper.prepareMainLooper()</code>&#x65B9;&#x6CD5;&#xFF0C;&#x5728;&#x4E3B;&#x7EBF;&#x7A0B;&#x4E2D;&#x521B;&#x5EFA;&#x4E86;&#x4E00;&#x4E2A;<code>Looper</code>&#xFF0C;&#x4E0D;&#x4FE1;&#x7684;&#x8BDD;&#x6211;&#x4EEC;&#x518D;&#x67E5;&#x770B;&#x8BE5;&#x65B9;&#x6CD5;&#x505A;&#x4E86;&#x4EC0;&#x4E48;</p>
+<h1 id="Looper"><a href="#Looper" class="headerlink" title="Looper"></a>Looper</h1><h2 id="prepare"><a href="#prepare" class="headerlink" title="prepare"></a>prepare</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">public static void prepare() {</div><div class="line">        prepare(true);</div><div class="line">    }</div><div class="line"> </div><div class="line">    private static void prepare(boolean quitAllowed) {</div><div class="line">        if (sThreadLocal.get() != null) {</div><div class="line">            throw new RuntimeException(&quot;Only one Looper may be created per thread&quot;);</div><div class="line">        }</div><div class="line">        sThreadLocal.set(new Looper(quitAllowed));//&#x521B;&#x5EFA;Looper&#x5E76;&#x8D4B;&#x7ED9;sThreadLocal</div><div class="line">    }</div><div class="line"> </div><div class="line">    /**</div><div class="line">     * Initialize the current thread as a looper, marking it as an</div><div class="line">     * application&apos;s main looper. The main looper for your application</div><div class="line">     * is created by the Android environment, so you should never need</div><div class="line">     * to call this function yourself.  See also: {@link #prepare()}</div><div class="line">     */</div><div class="line">    public static void prepareMainLooper() {</div><div class="line">        prepare(false);</div><div class="line">        synchronized (Looper.class) {</div><div class="line">            if (sMainLooper != null) {</div><div class="line">                throw new IllegalStateException(&quot;The main Looper has already been prepared.&quot;);</div><div class="line">            }</div><div class="line">            sMainLooper = myLooper();</div><div class="line">        }</div><div class="line">    }</div><div class="line">     </div><div class="line">    public static @Nullable Looper myLooper() {</div><div class="line">        return sThreadLocal.get();</div><div class="line">    }</div></pre></td></tr></table></figure>
+<p>&#x5728;<code>prepareMainLooper</code>&#x65B9;&#x6CD5;&#x4E2D;&#x8C03;&#x7528;&#x4E86;<code>prepare</code>&#x800C;&#x901A;&#x8FC7;<code>prepare</code>&#x4F1A;&#x53D1;&#x73B0;&#x5B83;&#x5176;&#x5B9E;&#x5C31;&#x662F;&#x521B;&#x5EFA;&#x4E86;&#x4E00;&#x4E2A;<code>Looper</code>&#xFF0C;&#x5E76;&#x628A;&#x5B83;&#x8D4B;&#x7ED9;&#x4E86;<code>sThreadLocal</code>&#x3002;&#x540C;&#x65F6;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;<code>myLooper</code>&#x65B9;&#x6CD5;&#x83B7;&#x53D6;&#x5F53;&#x524D;&#x7EBF;&#x7A0B;&#x4E2D;&#x7684;<code>Looper</code>&#x3002;&#x518D;&#x6765;&#x770B;&#x4E0B;<code>new Looper(quitAllowed)</code>&#x521D;&#x59CB;&#x5316;&#x4E86;&#x4EC0;&#x4E48;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">private Looper(boolean quitAllowed) {</div><div class="line">        mQueue = new MessageQueue(quitAllowed);</div><div class="line">        mThread = Thread.currentThread();</div><div class="line">    }</div></pre></td></tr></table></figure>
+<p>&#x5728;&#x8FD9;&#x91CC;&#x6211;&#x4EEC;&#x7EC8;&#x4E8E;&#x770B;&#x5230;&#x4E86;<code>MessageQueue</code>&#x4E86;&#xFF0C;&#x5B83;&#x521B;&#x5EFA;&#x4E86;&#x4E00;&#x4E2A;<code>MessageQueue</code>&#x3002;&#x8BE5;&#x6D88;&#x606F;&#x961F;&#x5217;&#x5C31;&#x662F;&#x7528;&#x6765;&#x4FDD;&#x5B58;&#x540E;&#x7EED;&#x7684;<code>Message</code>&#x3002;&#x518D;&#x56DE;&#x5230;<code>ActivityThread.main</code>&#x65B9;&#x6CD5;&#x4E2D;&#xFF0C;&#x53D1;&#x73B0;&#x5B83;&#x8C03;&#x7528;&#x4E86;<code>Looper.loop()</code>&#x662F;&#x7528;&#x6765;&#x5F00;&#x542F;<code>Looper</code>&#x5FAA;&#x73AF;&#x7684;&#xFF0C;&#x76D1;&#x542C;&#x6D88;&#x606F;&#x961F;&#x5217;<code>MessageQueue</code>&#x4E2D;&#x7684;&#x6D88;&#x606F;&#x3002;</p>
+<h2 id="loop"><a href="#loop" class="headerlink" title="loop"></a>loop</h2><p>&#x6211;&#x4EEC;&#x6765;&#x770B;&#x4E0B;<code>Looper.loop()</code>&#x7684;&#x6E90;&#x7801;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line">public static void loop() {</div><div class="line">        final Looper me = myLooper();//&#x83B7;&#x53D6;Looper</div><div class="line">        if (me == null) {</div><div class="line">            throw new RuntimeException(&quot;No Looper; Looper.prepare() wasn&apos;t called on this thread.&quot;);</div><div class="line">        }</div><div class="line">        final MessageQueue queue = me.mQueue;//&#x83B7;&#x53D6;&#x6D88;&#x606F;&#x961F;&#x5217;</div><div class="line"> </div><div class="line">        // Make sure the identity of this thread is that of the local process,</div><div class="line">        // and keep track of what that identity token actually is.</div><div class="line">        Binder.clearCallingIdentity();</div><div class="line">        final long ident = Binder.clearCallingIdentity();</div><div class="line"> </div><div class="line">        for (;;) {        </div><div class="line">            Message msg = queue.next(); // might block</div><div class="line">            if (msg == null) {</div><div class="line">                // No message indicates that the message queue is quitting.</div><div class="line">                return;</div><div class="line">            }</div><div class="line"> </div><div class="line">            // This must be in a local variable, in case a UI event sets the logger</div><div class="line">            final Printer logging = me.mLogging;</div><div class="line">            if (logging != null) {</div><div class="line">                logging.println(&quot;&gt;&gt;&gt;&gt;&gt; Dispatching to &quot; + msg.target + &quot; &quot; +</div><div class="line">                        msg.callback + &quot;: &quot; + msg.what);</div><div class="line">            }</div><div class="line"> </div><div class="line">            final long traceTag = me.mTraceTag;</div><div class="line">            if (traceTag != 0) {</div><div class="line">                Trace.traceBegin(traceTag, msg.target.getTraceName(msg));</div><div class="line">            }</div><div class="line">            try {</div><div class="line">                msg.target.dispatchMessage(msg);//&#x901A;&#x8FC7;Handler&#x5206;&#x53D1;&#x6D88;&#x606F;</div><div class="line">            } finally {</div><div class="line">                if (traceTag != 0) {</div><div class="line">                    Trace.traceEnd(traceTag);</div><div class="line">                }</div><div class="line">            }</div><div class="line"> </div><div class="line">            if (logging != null) {</div><div class="line">                logging.println(&quot;&lt;&lt;&lt;&lt;&lt; Finished to &quot; + msg.target + &quot; &quot; + msg.callback);</div><div class="line">            }</div><div class="line"> </div><div class="line">            // Make sure that during the course of dispatching the</div><div class="line">            // identity of the thread wasn&apos;t corrupted.</div><div class="line">            final long newIdent = Binder.clearCallingIdentity();</div><div class="line">            if (ident != newIdent) {</div><div class="line">                Log.wtf(TAG, &quot;Thread identity changed from 0x&quot;</div><div class="line">                        + Long.toHexString(ident) + &quot; to 0x&quot;</div><div class="line">                        + Long.toHexString(newIdent) + &quot; while dispatching to &quot;</div><div class="line">                        + msg.target.getClass().getName() + &quot; &quot;</div><div class="line">                        + msg.callback + &quot; what=&quot; + msg.what);</div><div class="line">            }</div><div class="line"> </div><div class="line">            msg.recycleUnchecked();</div><div class="line">        }</div><div class="line">    }</div></pre></td></tr></table></figure>
+<p>&#x5728;<code>loop</code>&#x4E2D;&#x9996;&#x5148;&#x83B7;&#x53D6;&#x4E86;&#x5F53;&#x524D;&#x6240;&#x5728;&#x7EBF;&#x7A0B;&#x7684;<code>Looper</code>&#xFF0C;&#x540C;&#x65F6;&#x4E5F;&#x83B7;&#x53D6;&#x5230;&#x4E86;<code>Looper</code>&#x4E2D;&#x7684;<code>MessageQueue</code>&#xFF0C;&#x8BF4;&#x660E;<code>Looper</code>&#x5DF2;&#x7ECF;&#x4E0E;&#x5F53;&#x524D;&#x7684;&#x7EBF;&#x7A0B;&#x8FDB;&#x884C;&#x4E86;&#x7ED1;&#x5B9A;&#x3002;&#x5728;&#x540E;&#x9762;&#x5F00;&#x542F;&#x4E86;&#x4E00;&#x4E2A;<code>for</code>&#x7684;&#x6B7B;&#x5FAA;&#x73AF;&#xFF0C;&#x53D1;&#x73B0;&#x5B83;&#x505A;&#x7684;&#x4E8B;&#x4EF6;&#x662F;&#x4E0D;&#x65AD;&#x7684;&#x4ECE;&#x6D88;&#x606F;&#x961F;&#x5217;&#x4E2D;&#x53D6;&#x51FA;&#x6D88;&#x606F;&#xFF0C;&#x6700;&#x540E;&#x90FD;&#x4EA4;&#x7ED9;<code>msg.target</code>&#x8C03;&#x7528;&#x5B83;&#x7684;<code>dispatchMessage</code>&#x65B9;&#x6CD5;&#xFF0C;&#x90A3;&#x4E48;<code>target</code>&#x53C8;&#x662F;&#x4EC0;&#x4E48;&#x5462;&#xFF1F;&#x6211;&#x4EEC;&#x8FDB;&#x5165;<code>Message</code></p>
+<h1 id="Message"><a href="#Message" class="headerlink" title="Message"></a>Message</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">/*package*/ int flags;</div><div class="line"></div><div class="line">    /*package*/ long when;</div><div class="line">    </div><div class="line">    /*package*/ Bundle data;</div><div class="line">    </div><div class="line">    /*package*/ Handler target;</div><div class="line">    </div><div class="line">    /*package*/ Runnable callback;</div><div class="line">    </div><div class="line">    // sometimes we store linked lists of these things</div><div class="line">    /*package*/ Message next;</div></pre></td></tr></table></figure>
+<p>&#x53D1;&#x73B0;&#x5B83;&#x5C31;&#x662F;&#x6211;&#x4EEC;&#x719F;&#x6089;&#x7684;<code>Handler</code>&#xFF0C;&#x8BF4;&#x660E;&#x6700;&#x540E;&#x8C03;&#x7528;&#x7684;&#x5C31;&#x662F;<code>Handler</code>&#x4E2D;&#x7684;<code>dispatchMessage</code>&#x65B9;&#x6CD5;&#xFF0C;&#x5BF9;&#x6D88;&#x606F;&#x7684;&#x5206;&#x53D1;&#x5904;&#x7406;&#x3002;&#x8FD9;&#x6837;&#x4E00;&#x6765;<code>Handler</code>&#x5C31;&#x901A;&#x8FC7;<code>Looper</code>&#x8054;&#x7CFB;&#x4E0A;&#x4E86;<code>Looper</code>&#x6240;&#x7ED1;&#x5B9A;&#x7684;&#x7EBF;&#x7A0B;&#xFF0C;&#x5373;&#x4E3A;&#x4E3B;&#x7EBF;&#x7A0B;&#x3002;</p>
+<h1 id="Handler"><a href="#Handler" class="headerlink" title="Handler"></a>Handler</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">public Handler(Callback callback, boolean async) {</div><div class="line">        if (FIND_POTENTIAL_LEAKS) {</div><div class="line">            final Class&lt;? extends Handler&gt; klass = getClass();</div><div class="line">            if ((klass.isAnonymousClass() || klass.isMemberClass() || klass.isLocalClass()) &amp;&amp;</div><div class="line">                    (klass.getModifiers() &amp; Modifier.STATIC) == 0) {</div><div class="line">                Log.w(TAG, &quot;The following Handler class should be static or leaks might occur: &quot; +</div><div class="line">                    klass.getCanonicalName());</div><div class="line">            }</div><div class="line">        }</div><div class="line"> </div><div class="line">        mLooper = Looper.myLooper();</div><div class="line">        if (mLooper == null) {</div><div class="line">            throw new RuntimeException(</div><div class="line">                &quot;Can&apos;t create handler inside thread that has not called Looper.prepare()&quot;);</div><div class="line">        }</div><div class="line">        mQueue = mLooper.mQueue;</div><div class="line">        mCallback = callback;</div><div class="line">        mAsynchronous = async;</div><div class="line">    }</div></pre></td></tr></table></figure>
+<p>&#x901A;&#x8FC7;<code>Handler</code>&#x7684;&#x521D;&#x59CB;&#x5316;&#xFF0C;&#x5B83;&#x83B7;&#x53D6;&#x4E86;&#x5B83;&#x6240;&#x5904;&#x7EBF;&#x7A0B;&#x7684;<code>Looper</code>&#xFF0C;&#x540C;&#x65F6;&#x4E5F;&#x83B7;&#x53D6;&#x4E86;<code>Looper</code>&#x4E2D;&#x7684;&#x6D88;&#x606F;&#x961F;&#x5217;&#x3002;&#x5F53;&#x7136;&#x5982;&#x679C;&#x6240;&#x5904;&#x7EBF;&#x7A0B;&#x7684;<code>Looper</code>&#x4E3A;&#x7A7A;&#x7684;&#x8BDD;&#x5C31;&#x4F1A;&#x629B;&#x51FA;&#x5F02;&#x5E38;&#xFF0C;&#x8FD9;&#x5C31;&#x89E3;&#x91CA;&#x4E86;&#x4E3A;&#x4EC0;&#x4E48;&#x5728;&#x975E;&#x4E3B;&#x7EBF;&#x7A0B;&#x4E2D;&#x521B;&#x5EFA;<code>Handler</code>&#x8981;&#x5206;&#x522B;&#x8C03;&#x7528;<code>Looper.prepare</code>&#x4E0E;<code>Looper.loop</code>&#x800C;&#x4E3B;&#x7EBF;&#x7A0B;&#x5219;&#x4E0D;&#x9700;&#x8981;&#xFF0C;&#x56E0;&#x4E3A;&#x5B83;&#x9ED8;&#x8BA4;&#x5DF2;&#x7ECF;&#x8C03;&#x7528;&#x4E86;&#x3002;</p>
+<h2 id="dispatchMessage"><a href="#dispatchMessage" class="headerlink" title="dispatchMessage"></a>dispatchMessage</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">public void dispatchMessage(Message msg) {</div><div class="line">        if (msg.callback != null) {</div><div class="line">            handleCallback(msg);</div><div class="line">        } else {</div><div class="line">            if (mCallback != null) {</div><div class="line">                if (mCallback.handleMessage(msg)) {</div><div class="line">                    return;</div><div class="line">                }</div><div class="line">            }</div><div class="line">            handleMessage(msg);</div><div class="line">        }</div><div class="line">    }</div><div class="line">private static void handleCallback(Message message) {</div><div class="line">        message.callback.run();</div><div class="line">    }</div></pre></td></tr></table></figure>
+<p>&#x56DE;&#x5230;&#x524D;&#x9762;&#xFF0C;&#x5BF9;&#x4E8E;<code>dispatchMessage</code>&#x7684;&#x5904;&#x7406;&#xFF0C;&#x9996;&#x5148;&#x5224;&#x65AD;<code>msg.callback</code>&#x662F;&#x5426;&#x4E3A;&#x7A7A;&#xFF0C;&#x8FD9;&#x91CC;<code>callback</code>&#x901A;&#x8FC7;&#x4E0A;&#x9762;&#x7684;<code>Message</code>&#x5E94;&#x8BE5;&#x80FD;&#x77E5;&#x9053;&#x4ED6;&#x5C31;&#x662F;&#x4E00;&#x4E2A;<code>Runnable</code>&#xFF0C;&#x5982;&#x679C;&#x4E0D;&#x4E3A;&#x7A7A;&#x5219;&#x76F4;&#x63A5;&#x8C03;&#x7528;<code>Runnable</code>&#x7684;<code>run</code>&#x65B9;&#x6CD5;&#x3002;&#x5426;&#x5219;&#x8C03;&#x7528;<code>Handler</code>&#x7684;<code>handleMessage</code>&#x65B9;&#x6CD5;.&#x800C;&#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;&#x76F8;&#x4FE1;&#x5927;&#x5BB6;&#x5DF2;&#x7ECF;&#x5F88;&#x719F;&#x6089;&#x4E86;&#xFF0C;&#x5BF9;&#x4E8B;&#x4EF6;&#x7684;&#x5904;&#x7406;&#x90FD;&#x662F;&#x5728;&#x8FD9;&#x4E2A;&#x65B9;&#x6CD5;&#x4E2D;&#x6267;&#x884C;&#x7684;&#x3002;&#x56E0;&#x4E3A;&#x901A;&#x8FC7;&#x524D;&#x9762;&#x6211;&#x4EEC;&#x5DF2;&#x7ECF;&#x77E5;&#x9053;&#x4E86;<code>Handler</code>&#x5DF2;&#x7ECF;&#x8054;&#x7CFB;&#x4E0A;&#x4E86;&#x4E3B;&#x7EBF;&#x7A0B;&#xFF0C;&#x6240;&#x4EE5;<code>handleMessage</code>&#x4E2D;&#x7684;&#x5904;&#x7406;&#x81EA;&#x7136;&#x76F8;&#x5BF9;&#x4E8E;&#x5728;&#x4E3B;&#x7EBF;&#x7A0B;&#x4E2D;&#x8FDB;&#x884C;&#xFF0C;&#x81EA;&#x7136;&#x4E5F;&#x80FD;&#x66F4;&#x65B0;<code>UI</code>&#x4E86;&#x3002;&#x901A;&#x8FC7;&#x8FD9;&#x91CC;&#x6211;&#x4EEC;&#x80FD;&#x628A;<code>Looper</code>&#x6BD4;&#x4F5C;&#x662F;&#x4E00;&#x4E2A;&#x6865;&#x6881;&#xFF0C;&#x6765;&#x8FDE;&#x63A5;<code>Looper</code>&#x6240;&#x5728;&#x7684;&#x7EBF;&#x7A0B;&#x4E0E;<code>Handler</code>&#x4E4B;&#x95F4;&#x7684;&#x901A;&#x4FE1;&#xFF0C;&#x540C;&#x65F6;&#x7BA1;&#x7406;&#x6D88;&#x606F;&#x961F;&#x5217;<code>MessageQueue</code>&#x4E2D;&#x7684;&#x6D88;&#x606F;&#x3002;&#x90A3;&#x4E48;&#x524D;&#x9762;&#x7684;<code>Runnable</code>&#x53C8;&#x662F;&#x5982;&#x4F55;&#x4E0D;&#x4E3A;&#x7A7A;&#x7684;&#x5462;&#xFF1F;&#x6211;&#x4EEC;&#x4F7F;&#x7528;<code>Handler</code>&#x6709;&#x4E24;&#x79CD;&#x65B9;&#x6CD5;&#xFF0C;&#x4E00;&#x79CD;&#x662F;&#x76F4;&#x63A5;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;<code>Handler</code>&#x5E76;&#x4E14;&#x91CD;&#x5199;&#x5B83;&#x7684;<code>handleMessage</code>&#x65B9;&#x6CD5;&#xFF0C;&#x800C;&#x53E6;&#x4E00;&#x79CD;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;<code>Handler.post(Runnable)</code>&#x6765;&#x4F7F;&#x7528;&#xFF0C;&#x8FD9;&#x6837;&#x4E8B;&#x4EF6;&#x7684;&#x5904;&#x7406;&#x81EA;&#x7136;&#x5C31;&#x5728;<code>run</code>&#x65B9;&#x6CD5;&#x4E2D;&#x5B9E;&#x73B0;&#x3002;</p>
+<p>&#x4E0A;&#x9762;&#x4ECB;&#x7ECD;&#x4E86;<code>Handler</code>&#x662F;&#x5982;&#x4F55;&#x8054;&#x7CFB;&#x4E0A;&#x4E86;&#x9700;&#x8981;&#x64CD;&#x4F5C;&#x7684;&#x7EBF;&#x7A0B;&#x4E0E;&#x5BF9;&#x6D88;&#x606F;&#x662F;&#x5982;&#x4F55;&#x53D6;&#x51FA;&#x4E0E;&#x5904;&#x7406;&#x7684;&#x3002;&#x4E0B;&#x9762;&#x6765;&#x8C08;&#x8C08;&#x6D88;&#x606F;&#x662F;&#x5982;&#x4F55;&#x653E;&#x5165;&#x5230;<code>Looper</code>&#x4E2D;&#x7684;<code>MessageQueue</code>&#x4E2D;&#x7684;&#x3002;</p>
+<h2 id="sendMessageAtTime"><a href="#sendMessageAtTime" class="headerlink" title="sendMessageAtTime"></a>sendMessageAtTime</h2><p>&#x901A;&#x8FC7;<code>Handler</code>&#x53D1;&#x9001;&#x6D88;&#x606F;&#x7684;&#x65B9;&#x5F0F;&#x5F88;&#x591A;&#xFF0C;&#x4F8B;&#x5982;&#xFF1A;<code>sendMessage</code>&#x3001;<code>sendEmptyMessage</code>&#x4E0E;<code>sendMessageDelayed</code>&#x7B49;&#xFF0C;&#x5176;&#x5B9E;&#x5230;&#x6700;&#x540E;&#x4ED6;&#x4EEC;&#x8C03;&#x7528;&#x7684;&#x90FD;&#x662F;<code>sendMessageAtTime</code>&#x65B9;&#x6CD5;&#x3002;&#x6240;&#x4EE5;&#x8FD8;&#x662F;&#x6765;&#x770B;&#x4E0B;<code>sendMessageAtTime</code>&#x65B9;&#x6CD5;&#x4E2D;&#x7684;&#x5B9E;&#x73B0;&#x3002;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">public boolean sendMessageAtTime(Message msg, long uptimeMillis) {</div><div class="line">        MessageQueue queue = mQueue;</div><div class="line">        if (queue == null) {</div><div class="line">            RuntimeException e = new RuntimeException(</div><div class="line">                    this + &quot; sendMessageAtTime() called with no mQueue&quot;);</div><div class="line">            Log.w(&quot;Looper&quot;, e.getMessage(), e);</div><div class="line">            return false;</div><div class="line">        }</div><div class="line">        return enqueueMessage(queue, msg, uptimeMillis);</div><div class="line">    }</div></pre></td></tr></table></figure>
+<p>&#x800C;<code>sendMessageAtTime</code>&#x5219;&#x5C31;&#x662F;&#x8C03;&#x7528;&#x4E86;<code>enqueueMessage</code>&#x64CD;&#x4F5C;&#xFF0C;&#x770B;&#x8FD9;&#x65B9;&#x6CD5;&#x540D;&#x5C31;&#x77E5;&#x9053;&#x662F;&#x5165;&#x961F;&#x5217;&#x64CD;&#x4F5C;&#x4E86;&#x3002;</p>
+<h2 id="enqueueMessage"><a href="#enqueueMessage" class="headerlink" title="enqueueMessage"></a>enqueueMessage</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">private boolean enqueueMessage(MessageQueue queue, Message msg, long uptimeMillis) {</div><div class="line">        msg.target = this;</div><div class="line">        if (mAsynchronous) {</div><div class="line">            msg.setAsynchronous(true);</div><div class="line">        }</div><div class="line">        return queue.enqueueMessage(msg, uptimeMillis);</div><div class="line">    }</div></pre></td></tr></table></figure>
+<p>&#x679C;&#x4E0D;&#x5176;&#x7136;&#x76F4;&#x63A5;&#x8C03;&#x7528;&#x4E86;<code>MessageQueue</code>&#x4E2D;&#x7684;<code>queue.enqueueMessage(msg, uptimeMillis)</code>&#x5C06;&#x6D88;&#x606F;&#x52A0;&#x5165;&#x6D88;&#x606F;&#x961F;&#x5217;&#xFF0C;&#x540C;&#x65F6;&#x8FD9;&#x6BB5;&#x4EE3;&#x7801;<code>msg.target = this</code> &#x5C06;&#x5F53;&#x524D;&#x7684;<code>Handler</code>&#x8D4B;&#x7ED9;&#x4E86;<code>msg.target</code>,&#x8FD9;&#x5C31;&#x662F;&#x524D;&#x9762;&#x6240;&#x8BF4;&#x7684;<code>Looper.loop</code>&#x65B9;&#x6CD5;&#x4E2D;&#x8C03;&#x7528;&#x7684;<code>Handler</code>&#x3002;&#x8FD9;&#x6837;&#x5C31;&#x628A;&#x6D88;&#x606F;&#x653E;&#x5230;&#x4E86;<code>MessageQueue</code>&#x4E2D;&#xFF0C;&#x8FDB;&#x800C;&#x901A;&#x8FC7;&#x524D;&#x9762;&#x6240;&#x8BB2;&#x7684;<code>loop</code>&#x6765;&#x53D6;&#x51FA;&#x6D88;&#x606F;&#x8FDB;&#x884C;&#x76F8;&#x5E94;&#x7684;&#x5904;&#x7406;&#xFF0C;&#x8FD9;&#x6837;&#x5C31;&#x6784;&#x6210;&#x4E86;&#x6574;&#x4E2A;&#x5BF9;&#x6D88;&#x606F;&#x8FDB;&#x884C;&#x5904;&#x7406;&#x7684;&#x7CFB;&#x7EDF;&#x3002;&#x8FD9;&#x4E5F;&#x662F;&#x4F7F;&#x7528;<code>Handler</code>&#x5185;&#x90E8;&#x6240;&#x53D1;&#x751F;&#x7684;&#x539F;&#x7406;&#x3002;&#x597D;&#x4E86;<code>Handler</code>&#x3001;<code>Looper</code>&#x4E0E;<code>MessageQueue</code>&#x5B83;&#x4EEC;&#x4E4B;&#x95F4;&#x7684;&#x8054;&#x7CFB;&#x57FA;&#x672C;&#x5C31;&#x662F;&#x8FD9;&#x4E9B;&#x4E86;&#x3002;&#x6211;&#x4E5F;&#x7B80;&#x5355;&#x753B;&#x4E86;&#x5F20;&#x56FE;&#x5E0C;&#x671B;&#x6709;&#x6240;&#x5E2E;&#x52A9;</p>
+<p><img src="/2016/10/19/Android-Handler&#x3001;Looper&#x4E0E;MessageQueue&#x6E90;&#x7801;&#x5206;&#x6790;/Handler&#x3001;Looper&#x4E0E;MessageQueue.png" alt="&#x8349;&#x56FE;"></p>
+<h1 id="&#x603B;&#x7ED3;"><a href="#&#x603B;&#x7ED3;" class="headerlink" title="&#x603B;&#x7ED3;"></a>&#x603B;&#x7ED3;</h1><p>&#x6765;&#x603B;&#x7ED3;&#x4E0B;&#x5B83;&#x4EEC;&#x4E4B;&#x95F4;&#x7684;&#x6D41;&#x7A0B;&#x3002;&#x9996;&#x5148;&#x521B;&#x5EFA;<code>Handler</code>&#x800C;&#x5728;<code>Handler</code>&#x6240;&#x5904;&#x7684;&#x7EBF;&#x7A0B;&#x4E2D;&#x5FC5;&#x987B;&#x8981;&#x6709;&#x4E00;&#x4E2A;<code>Looper</code>&#xFF0C;&#x5982;&#x679C;&#x5728;&#x4E3B;&#x7EBF;&#x7A0B;&#x4E2D;&#x9ED8;&#x8BA4;&#x5E2E;&#x6211;&#x4EEC;&#x5B9E;&#x73B0;&#x4E86;&#xFF0C;&#x5176;&#x4ED6;&#x7EBF;&#x7A0B;&#x5FC5;&#x987B;&#x8C03;&#x7528;<code>Looper.prepare</code>&#x6765;&#x521B;&#x5EFA;<code>Looper</code>&#x540C;&#x65F6;&#x8C03;&#x7528;<code>Looper.loop</code>&#x5F00;&#x542F;&#x5BF9;&#x6D88;&#x606F;&#x7684;&#x5904;&#x7406;&#x3002;&#x6BCF;&#x4E2A;<code>Looper</code>&#x4E2D;&#x90FD;&#x6709;&#x4E00;&#x4E2A;<code>MessageQueue</code>&#x5B83;&#x662F;&#x7528;&#x6765;&#x5B58;&#x50A8;<code>Message</code>&#x7684;&#xFF0C;<code>Handler</code>&#x901A;&#x8FC7;<code>post</code>&#x6216;&#x8005;<code>send..</code>&#x7B49;&#x4E00;&#x7CFB;&#x5217;&#x64CD;&#x4F5C;&#x901A;&#x8FC7;<code>Looper</code>&#x5C06;&#x6D88;&#x606F;&#x653E;&#x5165;&#x5230;&#x6D88;&#x606F;&#x961F;&#x5217;&#x4E2D;&#xFF0C;&#x800C;<code>Looper</code>&#x901A;&#x8FC7;&#x5F00;&#x542F;&#x4E00;&#x4E2A;&#x65E0;&#x9650;&#x7684;&#x5FAA;&#x73AF;&#x6765;&#x4E00;&#x76F4;&#x76D1;&#x542C;&#x7740;&#x6D88;&#x606F;&#x7684;&#x5904;&#x7406;&#xFF0C;&#x4E0D;&#x65AD;&#x4ECE;<code>MessageQueue</code>&#x4E2D;&#x53D6;&#x51FA;&#x6D88;&#x606F;&#xFF0C;&#x5E76;&#x4EA4;&#x7ED9;&#x4E0E;&#x5F53;&#x524D;<code>Looper</code>&#x6240;&#x7ED1;&#x5B9A;&#x7684;<code>handler</code>&#x7684;<code>dispatchMessage</code>&#x8FDB;&#x884C;&#x5206;&#x53D1;&#xFF0C;&#x6700;&#x540E;&#x6839;&#x636E;&#x60C5;&#x51B5;&#x8C03;&#x7528;<code>Runnable</code>&#x7684;<code>run</code>&#x6216;&#x8005;<code>Handler</code>&#x7684;<code>HandlerMessage</code>&#x65B9;&#x6CD5;&#x5BF9;&#x6D88;&#x606F;&#x8FDB;&#x884C;&#x6700;&#x540E;&#x7684;&#x5904;&#x7406;&#x3002;</p>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal-one" aria-hidden="true">
+  <a href="#close" class="cover" aria-hidden="true"></a>
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <a href="#close" class="btn-close" aria-hidden="true">关闭</a>
+    </div>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+  <section class="duoshuo-comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="" data-title="Handler、Looper与MessageQueue源码分析" data-url="https://idisfkj.github.io/2016/10/19/Android-Handler、Looper与MessageQueue源码分析/index.html"></div>
+    <!-- 多说评论框 end -->
+  </section>
+
+
+
+
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"idisfkj"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?398', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
