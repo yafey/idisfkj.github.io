@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+
+
+  <html class="light">
+
+
+<head>
+  <meta charset="utf-8">
+  
+  <title>带你走进Retrofit的新世界 | Idisfkj</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+    <meta name="keywords" content="retrofit," />
+  
+
+  <meta name="description" content="&amp;#x5BF9;&amp;#x4E8E;Android&amp;#x6765;&amp;#x8BF4;&amp;#x7F51;&amp;#x7EDC;&amp;#x8BF7;&amp;#x6C42;&amp;#x7684;&amp;#x5B9E;&amp;#x73B0;&amp;#x6709;&amp;#x5F88;&amp;#x591A;&amp;#xFF0C;&amp;#x4F8B;&amp;#x5982;&amp;#x53EF;&amp;#x4EE5;&amp;#x76F4;&amp;#x63A5;&amp;#x4F7F;&amp;#x7528;&amp;#x6CA1;&amp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="带你走进Retrofit的新世界">
+<meta property="og:url" content="https://idisfkj.github.io/2016/11/15/带你走进Retrofit的新世界/index.html">
+<meta property="og:site_name" content="Idisfkj">
+<meta property="og:description" content="&amp;#x5BF9;&amp;#x4E8E;Android&amp;#x6765;&amp;#x8BF4;&amp;#x7F51;&amp;#x7EDC;&amp;#x8BF7;&amp;#x6C42;&amp;#x7684;&amp;#x5B9E;&amp;#x73B0;&amp;#x6709;&amp;#x5F88;&amp;#x591A;&amp;#xFF0C;&amp;#x4F8B;&amp;#x5982;&amp;#x53EF;&amp;#x4EE5;&amp;#x76F4;&amp;#x63A5;&amp;#x4F7F;&amp;#x7528;&amp;#x6CA1;&amp;">
+<meta property="og:image" content="https://idisfkj.github.io/2016/11/15/带你走进Retrofit的新世界/1.png">
+<meta property="og:image" content="https://idisfkj.github.io/2016/11/15/带你走进Retrofit的新世界/2.png">
+<meta property="og:updated_time" content="2016-11-16T07:22:16.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="带你走进Retrofit的新世界">
+<meta name="twitter:description" content="&amp;#x5BF9;&amp;#x4E8E;Android&amp;#x6765;&amp;#x8BF4;&amp;#x7F51;&amp;#x7EDC;&amp;#x8BF7;&amp;#x6C42;&amp;#x7684;&amp;#x5B9E;&amp;#x73B0;&amp;#x6709;&amp;#x5F88;&amp;#x591A;&amp;#xFF0C;&amp;#x4F8B;&amp;#x5982;&amp;#x53EF;&amp;#x4EE5;&amp;#x76F4;&amp;#x63A5;&amp;#x4F7F;&amp;#x7528;&amp;#x6CA1;&amp;">
+<meta name="twitter:image" content="https://idisfkj.github.io/2016/11/15/带你走进Retrofit的新世界/1.png">
+
+  
+
+  
+  <!-- <link href="/favicon.ico" rel="icon" type="image/x-icon"> -->
+    <link rel="icon" href="/favicon.ico">
+    <!-- <link href="favicon.ico" rel="shortcut icon" type="image/x-icon" /> -->
+  
+  
+  <link href="/css/styles.css?v=5f7f1d39" rel="stylesheet">
+
+
+  
+    <link rel="stylesheet" href="/css/personal-style.css">
+  
+
+  
+
+  
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?ef89e68af5e136d5c22043f91cd139ea";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+</head>
+
+<body>
+
+  
+    <a href="#modal-one" class="toolbox-mobile">盒子</a>
+  
+
+  <div class="post-header CENTER">
+   
+  <div class="toolbox">
+    <a class="toolbox-entry" href="/">
+      <span class="toolbox-entry-text">盒子</span>
+      <i class="icon-angle-down"></i>
+      <i class="icon-home"></i>
+    </a>
+    <ul class="list-toolbox">
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/archives/"
+            target="_self"
+            >
+            博客
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/category/"
+            target="_self"
+            >
+            分类
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/tag/"
+            target="_self"
+            >
+            标签
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/link/"
+            target="_self"
+            >
+            友链
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/about/"
+            target="_self"
+            >
+            关于
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/atom.xml"
+            target="_blank"
+            >
+            RSS
+          </a>
+        </li>
+      
+        <li class="item-toolbox">
+          <a
+            class="CIRCLE"
+            href="/search/"
+            target="_self"
+            >
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+</div>
+
+
+  <div id="toc" class="toc-article">
+    <strong class="toc-title">文章目录</strong>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Retrofit"><span class="toc-text">Retrofit</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#配置"><span class="toc-text">配置</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用"><span class="toc-text">使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#GET"><span class="toc-text">GET</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Path"><span class="toc-text">Path</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Query"><span class="toc-text">Query</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#QueryMap"><span class="toc-text">QueryMap</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#示例"><span class="toc-text">示例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#POST"><span class="toc-text">POST</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#FormUrlEncoded-And-Multipart"><span class="toc-text">FormUrlEncoded And Multipart</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Field-And-FiledMap"><span class="toc-text">Field And FiledMap</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Part-And-PartMap"><span class="toc-text">Part And PartMap</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Headers-And-Header"><span class="toc-text">Headers And Header</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#示例-1"><span class="toc-text">示例</span></a></li></ol></li></ol>
+  </div>
+
+
+
+<div class="content content-post CENTER">
+   <article id="post-带你走进Retrofit的新世界" class="article article-type-post" itemprop="blogPost">
+  <header class="article-header">
+    <h1 class="post-title">带你走进Retrofit的新世界</h1>
+
+    <div class="article-meta">
+      <span>
+        <i class="icon-calendar"></i>
+        <span>2016.11.15</span>
+      </span>
+
+      
+        <span class="article-author">
+          <i class="icon-user"></i>
+          <span>idisfkj</span>
+        </span>
+      
+
+      
+  <span class="article-category">
+    <i class="icon-list"></i>
+    <a class="article-category-link" href="/categories/android/">android</a>
+  </span>
+
+
+
+      
+
+    </div>
+  </header>
+
+  <div class="article-content">
+    
+      <p>&#x5BF9;&#x4E8E;<code>Android</code>&#x6765;&#x8BF4;&#x7F51;&#x7EDC;&#x8BF7;&#x6C42;&#x7684;&#x5B9E;&#x73B0;&#x6709;&#x5F88;&#x591A;&#xFF0C;&#x4F8B;&#x5982;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x4F7F;&#x7528;&#x6CA1;&#x6709;&#x5C01;&#x88C5;&#x7684;<code>HttpUrlConnection</code>&#xFF0C;&#x6216;&#x8005;&#x4F7F;&#x7528;&#x4E00;&#x4E9B;&#x5DF2;&#x7ECF;&#x8FDB;&#x884C;&#x4E86;&#x5C01;&#x88C5;&#x7684;&#x4F8B;&#x5982;<code>Volley</code>&#x3001;<code>OkHttp</code>&#xFF0C;&#x8FD9;&#x4E9B;&#x5C01;&#x88C5;&#x597D;&#x7684;&#x5F00;&#x6E90;&#x5E93;&#x4E5F;&#x662F;&#x4E0D;&#x9519;&#x7684;&#xFF0C;&#x5982;&#x679C;&#x8981;&#x8BB2;&#x7684;&#x8BDD;&#x4E5F;&#x53EF;&#x4EE5;&#x5355;&#x72EC;&#x5199;&#x597D;&#x51E0;&#x7BC7;&#x6587;&#x7AE0;&#xFF0C;&#x5982;&#x679C;&#x9700;&#x8981;&#x4E86;&#x89E3;<code>Volley</code>&#x539F;&#x7406;&#x7684;&#x7684;&#x53EF;&#x4EE5;&#x67E5;&#x770B;&#x8FD9;&#x4E24;&#x7BC7;&#x6587;&#x7AE0;<a href="https://idisfkj.github.io/2016/10/14/Android-Volley%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-%E4%B8%80/">Android Volley&#x6E90;&#x7801;&#x5206;&#x6790;(&#x4E00;)</a>&#x3001;<a href="https://idisfkj.github.io/2016/10/17/Android-Volley%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90-%E4%BA%8C/">Android Volley&#x6E90;&#x7801;&#x5206;&#x6790;(&#x4E8C;)</a>&#x3002;&#x4F46;&#x662F;&#x4ECA;&#x5929;&#x8981;&#x8BF4;&#x7684;&#x662F;&#x73B0;&#x5728;<code>Android</code>&#x5F00;&#x53D1;&#x4EBA;&#x5458;&#x8FDB;&#x9636;&#x5FC5;&#x5907;&#x7684;&#x7F51;&#x7EDC;&#x5E93;<code>Retrofit</code>&#xFF0C;&#x4E5F;&#x662F;&#x73B0;&#x5728;&#x6700;&#x6D41;&#x884C;&#x7684;&#xFF0C;&#x5982;&#x679C;&#x4F60;&#x4E4B;&#x524D;&#x4F7F;&#x7528;&#x8FC7;<code>OkHttp</code>&#x90A3;&#x4E48;&#x606D;&#x559C;&#x4F60;&#x6709;&#x4E86;&#x4E00;&#x4E2A;&#x597D;&#x7684;&#x4F18;&#x52BF;&#xFF0C;&#x56E0;&#x4E3A;<code>Retrofit</code>&#x5185;&#x90E8;&#x5C31;&#x662F;&#x4F7F;&#x7528;<code>OkHttp</code>&#x8FDB;&#x884C;&#x8BF7;&#x6C42;&#x7684;&#x3002;<code>Retrofit</code>&#x505A;&#x7684;&#x53EA;&#x662F;&#x5C01;&#x88C5;&#x8BF7;&#x6C42;&#x53C2;&#x6570;&#x3001;<code>Header</code>&#x3001;<code>Url</code>&#x7B49;&#x4FE1;&#x606F;&#xFF0C;&#x6700;&#x540E;&#x518D;&#x4F20;&#x7ED9;<code>OkHttp</code>&#x5B8C;&#x6210;&#x8BF7;&#x6C42;&#xFF0C;&#x8BF7;&#x6C42;&#x5B8C;&#x4E4B;&#x540E;<code>OkHttp</code>&#x5728;&#x4F20;&#x56DE;&#x7ED9;<code>Retrofit</code>&#x3002;&#x4E0B;&#x9762;&#x6765;&#x8BF4;&#x4E0B;<code>Retrofit</code>&#x7684;&#x57FA;&#x672C;&#x4F7F;&#x7528;&#x3002;</p>
+<blockquote>
+<p>&#x672C;&#x7AE0;&#x4ECB;&#x7ECD;&#x7684;&#x90FD;&#x662F;&#x5165;&#x95E8;&#x7684;&#x77E5;&#x8BC6;&#xFF0C;&#x53EA;&#x505A;&#x4E00;&#x4E2A;&#x5F15;&#x5BFC;&#x4F5C;&#x7528;&#xFF0C;&#x5927;&#x795E;&#x8BF7;&#x81EA;&#x52A8;&#x8DF3;&#x8FC7;</p>
+</blockquote>
+<h1 id="Retrofit"><a href="#Retrofit" class="headerlink" title="Retrofit"></a>Retrofit</h1><p>&#x5BF9;&#x4E8E;<code>Retrofit</code>&#x7684;&#x4ECB;&#x7ECD;&#x6211;&#x5F15;&#x7528;&#x5B98;&#x65B9;&#x7684;&#x4E00;&#x53E5;&#x8BDD;<code>Type-safe HTTP client for Android and Java by Square, Inc.</code>&#x7B80;&#x5355;&#x7684;&#x7FFB;&#x8BD1;&#x4E00;&#x4E0B;&#x5C31;&#x662F;&#xFF1A;&#x5BF9;&#x4E8E;<code>Android</code>&#x4E0E;<code>Java</code>&#x662F;&#x4E00;&#x4E2A;&#x7C7B;&#x578B;&#x5B89;&#x5168;&#x7684;<code>Http</code>&#x8BF7;&#x6C42;&#x5E93;&#x3002;&#x5B83;&#x662F;&#x4F7F;&#x7528;&#x6CE8;&#x91CA;&#x6765;&#x63CF;&#x8FF0;<code>Http</code>&#x8BF7;&#x6C42;&#xFF0C;&#x4E3B;&#x8981;&#x6709;&#x4EE5;&#x4E0B;&#x7279;&#x70B9;&#xFF1A;</p>
+<ul>
+<li>&#x652F;&#x6301;<code>URL</code>&#x53C2;&#x6570;&#x66FF;&#x4EE3;&#x4E0E;<code>query</code>&#x53C2;&#x6570;&#x7684;&#x67E5;&#x8BE2;</li>
+<li>&#x5BF9;&#x4E8E;&#x8BF7;&#x6C42;<code>body</code>&#x7C7B;&#x578B;&#x7684;&#x8F6C;&#x6362;&#xFF08;&#x4F8B;&#x5982;&#xFF1A;<code>Json</code>&#x3001;<code>protocol buffers</code>&#xFF09;</li>
+<li>&#x652F;&#x6301;<code>Multipart</code>&#x8BF7;&#x6C42;&#x4E0E;&#x6587;&#x4EF6;&#x4E0A;&#x4F20;</li>
+</ul>
+<h2 id="&#x914D;&#x7F6E;"><a href="#&#x914D;&#x7F6E;" class="headerlink" title="&#x914D;&#x7F6E;"></a>&#x914D;&#x7F6E;</h2><p>&#x73B0;&#x5728;&#x5DF2;&#x7ECF;&#x66F4;&#x65B0;&#x5230;<code>Retrofit2</code>&#x4E86;&#xFF0C;&#x5BF9;&#x4E8E;<code>Android</code>&#x6765;&#x8BF4;&#x76F4;&#x63A5;&#x5728;<code>Gradle</code>&#x4E2D;&#x914D;&#x7F6E;&#xFF1A;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">compile &apos;com.squareup.retrofit2:retrofit:2.1.0&apos;</div></pre></td></tr></table></figure>
+<p>&#x6216;&#x8005;&#x67E5;&#x770B;<a href="https://github.com/square/retrofit" target="_blank" rel="external">&#x5B98;&#x7F51;</a>&#x914D;&#x7F6E;&#x6700;&#x65B0;&#x7248;&#x672C;,<code>Retrofit</code>&#x9700;&#x8981;&#x7684;<code>Android</code>&#x6700;&#x4F4E;&#x7248;&#x672C;&#x4E3A;<code>2.3</code><br>&#x5BF9;&#x4E8E;<code>Retrofit2</code>&#x5C31;&#x4E0D;&#x9700;&#x8981;&#x914D;&#x7F6E;<code>OkHttp</code>&#x4F9D;&#x8D56;&#x4E86;&#xFF0C;&#x56E0;&#x4E3A;&#x5B83;&#x9ED8;&#x8BA4;&#x4F1A;&#x4E00;&#x8D77;&#x914D;&#x7F6E;&#xFF0C;&#x5728;&#x4F7F;&#x7528;<code>Retrofit</code>&#x65F6;&#xFF0C;&#x4F1A;&#x4F7F;&#x7528;&#x4E00;&#x4E9B;&#x7C7B;&#x578B;&#x7684;&#x8F6C;&#x6362;&#xFF0C;&#x63D0;&#x4F9B;&#x4E86;&#x4EE5;&#x4E0B;<code>6</code>&#x4E2D;&#x6D41;&#x884C;&#x7684;&#x7C7B;&#x578B;&#x4F9B;&#x9009;&#x62E9;</p>
+<ul>
+<li>Gson: com.squareup.retrofit2:converter-gson</li>
+<li>Jackson: com.squareup.retrofit2:converter-jackson</li>
+<li>Moshi: com.squareup.retrofit2:converter-moshi</li>
+<li>Protobuf: com.squareup.retrofit2:converter-protobuf</li>
+<li>Wire: com.squareup.retrofit2:converter-wire</li>
+<li>Simple XML: com.squareup.retrofit2:converter-simplexml</li>
+<li><p>Scalars (primitives, boxed, and String): com.squareup.retrofit2:converter-scalars</p>
+<p>&#x5728;<code>Gradle</code>&#x4E2D;&#x914D;&#x7F6E;&#x4E0E;<code>Retrofit</code>&#x5BF9;&#x4E8E;&#x7684;&#x7248;&#x672C;&#x53F7;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">compile &apos;com.squareup.retrofit2:converter-gson:2.1.0&apos;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="&#x4F7F;&#x7528;"><a href="#&#x4F7F;&#x7528;" class="headerlink" title="&#x4F7F;&#x7528;"></a>&#x4F7F;&#x7528;</h1><p>&#x524D;&#x9762;&#x8BF4;&#x4E86;<code>Retrofit</code>&#x662F;&#x4F7F;&#x7528;&#x6CE8;&#x91CA;&#x6765;&#x5B9A;&#x4E49;&#x8BF7;&#x6C42;&#xFF0C;&#x4E14;&#x5B83;&#x5B9A;&#x4E49;&#x7684;&#x6CE8;&#x91CA;&#x662F;&#x5728;&#x63A5;&#x53E3;&#x65B9;&#x6CD5;&#x4E2D;&#xFF0C;&#x6240;&#x4EE5;&#x6BCF;&#x4E00;&#x4E2A;&#x65B9;&#x6CD5;&#x90FD;&#x5FC5;&#x987B;&#x8981;&#x6709;&#x76F8;&#x5E94;&#x7684;<code>Http</code>&#x6CE8;&#x91CA;&#x4E0E;&#x8BF7;&#x6C42;&#x7684;<code>URL</code>&#x3002;<code>Retrofit</code>&#x652F;&#x6301;<code>5</code>&#x4E2D;&#x5185;&#x7F6E;&#x7684;&#x6CE8;&#x91CA;&#x7684;<code>Http</code>&#x8BF7;&#x6C42;&#x65B9;&#x5F0F;&#xFF1A;<code>GET</code>&#x3001;<code>POST</code>&#x3001;<code>PUT</code>&#x3001;<code>DELETE</code>&#x4E0E;<code>HEAD</code>&#x3002;&#x4E0B;&#x9762;&#x6765;&#x770B;&#x4E0B;&#x7B80;&#x5355;&#x7684;&#x5B9A;&#x4E49;&#x3002;</p>
+<p>&#x5B9A;&#x4E49;&#x7684;<code>URL</code>&#x5305;&#x62EC;&#x4E24;&#x90E8;&#x5206;&#x4E00;&#x90E8;&#x5206;&#x4E3A;<code>host</code>&#x4E5F;&#x79F0;&#x4E3A;<code>baseUrl</code>&#x4F8B;&#x5982;&#xFF1A;<code>https://api.github.co</code>&#xFF0C;&#x522B;&#x4E00;&#x90E8;&#x5206;&#x4E3A;<code>path</code>&#x4F8B;&#x5982;:<code>users/list</code>&#xFF0C;&#x6211;&#x4EEC;&#x5728;&#x6CE8;&#x91CA;&#x4E2D;&#x5B9A;&#x4E49;&#x7684;<code>url</code>&#x4E00;&#x822C;&#x4E3A;<code>path</code>&#x90E8;&#x5206;&#x3002;</p>
+<blockquote>
+<p>&#x4EE5;&#x4E0B;&#x7684;&#x4ECB;&#x7ECD;&#x90FD;&#x662F;&#x9488;&#x5BF9;<code>Retrofit2</code>&#x6765;&#x8FDB;&#x884C;&#x7684;&#xFF0C;&#x4E0E;<code>Retrofit1.9</code>&#x6709;&#x7684;&#x5730;&#x65B9;&#x8FD8;&#x662F;&#x6709;&#x533A;&#x522B;&#x3002;</p>
+</blockquote>
+<h2 id="GET"><a href="#GET" class="headerlink" title="GET"></a>GET</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">@GET(&quot;users/list&quot;)</div></pre></td></tr></table></figure>
+<p>&#x4E5F;&#x53EF;&#x4EE5;&#x76F4;&#x63A5;&#x5E26;&#x53C2;&#x6570;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">@GET(&quot;users/list?sort=desc&quot;)</div></pre></td></tr></table></figure>
+<h2 id="Path"><a href="#Path" class="headerlink" title="Path"></a>Path</h2><p>&#x5176;&#x5B9E;&#x4E5F;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x52A8;&#x6001;&#x66F4;&#x65B0;&#x7684;&#x65B9;&#x5F0F;&#x6765;&#x5B9A;&#x4E49;<code>path</code>&#xFF0C;&#x518D;<code>path</code>&#x4E2D;&#x901A;&#x8FC7;&#x4F7F;&#x7528;<code>{}</code>&#x6765;&#x5B9A;&#x4E49;&#x9700;&#x8981;&#x52A8;&#x6001;&#x66FF;&#x4EE3;&#x7684;&#x5B57;&#x6BB5;&#xFF0C;&#x518D;&#x5230;&#x65B9;&#x6CD5;&#x4E2D;&#x4F7F;&#x7528;<code>@Path()</code>&#x6765;&#x5B9A;&#x4E49;&#x66FF;&#x4EE3;&#x7684;&#x53D8;&#x91CF;&#x503C;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">@GET(&quot;group/{id}/users&quot;)</div><div class="line">Call&lt;List&lt;User&gt;&gt; groupList(@Path(&quot;id&quot;) int groupId);</div></pre></td></tr></table></figure>
+<h2 id="Query"><a href="#Query" class="headerlink" title="Query"></a>Query</h2><p>&#x53C2;&#x6570;&#x67E5;&#x8BE2;&#x4E5F;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;&#x4F7F;&#x7528;<code>@Query()</code>&#x6765;&#x5B9A;&#x4E49;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">GET(&quot;group/{id}/users&quot;)</div><div class="line">Call&lt;List&lt;User&gt;&gt; groupList(@Path(&quot;id&quot;) int groupId, @Query(&quot;sort&quot;) String sort);</div></pre></td></tr></table></figure>
+<h2 id="QueryMap"><a href="#QueryMap" class="headerlink" title="QueryMap"></a>QueryMap</h2><p>&#x5982;&#x679C;&#x53C2;&#x6570;&#x8FC7;&#x591A;&#x53EF;&#x4EE5;&#x501F;&#x52A9;<code>@QueryMap</code> &#x6765;&#x6784;&#x9020;<code>Map</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">@GET(&quot;group/{id}/users&quot;)</div><div class="line">Call&lt;List&lt;User&gt;&gt; groupList(@Path(&quot;id&quot;) int groupId, @QueryMap Map&lt;String, String&gt; options);</div></pre></td></tr></table></figure>
+<p>&#x8BF4;&#x4E86;&#x8FD9;&#x4E48;&#x591A;&#x8FD8;&#x662F;&#x4EE5;&#x4E00;&#x4E2A;&#x793A;&#x4F8B;&#x6765;&#x5C55;&#x793A;&#xFF0C;&#x4E0B;&#x9762;&#x7684;&#x793A;&#x4F8B;&#x662F;<code>Github</code>&#x4E0A;&#x7684;</p>
+<h2 id="&#x793A;&#x4F8B;"><a href="#&#x793A;&#x4F8B;" class="headerlink" title="&#x793A;&#x4F8B;"></a>&#x793A;&#x4F8B;</h2><p>&#x5B9A;&#x4E49;&#x63A5;&#x53E3;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">public interface GithubService {</div><div class="line">    @GET(&quot;/repos/{owner}/{repo}/contributors&quot;)</div><div class="line">    Call&lt;List&lt;Contributors&gt;&gt; contributors(</div><div class="line">            @Path(&quot;owner&quot;) String owner,</div><div class="line">            @Path(&quot;repo&quot;) String repo);</div><div class="line">}</div></pre></td></tr></table></figure>
+<p><code>Contributors</code>&#x662F;&#x4E00;&#x4E2A;&#x5B9E;&#x4F53;&#x7C7B;&#xFF0C;&#x5BF9;&#x5E94;&#x4E8E;&#x8BF7;&#x6C42;&#x4E4B;&#x540E;&#x8FD4;&#x56DE;&#x7684;&#x6570;&#x636E;&#x7C7B;&#x578B;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public class Contributors {</div><div class="line">    public String login;</div><div class="line">    public String contributions;</div><div class="line"> </div><div class="line">    public Contributors(String contributions, String login) {</div><div class="line">        this.contributions = contributions;</div><div class="line">        this.login = login;</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+<p>&#x901A;&#x8FC7;<code>Retrofit</code>&#x751F;&#x6210;&#x4F60;&#x5B9A;&#x4E49;&#x7684;&#x63A5;&#x53E3;&#xFF0C;&#x5176;&#x4E2D;&#x54CD;&#x5E94;&#x7684;&#x6570;&#x636E;&#x662F;<code>Json</code>&#x7C7B;&#x578B;&#xFF0C;&#x6240;&#x4EE5;&#x8981;&#x5BF9;<code>body</code>&#x505A;&#x76F8;&#x5E94;&#x7684;&#x8F6C;&#x5316;&#xFF0C;&#x901A;&#x8FC7;&#x6DFB;&#x52A0;<code>Converter</code>&#xFF0C;&#x5982;&#x679C;&#x6CA1;&#x6709;&#x6DFB;&#x52A0;<code>Converter</code>&#x5B83;&#x9ED8;&#x8BA4;&#x662F;&#x4F7F;&#x7528;<code>OkHttp</code>&#x7684;<code>ResponseBody</code>&#x4E0E;<code>ResponseBody</code>&#x5BF9;&#x4E8E;&#x540E;&#x7EED;<code>POST</code>&#x8BBE;&#x7F6E;&#x7684;<code>@Body</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Retrofit retrofit = new Retrofit.Builder()</div><div class="line">                .baseUrl(&quot;https://api.github.com&quot;)</div><div class="line">                .addConverterFactory(GsonConverterFactory.create())</div><div class="line">                .build();</div><div class="line"> </div><div class="line">GithubService service = retrofit.create(GithubService.class)</div></pre></td></tr></table></figure>
+<blockquote>
+<p>&#x4F7F;&#x7528;<code>GsonConverterFactory.create()</code>&#x5FC5;&#x987B;&#x5728;<code>Gradle</code>&#x4E2D;&#x914D;&#x7F6E;&#x4E86;&#x524D;&#x9762;&#x6240;&#x8BF4;&#x7684;<code>6</code>&#x79CD;&#x7C7B;&#x578B;&#x4E2D;&#x7684;<code>Gson</code></p>
+</blockquote>
+<p>&#x6BCF;&#x4E00;&#x4E2A;<code>Call</code>&#x90FD;&#x662F;&#x6765;&#x81EA;&#x4E8E;&#x521B;&#x5EFA;&#x7684;&#x63A5;&#x53E3;&#x901A;&#x8FC7;&#x540C;&#x6B65;&#x6216;&#x8005;&#x5F02;&#x6B65;&#x8BF7;&#x6C42;&#x8FDC;&#x7A0B;&#x670D;&#x52A1;&#x800C;&#x83B7;&#x5F97;&#x3002;&#x5728;&#x8C03;&#x7528;&#x63A5;&#x53E3;&#x7684;&#x65B9;&#x6CD5;&#x65F6;&#x53EF;&#x4EE5;&#x4F20;&#x5165;&#x5BF9;&#x5E94;&#x7684;&#x53C2;&#x6570;&#x6570;&#x636E;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Call&lt;List&lt;Contributors&gt;&gt; call = service.contributors(&quot;square&quot;, &quot;retrofit&quot;);</div></pre></td></tr></table></figure>
+<p>&#x6700;&#x540E;&#x540C;&#x8C03;&#x7528;<code>Call</code>&#x7684;<code>execute</code>&#x6267;&#x884C;&#x540C;&#x6B65;&#x8BF7;&#x6C42;&#xFF0C;&#x6216;&#x8005;&#x8C03;&#x7528;<code>Call</code>&#x7684;<code>enqueue</code>&#x6765;&#x6267;&#x884C;&#x5F02;&#x6B65;&#x8BF7;&#x6C42;&#xFF0C;&#x83B7;&#x53D6;&#x54CD;&#x5E94;&#x7684;&#x7ED3;&#x679C;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">try {</div><div class="line">            List&lt;Contributors&gt; contributorses = call.execute().body();</div><div class="line">            for (Contributors contributors : contributorses) {</div><div class="line">                Log.v(&quot;TAG&quot;, contributors.login + &quot;(&quot; + contributors.contributions + &quot;)&quot;);</div><div class="line">            }</div><div class="line">        } catch (IOException e) {</div><div class="line">            e.printStackTrace();</div><div class="line">        }</div></pre></td></tr></table></figure>
+<h2 id="POST"><a href="#POST" class="headerlink" title="POST"></a>POST</h2><p>&#x5BF9;&#x4E8E;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;&#x53EF;&#x80FD;&#x4F1A;&#x4F5C;&#x4E3A;<code>Http</code>&#x8BF7;&#x6C42;&#x7684;<code>body</code>&#x3002;&#x8FD9;&#x65F6;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;<code>@Body</code>&#x6CE8;&#x91CA;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">@POST(&quot;users/new&quot;)</div><div class="line">Call&lt;User&gt; createUser(@Body User user);</div></pre></td></tr></table></figure>
+<p>&#x8FD9;&#x4E2A;&#x5BF9;&#x8C61;&#x4E5F;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;<code>Retrofit</code>&#x7684;<code>converter</code>&#x6765;&#x8FDB;&#x884C;&#x7279;&#x6B8A;&#x7684;&#x8F6C;&#x5316;&#xFF0C;&#x5982;&#x679C;&#x6CA1;&#x6709;&#x6DFB;&#x52A0;<code>converter</code>&#x5B83;&#x5C06;&#x9ED8;&#x8BA4;&#x4F7F;&#x7528;<code>RequestBody</code></p>
+<h2 id="FormUrlEncoded-And-Multipart"><a href="#FormUrlEncoded-And-Multipart" class="headerlink" title="FormUrlEncoded And Multipart"></a>FormUrlEncoded And Multipart</h2><p>&#x5BF9;&#x4E8E;&#x63A5;&#x53E3;&#x5B9A;&#x4E49;&#x7684;&#x65B9;&#x6CD5;&#x4E5F;&#x53EF;&#x4EE5;&#x53D1;&#x9001;<code>form-encoded</code>&#x4E0E;<code>multipart</code>&#x6570;&#x636E;&#x7C7B;&#x578B;&#x3002;</p>
+<h3 id="Field-And-FiledMap"><a href="#Field-And-FiledMap" class="headerlink" title="Field And FiledMap"></a>Field And FiledMap</h3><p>&#x5BF9;&#x4E8E;<code>form-encoded</code>&#x7684;&#x6570;&#x636E;&#x7C7B;&#x578B;&#xFF0C;&#x4E00;&#x822C;<code>Content-type</code>&#x4E3A;<code>x-www-form-urlencoded</code>&#x53EF;&#x4EE5;&#x4F7F;&#x7528;<code>@FormUrlEncoded</code>&#x6765;&#x5BF9;&#x65B9;&#x6CD5;&#x8FDB;&#x884C;&#x6CE8;&#x91CA;&#x8BF4;&#x660E;&#xFF0C;&#x6BCF;&#x4E00;&#x5BF9;&#x7684;<code>key-value</code>&#x53EF;&#x4EE5;&#x4F7F;&#x7528;<code>@Field</code>&#x6765;&#x8FDB;&#x884C;&#x5B9A;&#x4E49;&#xFF0C;&#x5206;&#x522B;&#x63D0;&#x4F9B;<code>key</code>&#x4E0E;<code>value</code>&#x3002;&#x5BF9;&#x4E8E;&#x5BF9;&#x6570;&#x636E;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;<code>@FieldMap</code>&#x8FDB;&#x884C;&#x7EDF;&#x4E00;&#x8BBE;&#x7F6E;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">@FormUrlEncoded</div><div class="line">@POST(&quot;user/edit&quot;)</div><div class="line">Call&lt;User&gt; updateUser(@Field(&quot;first_name&quot;) String first, @Field(&quot;last_name&quot;) String last);</div></pre></td></tr></table></figure>
+<h3 id="Part-And-PartMap"><a href="#Part-And-PartMap" class="headerlink" title="Part And PartMap"></a>Part And PartMap</h3><p>&#x9700;&#x8981;<code>Multipart</code>&#x8BF7;&#x6C42;&#x65F6;&#x5373;&#x4E0A;&#x4F20;&#x6587;&#x4EF6;&#x65F6;&#xFF0C;&#x4E00;&#x822C;<code>Content-type</code>&#x4E3A;<code>multipart/form-data</code>,&#x53EA;&#x8981;&#x5728;&#x65B9;&#x6CD5;&#x4E0A;&#x9762;&#x4F7F;&#x7528;<code>@Multipart</code>&#x6CE8;&#x91CA;&#xFF0C;&#x540C;&#x65F6;&#x5BF9;&#x4E8E;<code>Parts</code>&#x90E8;&#x5206;&#x7684;&#x5B9A;&#x4E49;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;<code>@Part</code>&#x6CE8;&#x91CA;&#xFF0C;&#x76F8;&#x5E94;&#x7684;<code>@PartMap</code>&#x4E5F;&#x5B58;&#x5728;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">@Multipart</div><div class="line">@PUT(&quot;user/photo&quot;)</div><div class="line">Call&lt;User&gt; updateUser(@Part(&quot;photo&quot;) RequestBody photo, </div><div class="line">				 @Part(&quot;description&quot;) RequestBody description);</div></pre></td></tr></table></figure>
+<p><code>Multipart</code>&#x9ED8;&#x8BA4;&#x4E5F;&#x662F;&#x4F7F;&#x7528;<code>RequestBody</code>&#x64CD;&#x4F5C;&#x5B83;&#x7684;&#x5E8F;&#x5217;&#x5316;&#xFF0C;&#x6216;&#x8005;&#x4E5F;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;<code>converter</code>&#x6765;&#x5B9E;&#x73B0;&#x3002;</p>
+<h2 id="Headers-And-Header"><a href="#Headers-And-Header" class="headerlink" title="Headers And Header"></a>Headers And Header</h2><p><code>@Headers</code>&#x6CE8;&#x91CA;&#x662F;&#x4E3A;&#x65B9;&#x6CD5;&#x6DFB;&#x52A0;&#x9759;&#x6001;&#x7684;<code>headers</code>&#xFF0C;&#x4E14;&#x76F8;&#x540C;&#x7684;<code>name</code>&#x4E0D;&#x4F1A;&#x88AB;&#x8986;&#x76D6;&#xFF0C;&#x90FD;&#x4F1A;&#x5305;&#x542B;&#x5230;&#x8BF7;&#x6C42;&#x4E2D;;&#x800C;<code>@Header</code>&#x6CE8;&#x91CA;&#x662F;&#x4E3A;&#x65B9;&#x6CD5;&#x6DFB;&#x52A0;&#x52A8;&#x6001;&#x7684;<code>header</code>,&#x5B83;&#x5C06;&#x4F1A;&#x76F8;&#x5F53;&#x4E0E;&#x53C2;&#x6570;&#x6765;&#x5BF9;<code>@Header</code>&#x8FDB;&#x884C;&#x63D0;&#x4F9B;&#xFF0C;&#x5982;&#x679C;&#x8FD9;&#x4E2A;&#x53C2;&#x6570;&#x7684;&#x503C;&#x4E3A;<code>null</code>&#xFF0C;&#x90A3;&#x4E48;&#x5B83;&#x5C06;&#x4F1A;&#x88AB;&#x5FFD;&#x7565;&#x3002;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">@Headers({&quot;Connection: keep-alive&quot;,</div><div class="line">            &quot;Accept-Language:zh-CN,zh;q=0.8,en;q=0.6&quot;})</div><div class="line">    @GET(&quot;/settings&quot;)</div><div class="line">    Call&lt;String&gt; settingService(@Header(&quot;Cookie&quot;) String cookie);</div></pre></td></tr></table></figure>
+<h2 id="&#x793A;&#x4F8B;-1"><a href="#&#x793A;&#x4F8B;-1" class="headerlink" title="&#x793A;&#x4F8B;"></a>&#x793A;&#x4F8B;</h2><p>&#x518D;&#x6765;&#x8D34;&#x4E00;&#x4E2A;&#x591A;&#x8BF4;&#x6587;&#x7AE0;&#x8BF7;&#x6C42;&#x7684;&#x5B8C;&#x6574;&#x793A;&#x4F8B;&#xFF0C;&#x5148;&#x6765;&#x770B;&#x4E0B;&#x9700;&#x8981;&#x8BF7;&#x6C42;&#x793A;&#x4F8B;&#x8D44;&#x6E90;</p>
+<p><img src="/2016/11/15/&#x5E26;&#x4F60;&#x8D70;&#x8FDB;Retrofit&#x7684;&#x65B0;&#x4E16;&#x754C;/1.png" alt="General"></p>
+<p><img src="/2016/11/15/&#x5E26;&#x4F60;&#x8D70;&#x8FDB;Retrofit&#x7684;&#x65B0;&#x4E16;&#x754C;/2.png" alt="Query String Parameters"></p>
+<p>&#x76F8;&#x4FE1;&#x5E94;&#x8BE5;&#x5F88;&#x6E05;&#x695A;&#x4E86;&#xFF0C;&#x8BF7;&#x6C42;&#x65B9;&#x5F0F;&#x4E3A;<code>GET</code>&#xFF0C;&#x8BF7;&#x6C42;&#x7684;<code>Url</code>&#x4E3A;<code>http://idisfkj.duoshuo.com/api/threads/list.json?short_name=idisfkj&amp;order=desc&amp;limit=30&amp;nonce=57f1b19209428</code>,&#x8BF7;&#x6C42;&#x67E5;&#x8BE2;&#x7684;&#x53C2;&#x6570;&#x4E3A;<code>short_name</code>&#x3001;<code>order</code>&#x3001;<code>limit</code>&#x4E0E;<code>nonce</code>&#xFF0C;<code>Ok</code>&#x9700;&#x8981;&#x77E5;&#x9053;&#x7684;&#x90FD;&#x6709;&#x4E86;&#xFF0C;&#x4E0B;&#x9762;&#x6765;<code>code</code>&#x3002;</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">public interface DuoShuoArticleService {</div><div class="line">    @GET(&quot;/api/threads/list.json&quot;)</div><div class="line">    Call&lt;DuoShuoArticle&gt; articleService(@Query(&quot;short_name&quot;) String shortName,</div><div class="line">                                        @Query(&quot;order&quot;) String order,</div><div class="line">                                        @Query(&quot;limit&quot;) int limit,</div><div class="line">                                        @Query(&quot;nonce&quot;) String onnce);</div><div class="line"> </div><div class="line">    @GET(&quot;/api/threads/list.json&quot;)</div><div class="line">    Call&lt;DuoShuoArticle&gt; articleServiceMap(@Query(&quot;limit&quot;) int limit,</div><div class="line">                                           @QueryMap Map&lt;String, String&gt; options);</div><div class="line">}</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">   /**</div><div class="line">     * get &#x5BF9;url&#x7684;&#x4F20;&#x53C2;&#x67E5;&#x8BE2;&#x53D1;&#x8D77;&#x8BF7;&#x6C42; &#x8FD4;&#x56DE;json&#x7C7B;&#x578B;&#x7684;response</div><div class="line">     */</div><div class="line">    public void getDuoShuoArticle() {</div><div class="line">        Retrofit retrofit = new Retrofit.Builder()</div><div class="line">                .baseUrl(&quot;http://idisfkj.duoshuo.com&quot;)</div><div class="line">                .addConverterFactory(GsonConverterFactory.create())</div><div class="line">                .build();</div><div class="line">        DuoShuoArticleService articleService = retrofit.create(DuoShuoArticleService.class);</div><div class="line">        Call&lt;DuoShuoArticle&gt; call = articleService.articleService(&quot;idisfkj&quot;, &quot;desc&quot;, 5, &quot;57f1b19209428&quot;);</div><div class="line"> </div><div class="line">        //&#x4F7F;&#x7528;QueryMap</div><div class="line">//                Map&lt;String,String&gt; map = new HashMap&lt;String, String&gt;();</div><div class="line">//                map.put(&quot;short_name&quot;,&quot;idisfkj&quot;);</div><div class="line">//                map.put(&quot;order&quot;,&quot;desc&quot;);</div><div class="line">//                map.put(&quot;nonce&quot;,&quot;57f1b19209428&quot;);</div><div class="line">//                Call&lt;DuoShuoArticle&gt; call = articleService.articleServiceMap(5,map);</div><div class="line">        try {</div><div class="line">            Response&lt;DuoShuoArticle&gt; response = call.execute();</div><div class="line">            List&lt;DuoShuoArticle.ResponseBean&gt; list = response.body().getResponse();</div><div class="line"> </div><div class="line">            for (DuoShuoArticle.ResponseBean responseBean : list) {</div><div class="line">                Log.v(&quot;TAG&quot;, responseBean.getThread_key() + &quot;-&gt;&quot; + responseBean.getTitle());</div><div class="line">            }</div><div class="line"> </div><div class="line">        } catch (IOException e) {</div><div class="line">            e.printStackTrace();</div><div class="line">        }</div><div class="line">    }</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">11-16 02:09:43.989 2061-2079/? V/TAG: duoshuo-&gt;&#x5E26;&#x4F60;&#x8D70;&#x8FDB;Retrofit&#x7684;&#x65B0;&#x4E16;&#x754C;</div><div class="line">11-16 02:09:43.989 2061-2079/? V/TAG: duoshuo-&gt;Android &#x81EA;&#x5B9A;&#x4E49;View</div><div class="line">11-16 02:09:43.989 2061-2079/? V/TAG: duoshuo-&gt;Android Handler&#x3001;Looper&#x4E0E;MessageQueue&#x6E90;&#x7801;&#x5206;&#x6790;</div><div class="line">11-16 02:09:43.989 2061-2079/? V/TAG: duoshuo-&gt;Android Volley&#x6E90;&#x7801;&#x5206;&#x6790;(&#x4E8C;)</div><div class="line">11-16 02:09:43.989 2061-2079/? V/TAG: duoshuo-&gt;Android Volley&#x6E90;&#x7801;&#x5206;&#x6790;(&#x4E00;)</div></pre></td></tr></table></figure>
+<blockquote>
+<p>&#x5982;&#x679C;&#x4F60;&#x770B;&#x5230;&#x8FD9;&#x91CC;&#xFF0C;&#x90A3;&#x4E48;&#x606D;&#x559C;&#x4F60;&#x5BF9;<code>Retrofit</code>&#x4E5F;&#x5165;&#x95E8;&#x4E86;&#xFF0C;&#x540E;&#x7EED;&#x6211;&#x8FD8;&#x4F1A;&#x7EE7;&#x7EED;&#x63A2;&#x7A76;&#x4E0E;&#x5927;&#x5BB6;&#x8FDB;&#x884C;&#x5206;&#x4EAB;&#x3002;</p>
+</blockquote>
+
+    
+  </div>
+</article>
+
+</div>
+
+
+  <a id="backTop" class="back-top">
+    <i class="icon-angle-up"></i>
+  </a>
+
+
+
+
+  <div class="modal" id="modal-one" aria-hidden="true">
+  <a href="#close" class="cover" aria-hidden="true"></a>
+  <div class="modal-dialog">
+    <div class="modal-header">
+      <a href="#close" class="btn-close" aria-hidden="true">关闭</a>
+    </div>
+    <div class="modal-body">
+      <ul class="list-toolbox">
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/archives/"
+              target="_self"
+              >
+              博客
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/category/"
+              target="_self"
+              >
+              分类
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/tag/"
+              target="_self"
+              >
+              标签
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/link/"
+              target="_self"
+              >
+              友链
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/about/"
+              target="_self"
+              >
+              关于
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/atom.xml"
+              target="_blank"
+              >
+              RSS
+            </a>
+          </li>
+        
+          <li class="item-toolbox">
+            <a
+              class="CIRCLE"
+              href="/search/"
+              target="_self"
+              >
+              搜索
+            </a>
+          </li>
+        
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+
+
+  
+      <div class="fexo-comments comments-post">
+    
+
+    
+  <section class="duoshuo-comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="" data-title="带你走进Retrofit的新世界" data-url="https://idisfkj.github.io/2016/11/15/带你走进Retrofit的新世界/index.html"></div>
+    <!-- 多说评论框 end -->
+  </section>
+
+
+
+
+  <script type="text/javascript">
+  var duoshuoQuery = {short_name:"idisfkj"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0]
+     || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+  </script>
+
+
+  </div>
+
+  
+
+  <script type="text/javascript">
+  function loadScript(url, callback) {
+    var script = document.createElement('script')
+    script.type = 'text/javascript';
+
+    if (script.readyState) { //IE
+      script.onreadystatechange = function() {
+        if (script.readyState == 'loaded' ||
+          script.readyState == 'complete') {
+          script.onreadystatechange = null;
+          callback();
+        }
+      };
+    } else { //Others
+      script.onload = function() {
+        callback();
+      };
+    }
+
+    script.src = url;
+    document.getElementsByTagName('head')[0].appendChild(script);
+  }
+
+  window.onload = function() {
+    loadScript('/js/bundle.js?398', function() {
+      // load success
+    });
+  }
+</script>
+
+</body>
+</html>
